@@ -1,237 +1,726 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>x_MatiXM | Ultimate Community Hub</title>
-<link href="https://googleapis.com" rel="stylesheet">
-<style>
-:root {
-  /* Domyślny Fiolet */
-  --main: #bc13fe; --second: #5f00ff;
-  --bg: #050508; --card: rgba(255, 255, 255, 0.03);
-  --border: rgba(255, 255, 255, 0.08);
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BladexMC - Oficjalna Strona Serwera</title>
+    <!-- Czcionka Poppins oraz ikony Font Awesome -->
+    <link href="googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="cloudflare.com">
+    
+    <style>
+        /* Konfiguracja globalna i reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
 
-/* --- ŁADNE ODCIENIE --- */
-body.blue { --main: #00d2ff; --second: #3a7bd5; }
-body.green { --main: #00ff88; --second: #00a86b; }
-body.yellow { --main: #ffcc00; --second: #ff9500; }
-body.purple { --main: #bc13fe; --second: #5f00ff; }
+        /* Paleta barw fioletu i ciemnego neonu */
+        :root {
+            --bg-dark: #08060f;
+            --purple-main: #8226e6;
+            --purple-glow: rgba(130, 38, 230, 0.6);
+            --purple-light: #ab66ff;
+            --bg-card: #140e24;
+            --text-muted: #bdaed1;
+        }
 
-* { box-sizing: border-box; margin: 0; padding: 0; transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
 
-body {
-  font-family: 'Poppins', sans-serif; color: #fff;
-  background: radial-gradient(circle at 50% -20%, #1a1a2e, #050508);
-  background-attachment: fixed; min-height: 100vh; overflow-x: hidden;
-}
+        /* Animowane tło z cząsteczkami */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, #170b2e 0%, var(--bg-dark) 80%);
+        }
 
-/* NAVBAR */
-.topbar {
-  position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center;
-  padding: 15px 8%; z-index: 1000; background: rgba(5, 5, 8, 0.8);
-  backdrop-filter: blur(25px); border-bottom: 1px solid var(--border);
-}
-.logo { font-family: 'Montserrat', sans-serif; font-size: 1.6rem; letter-spacing: -1px; color: var(--main); text-shadow: 0 0 20px var(--main); }
+        .particle {
+            position: absolute;
+            background: var(--purple-light);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: floatUp 8s infinite linear;
+        }
 
-/* MAIN CONTAINER */
-.container { max-width: 1200px; margin: auto; padding: 150px 20px 80px; text-align: center; }
+        /* Menu nawigacyjne */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(8, 6, 15, 0.85);
+            backdrop-filter: blur(12px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(130, 38, 230, 0.2);
+        }
 
-h1 { 
-  font-family: 'Montserrat', sans-serif; font-size: clamp(2.5rem, 10vw, 5.5rem); line-height: 1; margin-bottom: 15px;
-  background: linear-gradient(to bottom, #fff 30%, var(--main));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
-}
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-.hero-btns { display: flex; justify-content: center; gap: 20px; margin: 50px 0; flex-wrap: wrap; }
-.btn { 
-  padding: 18px 45px; border-radius: 20px; text-decoration: none; font-weight: 600; color: white; 
-  background: var(--card); border: 1px solid var(--border); position: relative; overflow: hidden;
-}
-.btn:hover { border-color: var(--main); transform: translateY(-7px); box-shadow: 0 15px 40px -10px var(--main); color: var(--main); }
+        .logo span {
+            color: var(--purple-main);
+            text-shadow: 0 0 15px var(--purple-glow);
+        }
 
-/* STATS */
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 60px; }
-.stat-box { 
-  background: var(--card); padding: 50px 30px; border-radius: 35px; border: 1px solid var(--border); 
-  backdrop-filter: blur(10px); position: relative;
-}
-.stat-box:hover { background: rgba(255,255,255,0.06); border-color: var(--main); }
-.stat-box h3 { font-family: 'Montserrat', sans-serif; font-size: 4rem; color: var(--main); line-height: 1; margin-bottom: 10px; }
-.stat-box p { font-size: 0.8rem; letter-spacing: 3px; opacity: 0.5; text-transform: uppercase; }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
 
-/* OGŁOSZENIE */
-.news-box { 
-  background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent); 
-  padding: 50px; border-radius: 40px; border: 1px solid var(--main); 
-  margin-top: 40px; display: none; position: relative;
-}
-.news-box::before { content: ''; position: absolute; inset: 0; border-radius: 40px; box-shadow: 0 0 30px var(--main); opacity: 0.2; }
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: 0.3s ease;
+        }
 
-/* PANEL ADMINA */
-#adminPanel {
-  position: fixed; right: -100%; top: 0; width: 100%; max-width: 480px; height: 100vh;
-  background: #08080c; z-index: 9999; border-left: 2px solid var(--main);
-  box-shadow: -30px 0 80px rgba(0,0,0,0.9); padding: 35px; overflow-y: auto;
-}
-#adminPanel.active { right: 0; }
+        .nav-links a:hover {
+            color: var(--purple-light);
+        }
 
-.admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-.field { margin-bottom: 20px; text-align: left; }
-.field label { font-size: 11px; color: var(--main); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
-.admin-input { 
-  width: 100%; padding: 15px; background: #12121b; border: 1px solid #222; 
-  border-radius: 15px; color: #fff; margin-top: 8px; font-family: inherit; 
-}
-.admin-input:focus { border-color: var(--main); outline: none; background: #161625; }
+        /* Główna sekcja (Hero) */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
 
-.btn-publish { 
-  width: 100%; padding: 20px; background: var(--main); color: #000; border: none; 
-  border-radius: 18px; font-weight: 900; cursor: pointer; margin-top: 30px; font-size: 1rem;
-}
-.theme-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 10px; }
-.t-btn { height: 50px; border-radius: 12px; border: 2px solid transparent; cursor: pointer; }
-.t-btn.active { border-color: #fff; transform: scale(0.9); }
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
 
-.admin-trigger { background: var(--main); color: #000; border: none; padding: 10px 25px; border-radius: 12px; font-weight: 800; cursor: pointer; }
-</style>
+        .hero h1 span {
+            color: var(--purple-main);
+            text-shadow: 0 0 30px var(--purple-glow);
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        /* Status graczy online */
+        .player-status {
+            background: rgba(130, 38, 230, 0.1);
+            border: 1px solid rgba(130, 38, 230, 0.3);
+            padding: 8px 20px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #00ff66;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff66;
+        }
+
+        /* Wielki przycisk IP */
+        .ip-box {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 18px 40px;
+            border-radius: 50px;
+            border: 2px solid var(--purple-main);
+            font-weight: 600;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 20px var(--purple-glow);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 1px;
+        }
+
+        .ip-box:hover {
+            background: var(--purple-main);
+            transform: scale(1.05);
+            box-shadow: 0 0 35px var(--purple-main);
+        }
+
+        /* Sekcja Ogólna dla Modułów */
+        section.content-sec {
+            position: relative;
+            z-index: 2;
+            padding: 100px 8%;
+            background: #05040a;
+            border-bottom: 1px solid rgba(130, 38, 230, 0.05);
+        }
+
+        section.content-sec:nth-of-type(even) {
+            background: #08060f;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 60px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .section-title span {
+            color: var(--purple-main);
+            text-shadow: 0 0 15px var(--purple-glow);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid rgba(130, 38, 230, 0.15);
+            padding: 45px 35px;
+            border-radius: 24px;
+            text-align: center;
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-12px);
+            border-color: var(--purple-light);
+            box-shadow: 0 15px 30px rgba(130, 38, 230, 0.15);
+        }
+
+        .card i {
+            font-size: 50px;
+            color: var(--purple-light);
+            margin-bottom: 25px;
+            text-shadow: 0 0 15px rgba(171, 102, 255, 0.4);
+        }
+
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* 👑 MODUŁ: LISTA ADMINISTRACJI */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+        }
+
+        .team-card {
+            background: linear-gradient(145deg, #140e24, #0b0714);
+            border: 1px solid rgba(130, 38, 230, 0.2);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .team-card:hover {
+            border-color: var(--purple-light);
+            box-shadow: 0 0 20px rgba(130, 38, 230, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .avatar-box {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--purple-main);
+            overflow: hidden;
+        }
+
+        .avatar-box img {
+            width: 64px;
+            height: 64px;
+            image-rendering: pixelated;
+        }
+
+        .team-card h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .rank {
+            display: inline-block;
+            padding: 4px 15px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .rank.ceo { background: #ff3333; color: #fff; }
+        .rank.zarzad { background: #ff9900; color: #fff; }
+        .rank.dev { background: #0099ff; color: #fff; }
+
+        /* 🛡️ MODUŁ: INTERAKTYWNY REGULAMIN DLA ADMINA */
+        .rules-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 2px solid rgba(130, 38, 230, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .rules-header {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 35px;
+            color: #fff;
+            border-bottom: 2px dashed rgba(130, 38, 230, 0.3);
+            padding-bottom: 15px;
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: 0.2s;
+        }
+
+        .rule-item:last-child {
+            border-bottom: none;
+        }
+
+        .rule-num {
+            background: var(--purple-main);
+            color: white;
+            font-weight: 800;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 0 10px var(--purple-glow);
+        }
+
+        .rule-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e3daf0;
+            line-height: 1.5;
+        }
+
+        .rules-footer {
+            text-align: center;
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 2px dashed rgba(130, 38, 230, 0.3);
+            font-weight: 800;
+            color: var(--purple-light);
+        }
+
+        /* 💬 MODUŁ: SKLEP & DISCORD GRID */
+        .social-shop-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .box-panel {
+            background: var(--bg-card);
+            border: 1px solid rgba(130, 38, 230, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--purple-main);
+            color: white;
+            text-decoration: none;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: 800;
+            margin-top: 25px;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px var(--purple-glow);
+        }
+
+        .btn-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--purple-main);
+        }
+
+        .btn-action.dc-btn { background: #5865F2; box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4); }
+        .btn-action.dc-btn:hover { box-shadow: 0 8px 25px #5865F2; }
+
+        /* ✨ MODUŁ: POWIADOMIENIE POP-UP NEWS */
+        .popup-news {
+            position: fixed;
+            bottom: -150px;
+            right: 30px;
+            background: var(--bg-card);
+            border: 2px solid var(--purple-main);
+            border-radius: 16px;
+            padding: 20px 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            z-index: 2000;
+            max-width: 350px;
+            transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .popup-news.active {
+            bottom: 30px;
+        }
+
+        .popup-icon {
+            font-size: 30px;
+            color: var(--purple-light);
+            animation: bounce 2s infinite;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            cursor: pointer;
+            color: #777;
+            transition: 0.3s;
+        }
+
+        .popup-close:hover { color: white; }
+
+        /* Stopka strony */
+        footer {
+            position: relative;
+            z-index: 2;
+            background: #030205;
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid rgba(130, 38, 230, 0.1);
+            color: #5d546a;
+            font-size: 14px;
+        }
+
+        /* Animacje CSS */
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-5vh) translateX(50px); opacity: 0; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* RWD - Dostosowanie smartfonów */
+        @media (max-width: 768px) {
+            .nav-links, .avatar-box { display: none; }
+            .hero h1 { font-size: 46px; }
+            .social-shop-container { grid-template-columns: 1fr; }
+            .rules-container { padding: 20px; }
+            .rule-text { font-size: 14px; }
+        }
+    </style>
 </head>
-<body id="body">
+<body>
 
-<div class="topbar">
-  <div class="logo">x_MatiXM</div>
-  <button class="admin-trigger" onclick="auth()">🔐 ADMIN</button>
-</div>
+    <!-- Warstwa cząsteczek w tle -->
+    <div class="particles" id="particles-container"></div>
 
-<div class="container">
-  <h1 id="vT">Hub x_MatiXM</h1>
-  <p id="vTag" style="font-size: 1.4rem; opacity: 0.6; font-weight: 300;">Wczytywanie Twojego świata...</p>
+    <!-- Pasek Nawigacji -->
+    <nav>
+        <div class="logo">Bladex<span>MC</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Start</a></li>
+            <li><a href="#modes">Tryby</a></li>
+            <li><a href="#rules">Regulamin</a></li>
+            <li><a href="#team">Ekipa</a></li>
+            <li><a href="#community">Społeczność</a></li>
+        </ul>
+    </nav>
 
-  <div class="hero-btns">
-    <a href="#" class="btn" id="vDC" target="_blank">DISCORD</a>
-    <a href="#" class="btn" id="vYT" target="_blank">YOUTUBE</a>
-  </div>
+    <!-- Główny ekran powitalny -->
+    <section class="hero" id="home">
+        <div class="player-status">
+            <div class="status-dot"></div>
+            <div>Graczy online: <span id="online-count">Ładowanie...</span></div>
+        </div>
 
-  <div class="stats-grid">
-    <div class="stat-box"><h3 id="v1v">0</h3><p id="v1l">Użytkowników</p></div>
-    <div class="stat-box"><h3 id="v2v">0</h3><p id="v2l">Aktywność</p></div>
-    <div class="stat-box"><h3 id="v3v">0</h3><p id="v3l">Status</p></div>
-  </div>
+        <h1>Bladex<span>MC</span></h1>
+        <p>Wejdź do świata pełnego fioletowej magii, potężnych gildii i unikalnych mechanik.</p>
+        
+        <div class="ip-box" onclick="copyIP()">
+            <i class="fa-solid fa-layer-group"></i>
+            <span id="ip-text">IP: BLADEXMC</span>
+        </div>
+    </section>
 
-  <div class="news-box" id="vNewsBox">
-    <h2 id="vNewsT" style="color: var(--main); font-family: 'Montserrat';">OGŁOSZENIE</h2>
-    <p id="vNewsC" style="font-size: 1.4rem; margin-top: 20px; font-weight: 300; line-height: 1.6;"></p>
-  </div>
-</div>
+    <!-- Sekcja z Opisami Trybów -->
+    <section class="content-sec" id="modes">
+        <h2 class="section-title">Wybierz swój <span>Tryb</span></h2>
+        <div class="grid">
+            <div class="card">
+                <i class="fa-solid fa-dragon"></i>
+                <h3>Survival + Gildie</h3>
+                <p>Klasyczna walka o przetrwanie urozmaicona zaawansowanym systemem klanów i epickimi bitwami PVP.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-cloud"></i>
+                <h3>Mega SkyBlock</h3>
+                <p>Rozbudowane zadania, automatyczne farmy, autorski system ulepszeń wyspy oraz prężny rynek.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-cubes"></i>
+                <h3>OneBlock Classic</h3>
+                <p>Ekscytująca rozgrywka. Jeden nieskończony blok generuje surowce od drewna aż po netheryt.</p>
+            </div>
+        </div>
+    </section>
 
-<div id="adminPanel">
-  <div class="admin-header">
-    <h2 style="font-family: 'Montserrat'">USTAWIENIA HUB</h2>
-    <button onclick="closeA()" style="background:none; border:none; color:#fff; font-size:40px; cursor:pointer">&times;</button>
-  </div>
-  
-  <div class="field"><label>Tytuł Główny</label><input type="text" id="inT" class="admin-input"></div>
-  <div class="field"><label>Podtytuł</label><input type="text" id="inTag" class="admin-input"></div>
-  
-  <div class="field">
-    <label>Wybierz Kolor Przewodni</label>
-    <div class="theme-grid">
-      <button class="t-btn" style="background:#bc13fe" onclick="setT('purple')"></button>
-      <button class="t-btn" style="background:#00d2ff" onclick="setT('blue')"></button>
-      <button class="t-btn" style="background:#00ff88" onclick="setT('green')"></button>
-      <button class="t-btn" style="background:#ffcc00" onclick="setT('yellow')"></button>
+    <!-- 🛡️ SEKCJA: REGULAMIN DLA ADMINISTRACJI -->
+    <section class="content-sec" id="rules">
+        <h2 class="section-title">Zasady <span>Administracji</span></h2>
+        
+        <div class="rules-container">
+            <div class="rules-header">
+                📜 ZASADY ORAZ OBOWIĄZKI ADMINISTRACJI 📜
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-num">1</div>
+                <div class="rule-text">ROZWIJANIE SERWERA I SPOŁECZNOŚCI 💪</div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-num">2</div>
+                <div class="rule-text">ADMINISTRACJA ORAZ WŁAŚCICIEL MAJĄ OBOWIĄZEK PROMOWANIA SERWERA 📢</div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-num">3</div>
+                <div class="rule-text">DOSTĘP DO STRONY OTRZYMUJĄ RANGI: HE 👑 DEV 💻 ZARZĄD 🛡️ CEO 💼</div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-num">4</div>
+                <div class="rule-text">PROMOWANIE DISCORDA TO OBOWIĄZEK ADMINISTRACJI 🔥</div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-num">5</div>
+                <div class="rule-text">NAGRYWANIE NA TIKTOKA 🎬 ORAZ YOUTUBE ▶️ – KLIPY, FILMY ITP.</div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-num">6</div>
+                <div class="rule-text">ULEPSZANIE SERWERA 🔧 ORAZ RESTARTY TO OBOWIĄZEK ADMINISTRACJI ⚡</div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-num">7</div>
+                <div class="rule-text">POMOC GRACZOM W POTRZEBIE ❤️</div>
+            </div>
+
+            <div class="rules-footer">
+                🔥 EVENTY, DROPY, ATRAKCJE I WIELE WIĘCEJ JUŻ WKRÓTCE! 🔥 <br><br>
+                👑 POZDRAWIAMI — BLADEXMC
+            </div>
+        </div>
+    </section>
+
+    <!-- 👑 SEKCJA: EKIPA SERWERA -->
+    <section class="content-sec" id="team">
+        <h2 class="section-title">Nasza <span>Ekipa</span></h2>
+        <div class="team-grid">
+            
+            <!-- Karta 1: Właściciel -->
+            <div class="team-card">
+                <div class="avatar-box">
+                    <!-- Pobieranie główki Minecraft z darmowego API crafatar -->
+                    <img src="crafatar.com" alt="CEO Avatar">
+                </div>
+                <h3>TwójNick1</h3>
+                <span class="rank ceo">CEO</span>
+            </div>
+
+            <!-- Karta 2: Zarząd -->
+            <div class="team-card">
+                <div class="avatar-box">
+                    <img src="crafatar.com" alt="Zarząd Avatar">
+                </div>
+                <h3>TwójNick2</h3>
+                <span class="rank zarzad">Zarząd</span>
+            </div>
+
+            <!-- Karta 3: Developer -->
+            <div class="team-card">
+                <div class="avatar-box">
+                    <img src="crafatar.com" alt="Dev Avatar">
+                </div>
+                <h3>TwójNick3</h3>
+                <span class="rank dev">Developer</span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 💬 SEKCJA: SPOŁECZNOŚCIOWE I DLA GRACZY (DISCORD / SKLEP) -->
+    <section class="content-sec" id="community">
+        <h2 class="section-title">Dołącz do <span>Nas</span></h2>
+        <div class="social-shop-container">
+            
+            <!-- Panel Discord -->
+            <div class="box-panel">
+                <i class="fa-brands fa-discord" style="font-size: 50px; color: #5865F2; margin-bottom: 20px;"></i>
+                <h3>Serwer Discord</h3>
+                <p style="margin-top: 10px; color: var(--text-muted)">Rozmawiaj z graczami, bierz udział w konkursach i odbieraj darmowe kody na klucze!</p>
+                <a href="discord.gg" target="_blank" class="btn-action dc-btn">Dołącz do Discorda</a>
+            </div>
+
+            <!-- Panel Sklepu -->
+            <div class="box-panel">
+                <i class="fa-solid fa-basket-shopping" style="font-size: 50px; color: #ab66ff; margin-bottom: 20px;"></i>
+                <h3>ItemShop Serwera</h3>
+                <p style="margin-top: 10px; color: var(--text-muted)">Chcesz wspomóc rozwój serwera BladexMC? Zakup unikalne rangi VIP, pakiety monet lub klucze.</p>
+                <a href="#shop" class="btn-action">Otwórz Sklep</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ✨ AKTYWNE POWIADOMIENIE POP-UP NEWS (Wyskakuje po 3 sekundach) -->
+    <div class="popup-news" id="news-popup">
+        <i class="fa-solid fa-xmark popup-close" onclick="closePopup()"></i>
+        <i class="fa-solid fa-bullhorn popup-icon"></i>
+        <div>
+            <h4 style="font-size: 16px; margin-bottom: 3px; color: #fff;">Nowość na BladexMC!</h4>
+            <p style="font-size: 13px; color: var(--text-muted)">Eventy, dropy i atrakcje ruszają już niedługo! Bądź na bieżąco.</p>
+        </div>
     </div>
-  </div>
 
-  <div class="field"><label>Nagłówek Ogłoszenia</label><input type="text" id="inNT" class="admin-input"></div>
-  <div class="field"><label>Treść Ogłoszenia (Zostaw puste by ukryć)</label><textarea id="inNC" class="admin-input" rows="3"></textarea></div>
-  
-  <div class="field">
-    <label>Liczniki (Wartość | Nazwa)</label>
-    <div style="display:flex; gap:10px; margin-bottom:10px"><input type="text" id="in1v" class="admin-input" placeholder="0"><input type="text" id="in1l" class="admin-input" placeholder="Tekst"></div>
-    <div style="display:flex; gap:10px; margin-bottom:10px"><input type="text" id="in2v" class="admin-input" placeholder="0"><input type="text" id="in2l" class="admin-input" placeholder="Tekst"></div>
-    <div style="display:flex; gap:10px"><input type="text" id="in3v" class="admin-input" placeholder="0"><input type="text" id="in3l" class="admin-input" placeholder="Tekst"></div>
-  </div>
+    <!-- Stopka -->
+    <footer>
+        <p>&copy; 2026 BladexMC. Wszelkie prawa zastrzeżone. Strona nie jest oficjalnym produktem Mojang.</p>
+    </footer>
 
-  <div class="field"><label>Linki Społecznościowe</label>
-    <input type="text" id="inDC" class="admin-input" placeholder="Discord URL">
-    <input type="text" id="inYT" class="admin-input" placeholder="YouTube URL">
-  </div>
+    <!-- Skrypty JavaScript -->
+    <script>
+        // 1. Skrypt generujący ruchome cząsteczki w tle
+        const container = document.getElementById('particles-container');
+        const particleCount = 40;
 
-  <button class="btn-publish" onclick="push()">🚀 AKTUALIZUJ DLA KAŻDEGO</button>
-</div>
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * 5 + 2;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.animationDuration = (Math.random() * 5 + 6) + 's';
+            particle.style.animationDelay = (Math.random() * 8) + 's';
+            container.appendChild(particle);
+        }
 
-<script>
-// --- KONFIGURACJA ---
-const DB_LINK = "TWOJA_BAZA_FIREBASE/data.json"; 
-const PASS = "FrakoMat051205";
-let selectedColor = "purple";
+        // 2. Skrypt obsługujący kopiowanie adresu IP
+        function copyIP() {
+            const serverIP = "BLADEXMC";
+            navigator.clipboard.writeText(serverIP).then(() => {
+                const ipLabel = document.getElementById("ip-text");
+                ipLabel.innerText = "SKOPIOWANO DO SCHOWKA!";
+                ipLabel.style.color = "#ab66ff";
+                
+                setTimeout(() => {
+                    ipLabel.innerText = "IP: BLADEXMC";
+                    ipLabel.style.color = "#ffffff";
+                }, 2200);
+            });
+        }
 
-function closeA() { document.getElementById('adminPanel').classList.remove('active'); }
-function auth() { if(prompt("Hasło:") === PASS) document.getElementById('adminPanel').classList.add('active'); else alert("Złe hasło!"); }
-function setT(c) { selectedColor = c; document.body.className = c; }
+        // 3. Pobieranie realnej liczby graczy online
+        async function fetchPlayers() {
+            try {
+                const response = await fetch('mcsrvstat.us');
+                const data = await response.json();
+                if(data.online) {
+                    document.getElementById('online-count').innerText = data.players.online + " / " + data.players.max;
+                } else {
+                    document.getElementById('online-count').innerText = "0 (Przerwa techniczna)";
+                }
+            } catch (error) {
+                document.getElementById('online-count').innerText = "Kliknij IP, by wejść";
+            }
+        }
+        fetchPlayers();
 
-// WYSYŁANIE DO FIREBASE
-async function push() {
-    const payload = {
-        t: document.getElementById('inT').value,
-        tag: document.getElementById('inTag').value,
-        nt: document.getElementById('inNT').value,
-        nc: document.getElementById('inNC').value,
-        s1v: document.getElementById('in1v').value, s1l: document.getElementById('in1l').value,
-        s2v: document.getElementById('in2v').value, s2l: document.getElementById('in2l').value,
-        s3v: document.getElementById('in3v').value, s3l: document.getElementById('in3l').value,
-        dc: document.getElementById('inDC').value,
-        yt: document.getElementById('inYT').value,
-        theme: selectedColor
-    };
+        // 4. Obsługa wyskakującego powiadomienia (Pop-up News)
+        setTimeout(() => {
+            document.getElementById('news-popup').classList.add('active');
+        }, 3000); // Pokazuje po 3 sekundach od wejścia
 
-    try {
-        await fetch(DB_LINK, { method: 'PUT', body: JSON.stringify(payload) });
-        alert("GOTOWE! Zmiany są już u każdego. 🔥");
-    } catch(e) { alert("Błąd połączenia!"); }
-}
+        function closePopup() {
+            document.getElementById('news-popup').classList.remove('active');
+        }
+    </script>
 
-// POBIERANIE LIVE DLA WSZYSTKICH
-async function update() {
-    try {
-        const r = await fetch(DB_LINK);
-        const d = await r.json();
-        if(!d) return;
-
-        document.getElementById('vT').innerText = d.t;
-        document.getElementById('vTag').innerText = d.tag;
-        
-        if(d.nc) {
-            document.getElementById('vNewsBox').style.display = 'block';
-            document.getElementById('vNewsT').innerText = d.nt || "OGŁOSZENIE";
-            document.getElementById('vNewsC').innerText = d.nc;
-        } else { document.getElementById('vNewsBox').style.display = 'none'; }
-
-        document.getElementById('v1v').innerText = d.s1v; document.getElementById('v1l').innerText = d.s1l;
-        document.getElementById('v2v').innerText = d.s2v; document.getElementById('v2l').innerText = d.s2l;
-        document.getElementById('v3v').innerText = d.s3v; document.getElementById('v3l').innerText = d.s3l;
-        
-        document.getElementById('vDC').href = d.dc;
-        document.getElementById('vYT').href = d.yt;
-        
-        setT(d.theme);
-
-        // Ustawianie wartości w panelu, żebyś widział co edytujesz
-        document.getElementById('inT').value = d.t; document.getElementById('inTag').value = d.tag;
-        document.getElementById('inNT').value = d.nt; document.getElementById('inNC').value = d.nc;
-        document.getElementById('in1v').value = d.s1v; document.getElementById('in1l').value = d.s1l;
-        document.getElementById('in2v').value = d.s2v; document.getElementById('in2l').value = d.s2l;
-        document.getElementById('in3v').value = d.s3v; document.getElementById('in3l').value = d.s3l;
-        document.getElementById('inDC').value = d.dc; document.getElementById('inYT').value = d.yt;
-
-    } catch(e) { console.warn("Oczekiwanie na bazę..."); }
-}
-
-setInterval(update, 3000);
-window.onload = update;
-</script>
 </body>
 </html>
