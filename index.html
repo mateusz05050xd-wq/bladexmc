@@ -59,7 +59,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 8%;
+            padding: 10px 8%;
             background: rgba(8, 6, 15, 0.85);
             backdrop-filter: blur(12px);
             position: fixed;
@@ -69,16 +69,12 @@
             border-bottom: 1px solid rgba(130, 38, 230, 0.2);
         }
 
-        .logo {
-            font-size: 26px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .logo span {
-            color: var(--purple-main);
-            text-shadow: 0 0 15px var(--purple-glow);
+        /* Logo serwera jako obrazek */
+        .logo-img {
+            height: 65px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--purple-glow));
         }
 
         .nav-links {
@@ -110,14 +106,6 @@
             padding: 0 20px;
             position: relative;
             z-index: 2;
-        }
-
-        /* Stylizacja logotypu graficznego na stronie głównej */
-        .main-logo-img {
-            max-width: 220px;
-            margin-bottom: -10px;
-            filter: drop-shadow(0 0 20px var(--purple-glow));
-            animation: bounce 3s infinite ease-in-out;
         }
 
         .hero h1 {
@@ -230,34 +218,19 @@
         }
 
         /* 👑 MODUŁ: LISTA ADMINISTRACJI */
-        .team-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .team-row-title {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--purple-light);
-            margin: 30px 0 15px 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-left: 4px solid var(--purple-main);
-            padding-left: 15px;
-        }
-
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 30px;
-            margin-bottom: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .team-card {
             background: linear-gradient(145deg, #140e24, #0b0714);
             border: 1px solid rgba(130, 38, 230, 0.2);
             border-radius: 20px;
-            padding: 30px 20px;
+            padding: 35px 25px;
             text-align: center;
             transition: 0.3s;
         }
@@ -287,32 +260,31 @@
             image-rendering: pixelated;
         }
 
-        /* Specjalny styl dla awatara bota/smoka */
-        .avatar-box img.logo-avatar {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            image-rendering: auto;
+        .team-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
         }
 
-        .team-card h3 {
-            font-size: 20px;
-            margin-bottom: 8px;
+        .ranks-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
         }
 
         .rank {
             display: inline-block;
-            padding: 4px 15px;
+            width: 130px;
+            padding: 5px 0;
             border-radius: 30px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .rank.ceo { background: #ff3333; color: #fff; }
-        .rank.zarzad { background: #ff9900; color: #fff; }
-        .rank.dev { background: #0099ff; color: #fff; }
+        .rank.ceo { background: #ff3333; color: #fff; box-shadow: 0 0 8px rgba(255, 51, 51, 0.4); }
+        .rank.zarzad { background: #ff9900; color: #fff; box-shadow: 0 0 8px rgba(255, 153, 0, 0.4); }
 
         /* 🛡️ MODUŁ: INTERAKTYWNY REGULAMIN DLA ADMINA */
         .rules-container {
@@ -418,10 +390,8 @@
 
         .btn-action.dc-btn { background: #5865F2; box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4); }
         .btn-action.dc-btn:hover { box-shadow: 0 8px 25px #5865F2; }
-        .btn-action.yt-btn { background: #ff0000; box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4); }
-        .btn-action.yt-btn:hover { box-shadow: 0 8px 25px #ff0000; }
 
-        /* ✨ MODUŁ: AUTOMATYCZNE POWIADOMIENIA NA ZMIANĘ */
+        /* ✨ MODUŁ: POWIADOMIENIE POP-UP NEWS */
         .popup-news {
             position: fixed;
             bottom: -150px;
@@ -433,7 +403,7 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.6);
             z-index: 2000;
             max-width: 380px;
-            transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.5s ease-in-out;
             display: flex;
             gap: 15px;
             align-items: center;
@@ -445,19 +415,120 @@
 
         .popup-icon {
             font-size: 30px;
-            animation: miniBounce 2s infinite;
+            color: var(--purple-light);
         }
 
-        .popup-close {
-            position: absolute;
-            top: 10px;
-            right: 12px;
+        /* 🔒 MODUŁ: SYSTEM PANELU ADMINISTRATORA */
+        .admin-trigger {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            z-index: 3000;
+            background: rgba(20, 14, 36, 0.4);
+            border: 1px solid rgba(130, 38, 230, 0.2);
+            color: rgba(255,255,255,0.3);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            color: #777;
             transition: 0.3s;
         }
 
-        .popup-close:hover { color: white; }
+        .admin-trigger:hover {
+            color: var(--purple-light);
+            border-color: var(--purple-light);
+            background: var(--bg-card);
+        }
+
+        .admin-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 450px;
+            background: #110a21;
+            border: 2px solid var(--purple-main);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            z-index: 4000;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s ease;
+        }
+
+        .admin-panel.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .admin-panel h3 {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 20px;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+
+        .admin-panel label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            margin-top: 15px;
+        }
+
+        .admin-panel input {
+            width: 100%;
+            padding: 12px;
+            background: #090514;
+            border: 1px solid rgba(130, 38, 230, 0.4);
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .admin-panel input:focus {
+            border-color: var(--purple-light);
+        }
+
+        .admin-btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .admin-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .admin-btn.save { background: var(--purple-main); color: white; }
+        .admin-btn.close { background: #2a1f44; color: #ccc; }
+        .admin-btn:hover { opacity: 0.9; }
+
+        .admin-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 3999;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+        }
+
+        .admin-overlay.active { opacity: 1; pointer-events: auto; }
 
         /* Stopka strony */
         footer {
@@ -479,19 +550,9 @@
             100% { transform: translateY(-5vh) translateX(50px); opacity: 0; }
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes miniBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
-        }
-
         /* RWD - Dostosowanie smartfonów */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
+            .nav-links, .avatar-box { display: none; }
             .hero h1 { font-size: 46px; }
             .social-shop-container { grid-template-columns: 1fr; }
             .rules-container { padding: 20px; }
@@ -506,25 +567,22 @@
 
     <!-- Pasek Nawigacji -->
     <nav>
-        <div class="logo">Bladex<span>MC</span></div>
+        <!-- Umieść plik ze swoim logo jako logo.png w folderze ze stroną -->
+        <img src="logo.png" alt="BladexMC Logo" class="logo-img">
         <ul class="nav-links">
             <li><a href="#home">Start</a></li>
             <li><a href="#modes">Tryby</a></li>
             <li><a href="#rules">Regulamin</a></li>
             <li><a href="#team">Ekipa</a></li>
-            <li><a href="#community">Media</a></li>
+            <li><a href="#community">Społeczność</a></li>
         </ul>
     </nav>
 
     <!-- Główny ekran powitalny -->
     <section class="hero" id="home">
-        <!-- Logo z zielonym smokiem wycięte/pobrane ze zdjęcia -->
-        <img src="imgur.com" alt="BladexMC Logo" class="main-logo-img">
-        
         <h1>Bladex<span>MC</span></h1>
-        <p>Wejdź do świata pełnego fioletowej magii, potężnych wyzwań i unikalnych mechanik.</p>
+        <p>Wejdź do świata pełnego fioletowej magii, potężnych gildii i unikalnych mechanik.</p>
         
-        <!-- Przycisk kopiowania IP zaktualizowany pod serwer Aternos -->
         <div class="ip-box" onclick="copyIP()">
             <i class="fa-solid fa-layer-group"></i>
             <span id="ip-text">IP: BLADEXMC.ATERNOS.ME</span>
@@ -533,22 +591,22 @@
 
     <!-- Sekcja z Opisami Trybów -->
     <section class="content-sec" id="modes">
-        <h2 class="section-title">Nasze <span>Tryby Gry</span></h2>
+        <h2 class="section-title">Wybierz swój <span>Tryb</span></h2>
         <div class="grid">
             <div class="card">
                 <i class="fa-solid fa-skull-crossbones"></i>
                 <h3>ANARCHIA SMP</h3>
-                <p>Brak litości, brutalne walki i całkowita wolność. Przetrwaj w świecie, gdzie jedyną zasadą jest brak zasad.</p>
+                <p>Brak restrykcyjnych zasad, czysty survival, bezwzględne walki i rywalizacja o przetrwanie.</p>
             </div>
             <div class="card">
-                <i class="fa-solid fa-shuttle-space"></i>
+                <i class="fa-solid fa-gavel"></i>
                 <h3>DUELS</h3>
-                <p>Sprawdź swoje umiejętności PVP. Szybkie pojedynki 1v1 na unikalnych arenach z wybranymi zestawami ekwipunku.</p>
+                <p>Zmierz się 1vs1 na zbalansowanych arenach. Pokaż swoje umiejętności PVP i wbijaj rankingi.</p>
             </div>
             <div class="card">
                 <i class="fa-solid fa-trophy"></i>
                 <h3>IGRZYSKA</h3>
-                <p>Epickie starcie wielu graczy. Szukaj ukrytych skrzyń, zbieraj zasoby i eliminuj rywali, by zostać ostatnim na polu bitwy.</p>
+                <p>Epickie areny turniejowe, zbieranie skrzyń, taktyczna eliminacja wrogów i walka o miano mistrza.</p>
             </div>
         </div>
     </section>
@@ -607,93 +665,85 @@
     <!-- 👑 SEKCJA: EKIPA SERWERA -->
     <section class="content-sec" id="team">
         <h2 class="section-title">Nasza <span>Ekipa</span></h2>
-        <div class="team-container">
+        <div class="team-grid">
             
-            <!-- Rząd 1: CEO -->
-            <div class="team-row-title">Główni Właściciele (CEO)</div>
-            <div class="team-grid">
-                <div class="team-card">
-                    <div class="avatar-box">
-                        <img src="crafatar.com" alt="Mateusz05050">
-                    </div>
-                    <h3>Mateusz05050</h3>
+            <!-- Karta 1: Mateusz05050 -->
+            <div class="team-card">
+                <div class="avatar-box">
+                    <img src="crafatar.com" alt="Mateusz05050 Avatar">
+                </div>
+                <h3>Mateusz05050</h3>
+                <div class="ranks-container">
                     <span class="rank ceo">CEO</span>
-                </div>
-                <div class="team-card">
-                    <div class="avatar-box">
-                        <img src="crafatar.com" alt="igorekv">
-                    </div>
-                    <h3>igorekv</h3>
-                    <span class="rank ceo">CEO</span>
-                </div>
-            </div>
-
-            <!-- Rząd 2: Zarząd -->
-            <div class="team-row-title">Zarząd Serwera</div>
-            <div class="team-grid">
-                <div class="team-card">
-                    <div class="avatar-box">
-                        <img src="crafatar.com" alt="Mateusz05050">
-                    </div>
-                    <h3>Mateusz05050</h3>
-                    <span class="rank zarzad">Zarząd</span>
-                </div>
-                <div class="team-card">
-                    <div class="avatar-box">
-                        <img src="crafatar.com" alt="igorekv">
-                    </div>
-                    <h3>igorekv</h3>
                     <span class="rank zarzad">Zarząd</span>
                 </div>
             </div>
 
-            <!-- Rząd 3: System Brakującego Deva -->
-            <div class="team-row-title">Systemy Serwerowe</div>
-            <div class="team-grid">
-                <div class="team-card">
-                    <div class="avatar-box">
-                        <!-- Podmiana awatara na grafikę z zielonym smokiem -->
-                        <img src="imgur.com" alt="BladexBot" class="logo-avatar">
-                    </div>
-                    <h3>BladexBot</h3>
-                    <span class="rank dev">Automated Dev</span>
+            <!-- Karta 2: igorekv -->
+            <div class="team-card">
+                <div class="avatar-box">
+                    <img src="crafatar.com" alt="igorekv Avatar">
+                </div>
+                <h3>igorekv</h3>
+                <div class="ranks-container">
+                    <span class="rank ceo">CEO</span>
+                    <span class="rank zarzad">Zarząd</span>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <!-- 💬 SEKCJA: MEDIA I SPOŁECZNOŚĆ -->
+    <!-- 💬 SEKCJA: SPOŁECZNOŚCIOWE I DLA GRACZY (DISCORD / SKLEP) -->
     <section class="content-sec" id="community">
-        <h2 class="section-title">Nasze <span>Social Media</span></h2>
+        <h2 class="section-title">Dołącz do <span>Nas</span></h2>
         <div class="social-shop-container">
             
             <!-- Panel Discord -->
             <div class="box-panel">
                 <i class="fa-brands fa-discord" style="font-size: 50px; color: #5865F2; margin-bottom: 20px;"></i>
                 <h3>Serwer Discord</h3>
-                <p style="margin-top: 10px; color: var(--text-muted)">Dołącz do naszej oficjalnej społeczności na Discordzie, bierz udział w eventach i zgłaszaj błędy.</p>
-                <a href="discord.gg" target="_blank" class="btn-action dc-btn"><i class="fa-brands fa-discord"></i> Wejdź na Discord</a>
+                <p style="margin-top: 10px; color: var(--text-muted)">Rozmawiaj z graczami, bierz udział w konkursach i odbieraj darmowe kody na klucze!</p>
+                <a href="discord.gg" target="_blank" class="btn-action dc-btn">Dołącz do Discorda</a>
             </div>
 
-            <!-- Panel YouTube -->
+            <!-- Panel Sklepu -->
             <div class="box-panel">
-                <i class="fa-brands fa-youtube" style="font-size: 50px; color: #ff0000; margin-bottom: 20px;"></i>
-                <h3>Oficjalny Kanał YT</h3>
-                <p style="margin-top: 10px; color: var(--text-muted)">Subskrybuj nasz kanał, aby oglądać oficjalne zapowiedzi edycji, zwiastuny i klipy z serwera.</p>
-                <a href="youtube.com" target="_blank" class="btn-action yt-btn"><i class="fa-brands fa-youtube"></i> Zobacz Kanał</a>
+                <i class="fa-solid fa-basket-shopping" style="font-size: 50px; color: #ab66ff; margin-bottom: 20px;"></i>
+                <h3>ItemShop Serwera</h3>
+                <p style="margin-top: 10px; color: var(--text-muted)">Chcesz wspomóc rozwój serwera BladexMC? Zakup unikalne rangi VIP, pakiety monet lub klucze.</p>
+                <!-- Przekierowuje tymczasowo na Twojego YouTube, dopóki nie zmienisz linku -->
+                <a href="youtube.com" target="_blank" class="btn-action">Otwórz Sklep</a>
             </div>
 
         </div>
     </section>
 
-    <!-- ✨ AUTOMATYCZNE ZMIENIAJĄCE SIĘ POWIADOMIENIE POP-UP -->
+    <!-- ✨ AKTYWNE POWIADOMIENIE POP-UP NEWS (Pętla: 2 sekundy włączone, 5 sekund wyłączone) -->
     <div class="popup-news" id="news-popup">
-        <i class="fa-solid fa-xmark popup-close" onclick="closePopup()"></i>
-        <i class="fa-solid fa-bullhorn popup-icon" id="popup-media-icon" style="color: #5865F2;"></i>
-        <div>
-            <h4 style="font-size: 16px; margin-bottom: 3px; color: #fff;" id="popup-title">Zaproszenie</h4>
-            <p style="font-size: 13px; color: var(--text-muted);" id="popup-desc">Dołącz do nas!</p>
+        <div id="popup-content-box" style="display: flex; gap: 15px; align-items: center;">
+            <!-- Zawartość generowana przez skrypt JS -->
+        </div>
+    </div>
+
+    <!-- 🔒 UKRYTY PANEL ADMINISTRATORA (Dostępny w lewym dolnym rogu) -->
+    <div class="admin-trigger" onclick="openAdminModal()" title="Panel Administratora">
+        <i class="fa-solid fa-lock"></i>
+    </div>
+
+    <div class="admin-overlay" id="admin-overlay"></div>
+    <div class="admin-panel" id="admin-panel">
+        <h3><i class="fa-solid fa-shield-halved" style="color: var(--purple-light);"></i> Panel BladexMC</h3>
+        
+        <label>Treść powiadomienia Discord:</label>
+        <input type="text" id="input-dc" value="Zapraszamy na nasz oficjalny serwer Discord! Czekają tam konkursy i kody.">
+        
+        <label>Treść powiadomienia YouTube:</label>
+        <input type="text" id="input-yt" value="Zasubskrybuj nasz oficjalny kanał YouTube, aby nie przegapić zapowiedzi!">
+
+        <div class="admin-btn-group">
+            <button class="admin-btn close" onclick="closeAdminModal()">Anuluj</button>
+            <button class="admin-btn save" onclick="saveAdminData()">Zapisz zmiany</button>
         </div>
     </div>
 
@@ -720,48 +770,9 @@
             container.appendChild(particle);
         }
 
-        // 2. Skrypt obsługujący kopiowanie adresu IP z Aternosa
+        // 2. Skrypt obsługujący kopiowanie adresu IP
         function copyIP() {
             const serverIP = "BLADEXMC.ATERNOS.ME";
             navigator.clipboard.writeText(serverIP).then(() => {
                 const ipLabel = document.getElementById("ip-text");
-                ipLabel.innerText = "SKOPIOWANO DO SCHOWKA!";
-                ipLabel.style.color = "#ab66ff";
                 
-                setTimeout(() => {
-                    ipLabel.innerText = "IP: BLADEXMC.ATERNOS.ME";
-                    ipLabel.style.color = "#ffffff";
-                }, 2200);
-            });
-        }
-
-        // 3. Obsługa naprzemiennych powiadomień: Pokazuj przez 2s, Schowaj na 5s
-        const popup = document.getElementById('news-popup');
-        const pIcon = document.getElementById('popup-media-icon');
-        const pTitle = document.getElementById('popup-title');
-        const pDesc = document.getElementById('popup-desc');
-
-        // Baza powiadomień wyświetlanych losowo lub na zmianę
-        const notifications = [
-            {
-                title: "Wpadnij na Discorda!",
-                desc: "Dołącz do społeczności graczy i zgarniaj bonusy.",
-                iconClass: "fa-brands fa-discord",
-                iconColor: "#5865F2"
-            },
-            {
-                title: "Subskrybuj nasz YT!",
-                desc: "Oglądaj najnowsze zapowiedzi i filmy z serwera.",
-                iconClass: "fa-brands fa-youtube",
-                iconColor: "#ff0000"
-            }
-        ];
-
-        let currentTrack = 0;
-        let isClosedManually = false;
-
-        function cycleNotification() {
-            if (isClosedManually) return;
-
-            // Zmień treść na następną
-            const currentItem = notifications[
