@@ -194,7 +194,7 @@
             gap: 40px;
         }
 
-        /* NOWE DYNAMICZNE KARTY */
+        /* DYNAMICZNE KARTY */
         .card {
             background: var(--bg-card);
             border: 1px solid rgba(130, 38, 230, 0.15);
@@ -233,9 +233,9 @@
         }
 
         /* Efekt podświetlenia RGB (Glow) dla trybów gry */
-        .card.clickable:nth-child(1):hover { box-shadow: 0 0 30px rgba(130, 38, 230, 0.5), 0 0 50px rgba(255, 0, 127, 0.2); }
+        .card.clickable:nth-child(1):hover { box-shadow: 0 0 30px rgba(255, 0, 127, 0.4), 0 0 50px rgba(255, 0, 127, 0.2); }
         .card.clickable:nth-child(2):hover { box-shadow: 0 0 30px rgba(0, 240, 255, 0.4), 0 0 50px rgba(0, 240, 255, 0.1); }
-        .card.clickable:nth-child(3):hover { box-shadow: 0 0 30px rgba(255, 0, 127, 0.4), 0 0 50px rgba(130, 38, 230, 0.2); }
+        .card.clickable:nth-child(3):hover { box-shadow: 0 0 30px rgba(130, 38, 230, 0.5), 0 0 50px rgba(130, 38, 230, 0.2); }
 
         .card i {
             font-size: 50px;
@@ -290,6 +290,7 @@
             gap: 20px;
             padding: 18px 0;
             border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: relative;
         }
 
         .rule-item:last-child {
@@ -315,13 +316,46 @@
             font-weight: 600;
             color: #e3daf0;
             line-height: 1.5;
+            flex-grow: 1;
         }
 
         .rules-footer {
             text-align: center;
             margin-top: 35px;
-            font-size: 14px;
-            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffaa00;
+            text-shadow: 0 0 10px rgba(255,170,0,0.3);
+        }
+
+        /* PRZYCISKI EDYCJI W TRYBIE ADMINA */
+        .admin-edit-btn {
+            display: none;
+            margin-top: 15px;
+            background: var(--neon-cyan);
+            color: #000;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 11px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+            transition: 0.3s;
+            z-index: 10;
+            position: relative;
+        }
+
+        .admin-edit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .rule-item .admin-edit-btn {
+            margin-top: 0;
+            margin-left: 15px;
+            align-self: center;
         }
 
         /* PEŁNOEKRANOWA NAKŁADKA MODAL (PODGLĄD TRYBU) */
@@ -462,6 +496,42 @@
             background: #0b0716;
         }
 
+        body.admin-mode .admin-edit-btn {
+            display: inline-block;
+        }
+
+        /* STAŁY NOWY PRZYCISK LOGOWANIA / NOWA PROPOZYCJA W ROGU */
+        .login-trigger-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 999;
+            background: rgba(20, 14, 36, 0.85);
+            border: 1px solid var(--purple-main);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .login-trigger-btn:hover {
+            border-color: var(--purple-light);
+            box-shadow: 0 0 20px var(--purple-glow);
+            transform: translateY(-3px);
+        }
+
+        body.admin-mode .login-trigger-btn {
+            display: none;
+        }
+
         /* STAŁY PŁYWAJĄCY PRZYCISK WYLOGOWANIA */
         .logout-btn {
             position: fixed;
@@ -497,21 +567,7 @@
         }
 
         body.admin-mode .nav-links {
-            margin-right: 150px; /* Robi miejsce dla przycisku wylogowania w menu */
-        }
-
-        /* Przycisk wywołania logowania admina (ukryty smaczek w stopce) */
-        .admin-trigger {
-            background: none;
-            border: none;
-            color: rgba(255,255,255,0.05);
-            cursor: pointer;
-            margin-top: 15px;
-            font-size: 11px;
-            transition: color 0.3s;
-        }
-        .admin-trigger:hover {
-            color: var(--purple-light);
+            margin-right: 150px;
         }
 
         /* Stopka */
@@ -531,6 +587,11 @@
 
     <!-- Tło z cząsteczkami -->
     <div class="particles" id="particles-container"></div>
+
+    <!-- Widoczny stały przycisk logowania do Panelu Admina -->
+    <button class="login-trigger-btn" onclick="loginAdmin()">
+        <i class="fa-solid fa-user-gear"></i> Panel Admina
+    </button>
 
     <!-- Pływający Przycisk Wyloguj z Panelu Admina -->
     <button class="logout-btn" onclick="logoutAdmin()">
@@ -563,51 +624,73 @@
         <section class="content-sec" id="modes">
             <h2 class="section-title">Nasze <span>Tryby</span></h2>
             <div class="grid">
-                <!-- Karta 1 -->
-                <div class="card clickable" onclick="openModeModal('survival')">
-                    <i class="fa-solid fa-shield-halved" style="color: var(--neon-pink);"></i>
-                    <h3>Survival + Gildie</h3>
-                    <p>Załóż potężną gildię, rekrutuj sojuszników i walcz o dominację na mapie pełnej niebezpieczeństw.</p>
+                <!-- Karta 1: ANARCHIA SMP -->
+                <div class="card clickable" id="card-anarchia" onclick="openModeModal('anarchia')">
+                    <i class="fa-solid fa-skull" style="color: var(--neon-pink);"></i>
+                    <h3 class="mode-title">ANARCHIA SMP</h3>
+                    <p class="mode-short-desc">Brak zasad, czysty survival, kradzieże i nieustanna walka o przetrwanie w najbrutalniejszym świecie.</p>
+                    <button class="admin-edit-btn" onclick="editMode(event, 'anarchia')">Edytuj</button>
                 </div>
-                <!-- Karta 2 -->
-                <div class="card clickable" onclick="openModeModal('skyblock')">
-                    <i class="fa-solid fa-cube" style="color: var(--neon-cyan);"></i>
-                    <h3>SkyBlock</h3>
-                    <p>Rozwiń swoją podniebną wyspę od zera, twórz automatyczne farmy i handluj z innymi graczami.</p>
+                <!-- Karta 2: DUELS -->
+                <div class="card clickable" id="card-duels" onclick="openModeModal('duels')">
+                    <i class="fa-solid fa-swords" style="color: var(--neon-cyan);"></i>
+                    <h3 class="mode-title">DUELS</h3>
+                    <p class="mode-short-desc">Szybkie i dynamiczne pojedynki 1v1 na unikalnych arenach. Pokaż swoje umiejętności PvP i awansuj w rankingu.</p>
+                    <button class="admin-edit-btn" onclick="editMode(event, 'duels')">Edytuj</button>
                 </div>
-                <!-- Karta 3 -->
-                <div class="card clickable" onclick="openModeModal('bedwars')">
-                    <i class="fa-solid fa-crosshairs"></i>
-                    <h3>BedWars</h3>
-                    <p>Chroń swoje łóżko, niszcz bazy przeciwników i kupuj ulepszenia, aby zdobyć ostateczne zwycięstwo.</p>
+                <!-- Karta 3: GILDIE -->
+                <div class="card clickable" id="card-gildie" onclick="openModeModal('gildie')">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <h3 class="mode-title">GILDIE</h3>
+                    <p class="mode-short-desc">Załóż potężną gildię, rekrutuj zaufanych sojuszników, buduj zamki i walcz o całkowitą dominację na mapie.</p>
+                    <button class="admin-edit-btn" onclick="editMode(event, 'gildie')">Edytuj</button>
                 </div>
             </div>
         </section>
 
-        <!-- Sekcja Regulaminu -->
+        <!-- Sekcja Regulaminu Administracji -->
         <section class="content-sec" id="rules">
-            <h2 class="section-title">Główne <span>Zasady</span></h2>
+            <h2 class="section-title">Zasady <span>Administracji</span></h2>
             <div class="rules-container">
-                <div class="rules-header">REGULAMIN SERWERA BLADEXMC</div>
+                <div class="rules-header">📜 ZASADY ORAZ OBOWIĄZKI ADMINISTRACJI 📜</div>
                 
                 <div class="rule-item">
                     <div class="rule-num">1</div>
-                    <div class="rule-text">Szanuj innych graczy i członków administracji. Zakazuje się obrażania oraz toksycznego zachowania.</div>
+                    <div class="rule-text" id="rule-text-1">ROZWIJANIE SERWERA I SPOŁECZNOŚCI 💪</div>
+                    <button class="admin-edit-btn" onclick="editRule(event, 1)">Edytuj</button>
                 </div>
                 <div class="rule-item">
                     <div class="rule-num">2</div>
-                    <div class="rule-text">Używanie wspomagaczy, cheatów oraz modyfikacji dających przewagę w grze jest surowo wzbronione.</div>
+                    <div class="rule-text" id="rule-text-2">ADMINISTRACJA ORAZ WŁAŚCICIEL MAJĄ OBOWIĄZEK PROMOWANIA SERWERA 📢</div>
+                    <button class="admin-edit-btn" onclick="editRule(event, 2)">Edytuj</button>
                 </div>
                 <div class="rule-item">
                     <div class="rule-num">3</div>
-                    <div class="rule-text">Zakazuje się reklamowania innych serwerów Minecraft, stron internetowych oraz kanałów YouTube bez zgody właścicieli.</div>
+                    <div class="rule-text" id="rule-text-3">DOSTĘP DO STRONY OTRZYMUJĄ RANGI: HE 👑 DEV 💻 ZARZĄD 🛡️ CEO 💼</div>
+                    <button class="admin-edit-btn" onclick="editRule(event, 3)">Edytuj</button>
                 </div>
                 <div class="rule-item">
                     <div class="rule-num">4</div>
-                    <div class="rule-text">Wszelkie błędy gry należy niezwłocznie zgłaszać administracji. Wykorzystywanie bugów grozi blokadą konta.</div>
+                    <div class="rule-text" id="rule-text-4">PROMOWANIE DISCORDA TO OBOWIĄZEK ADMINISTRACJI 🔥</div>
+                    <button class="admin-edit-btn" onclick="editRule(event, 4)">Edytuj</button>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">5</div>
+                    <div class="rule-text" id="rule-text-5">NAGRYWANIE NA TIKTOKA 🎬 ORAZ YOUTUBE ▶️ – KLIPY, FILMY ITP.</div>
+                    <button class="admin-edit-btn" onclick="editRule(event, 5)">Edytuj</button>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">6</div>
+                    <div class="rule-text" id="rule-text-6">ULEPSZANIE SERWERA 🔧 ORAZ RESTARTY TO OBOWIĄZEK ADMINISTRACJI ⚡</div>
+                    <button class="admin-edit-btn" onclick="editRule(event, 6)">Edytuj</button>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">7</div>
+                    <div class="rule-text" id="rule-text-7">POMOC GRACZOM W POTRZEBIE ❤️</div>
+                    <button class="admin-edit-btn" onclick="editRule(event, 7)">Edytuj</button>
                 </div>
 
-                <div class="rules-footer">Wejście na serwer oznacza pełną akceptację powyższych zasad.</div>
+                <div class="rules-footer">🔥 EVENTY, DROPY, ATRAKCJE I WIELE WIĘCEJ JUŻ WKRÓTCE! 🔥</div>
             </div>
         </section>
 
@@ -627,97 +710,15 @@
     <!-- Stopka -->
     <footer>
         <p>&copy; 2026 BladexMC. Wszelkie prawa zastrzeżone. Strona nie jest powiązana z firmą Mojang Synergies AB.</p>
-        <button class="admin-trigger" onclick="loginAdmin()">Panel Admina</button>
+        <p style="margin-top: 10px; font-size: 12px; opacity: 0.5;">👑 POZDRAWIAMY — BLADEXMC</p>
     </footer>
 
     <!-- Skrypty JavaScript -->
     <script>
-        // Dane fabularne dla Modali Trybów Gry
+        // Lokalne bazy danych dla elementów zmienianych dynamicznie na żywo
         const modeData = {
-            survival: {
-                title: "Survival + Gildie",
-                icon: '<i class="fa-solid fa-shield-halved"></i>',
-                desc: "Wkraczasz do prastarych krain, gdzie porządek dnia wyznacza stal i krew. Zakładaj potężne sojusze, wznoś niezdobyte fortece i rzuć wyzwanie wrogim imperiom. Twoja własna dynastia rodzi się właśnie tutaj — przetrwają tylko najsilniejsi dowódcy."
-            },
-            skyblock: {
-                title: "Podniebny SkyBlock",
-                icon: '<i class="fa-solid fa-cube"></i>',
-                desc: "Budzisz się na samotnej, dryfującej w pustce skale. Mając do dyspozycji jedynie drzewo i wiadro lodu, musisz okiełznać nieskończoność. Przekształć ten skrawek ziemi w latający monopol gospodarczy, handluj rzadkimi surowcami i zdominuj podniebny rynek."
-            },
-            bedwars: {
-                title: "Dynamiczny BedWars",
-                icon: '<i class="fa-solid fa-crosshairs"></i>',
-                desc: "Czas ucieka, a wyspy wokół Ciebie płoną. Wasze łóżko to jedyne źródło wieczności — jeśli upadnie, zginiecie na zawsze. Zbieraj surowce, twórz potężne linie obrony, kupuj ulepszenia w ułamku sekundy i zniszcz bazy oponentów, zanim oni dotrą do Twojej."
-            }
-        };
-
-        // Funkcja otwierania modalu trybu
-        function openModeModal(modeKey) {
-            const modal = document.getElementById('modeModal');
-            const data = modeData[modeKey];
-            
-            if (data) {
-                document.getElementById('modalIcon').innerHTML = data.icon;
-                document.getElementById('modalTitle').innerText = data.title;
-                document.getElementById('modalDescription').innerText = data.desc;
-                modal.classList.add('active');
-            }
-        }
-
-        // Zamykanie modalu przy kliknięciu poza obszar treści
-        function closeModeModal(event) {
-            document.getElementById('modeModal').classList.remove('active');
-        }
-
-        // Autentykacja do Zaawansowanego Panelu Administratora
-        function loginAdmin() {
-            const password = prompt("Wprowadź hasło administratora:");
-            if (password === "BladexMC151505") {
-                document.body.classList.add('admin-mode');
-                alert("Autentykacja powiodła się. Witaj w bezpiecznym systemie HUD BladexMC.");
-            } else if (password !== null) {
-                alert("Błędne hasło dostępu!");
-            }
-        }
-
-        // Bezpieczne wylogowanie z Panelu Admina
-        function logoutAdmin() {
-            document.body.classList.remove('admin-mode');
-            alert("Pomyślnie wylogowano z systemu HUD administratora.");
-        }
-
-        // Generowanie animowanych cząsteczek w tle
-        const container = document.getElementById('particles-container');
-        const particleCount = 20;
-
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            
-            const size = Math.random() * 5 + 2;
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-            particle.style.left = `${Math.random() * 100}vw`;
-            particle.style.animationDelay = `${Math.random() * 8}s`;
-            particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
-            
-            container.appendChild(particle);
-        }
-
-        // Funkcja kopiowania adresu IP serwera
-        function copyIP(ip) {
-            navigator.clipboard.writeText(ip).then(() => {
-                const ipText = document.getElementById('ip-text');
-                const originalText = ipText.innerText;
-                
-                ipText.innerText = "SKOPIOWANO!";
-                setTimeout(() => {
-                    ipText.innerText = originalText;
-                }, 2000);
-            }).catch(err => {
-                console.error('Nie udało się skopiować adresu: ', err);
-            });
-        }
-    </script>
-</body>
-</html>
+            anarchia: {
+                title: "ANARCHIA SMP",
+                icon: '<i class="fa-solid fa-skull"></i>',
+                short: "Brak zasad, czysty survival, kradzieże i nieustanna walka o przetrwanie w najbrutalniejszym świecie.",
+                desc: "Wkraczas
