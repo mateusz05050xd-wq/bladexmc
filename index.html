@@ -18,7 +18,6 @@
             scroll-behavior: smooth;
         }
 
-        /* Paleta barw fioletu i ciemnego neonu */
         :root {
             --bg-dark: #08060f;
             --purple-main: #8226e6;
@@ -54,7 +53,7 @@
             animation: floatUp 8s infinite linear;
         }
 
-        /* Menu nawigacyjne bez logotypu */
+        /* Menu nawigacyjne - Usunięte logo tekstowe/obrazkowe */
         nav {
             display: flex;
             justify-content: center;
@@ -87,7 +86,7 @@
             color: var(--purple-light);
         }
 
-        /* Główna sekcja (Hero) */
+        /* Sekcja główna (Hero) */
         .hero {
             height: 100vh;
             display: flex;
@@ -144,6 +143,12 @@
             box-shadow: 0 0 35px var(--purple-main);
         }
 
+        /* Kontener zarządzający układem sekcji dla panelu admina */
+        #sections-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
         /* Sekcja Ogólna dla Modułów */
         section.content-sec {
             position: relative;
@@ -183,6 +188,7 @@
             border-radius: 24px;
             text-align: center;
             transition: 0.3s ease;
+            cursor: pointer;
         }
 
         .card:hover {
@@ -209,7 +215,77 @@
             line-height: 1.7;
         }
 
-        /* 👑 MODUŁ: LISTA ADMINISTRACJI */
+        /* 🛡️ MODUŁ: INTERAKTYWNY REGULAMIN DLA ADMINA */
+        .rules-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 2px solid rgba(130, 38, 230, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .rules-container.highlight {
+            border-color: var(--purple-light);
+            box-shadow: 0 0 35px var(--purple-main);
+        }
+
+        .rules-header {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 35px;
+            color: #fff;
+            border-bottom: 2px dashed rgba(130, 38, 230, 0.3);
+            padding-bottom: 15px;
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .rule-item:last-child {
+            border-bottom: none;
+        }
+
+        .rule-num {
+            background: var(--purple-main);
+            color: white;
+            font-weight: 800;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 0 10px var(--purple-glow);
+        }
+
+        .rule-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e3daf0;
+            line-height: 1.5;
+        }
+
+        .rules-footer {
+            text-align: center;
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 2px dashed rgba(130, 38, 230, 0.3);
+            font-weight: 800;
+            color: var(--purple-light);
+        }
+
+        /* 👑 MODUŁ: LISTA ADMINISTRACJI (BEZ DEV, NOWY UKŁAD RANG) */
         .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -278,71 +354,7 @@
         .rank.ceo { background: #ff3333; color: #fff; box-shadow: 0 0 8px rgba(255, 51, 51, 0.4); }
         .rank.zarzad { background: #ff9900; color: #fff; box-shadow: 0 0 8px rgba(255, 153, 0, 0.4); }
 
-        /* 🛡️ MODUŁ: INTERAKTYWNY REGULAMIN DLA ADMINA */
-        .rules-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: var(--bg-card);
-            border: 2px solid rgba(130, 38, 230, 0.2);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .rules-header {
-            text-align: center;
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            margin-bottom: 35px;
-            color: #fff;
-            border-bottom: 2px dashed rgba(130, 38, 230, 0.3);
-            padding-bottom: 15px;
-        }
-
-        .rule-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            padding: 18px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .rule-item:last-child {
-            border-bottom: none;
-        }
-
-        .rule-num {
-            background: var(--purple-main);
-            color: white;
-            font-weight: 800;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 0 10px var(--purple-glow);
-        }
-
-        .rule-text {
-            font-size: 16px;
-            font-weight: 600;
-            color: #e3daf0;
-            line-height: 1.5;
-        }
-
-        .rules-footer {
-            text-align: center;
-            margin-top: 35px;
-            padding-top: 20px;
-            border-top: 2px dashed rgba(130, 38, 230, 0.3);
-            font-weight: 800;
-            color: var(--purple-light);
-        }
-
-        /* 💬 MODUŁ: SKLEP & DISCORD GRID */
+        /* 💬 MODUŁ: SKLEP & DISCORD (BEZ YT) */
         .social-shop-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -372,7 +384,6 @@
             margin-top: 25px;
             transition: 0.3s;
             box-shadow: 0 5px 15px var(--purple-glow);
-            cursor: pointer;
         }
 
         .btn-action:hover {
@@ -383,7 +394,7 @@
         .btn-action.dc-btn { background: #5865F2; box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4); }
         .btn-action.dc-btn:hover { box-shadow: 0 8px 25px #5865F2; }
 
-        /* ✨ MODUŁ: POWIADOMIENIE POP-UP DISCORD (Pojawia się na 2s, znika na 5s) */
+        /* ✨ MODUŁ: POWIADOMIENIA (Cykl 2s pokaz / 5s ukrycie) */
         .popup-news {
             position: fixed;
             bottom: -150px;
@@ -401,106 +412,64 @@
             align-items: center;
         }
 
-        .popup-news.active {
-            bottom: 30px;
-        }
+        .popup-news.active { bottom: 30px; }
+        .popup-icon { font-size: 30px; color: var(--purple-light); }
 
-        .popup-icon {
-            font-size: 30px;
-            color: #5865F2;
-        }
-
-        /* 🔐 PANEL ADMINA (W prawym dolnym rogu) */
+        /* 🔐 PANEL ADMINA (Przycisk w lewym/prawym dolnym rogu) */
         .admin-trigger {
             position: fixed;
-            bottom: 15px;
-            left: 15px;
-            z-index: 3000;
-            background: rgba(20, 14, 36, 0.5);
-            border: 1px solid rgba(130, 38, 230, 0.3);
-            color: rgba(255, 255, 255, 0.4);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 11px;
+            bottom: 20px;
+            left: 20px;
+            width: 45px;
+            height: 45px;
+            background: rgba(130, 38, 230, 0.2);
+            border: 1px solid var(--purple-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
+            z-index: 9999;
             transition: 0.3s;
-            backdrop-filter: blur(5px);
         }
 
         .admin-trigger:hover {
             background: var(--purple-main);
-            color: #fff;
-            box-shadow: 0 0 10px var(--purple-main);
+            box-shadow: 0 0 15px var(--purple-main);
         }
 
         .admin-panel {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            width: 90%;
-            max-width: 500px;
-            background: #100a1f;
-            border: 2px solid var(--purple-main);
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-            border-radius: 20px;
-            padding: 30px;
-            z-index: 4000;
-            display: none;
-            transition: 0.3s ease;
+            top: 0;
+            right: -400px;
+            width: 380px;
+            height: 100vh;
+            background: #0d0a1a;
+            border-left: 2px solid var(--purple-main);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.7);
+            z-index: 10000;
+            transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+            padding: 30px 20px;
+            overflow-y: auto;
         }
 
-        .admin-panel.open {
-            display: block;
-            transform: translate(-50%, -50%) scale(1);
-        }
+        .admin-panel.active { right: 0; }
+        .admin-title { font-size: 20px; font-weight: 800; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; color: var(--purple-light); }
+        .admin-close { position: absolute; top: 20px; right: 20px; cursor: pointer; font-size: 20px; color: #777; }
+        .admin-close:hover { color: #fff; }
+        
+        .admin-group { margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 15px; border-radius: 12px; border: 1px solid rgba(130, 38, 230, 0.1); }
+        .admin-group label { display: block; font-size: 12px; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; color: #aaa; }
+        .admin-input { width: 100%; padding: 10px; background: #161226; border: 1px solid rgba(130, 38, 230, 0.3); border-radius: 8px; color: #fff; font-size: 14px; margin-bottom: 10px; }
+        .admin-input:focus { border-color: var(--purple-light); outline: none; }
+        
+        .admin-btn { width: 100%; padding: 10px; background: var(--purple-main); border: none; border-radius: 8px; color: white; font-weight: 800; cursor: pointer; transition: 0.2s; }
+        .admin-btn:hover { background: var(--purple-light); }
+        
+        .order-btn-group { display: flex; gap: 10px; margin-top: 5px; }
+        .order-btn { flex: 1; padding: 6px; background: #221a38; border: 1px solid rgba(255,255,255,0.1); color: #fff; font-size: 11px; font-weight: 800; border-radius: 6px; cursor: pointer; }
+        .order-btn:hover { background: var(--purple-main); }
 
-        .admin-panel h3 {
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 22px;
-            color: var(--purple-light);
-        }
-
-        .admin-panel label {
-            display: block;
-            font-size: 13px;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-        }
-
-        .admin-panel input, .admin-panel textarea {
-            width: 100%;
-            background: #1a1230;
-            border: 1px solid rgba(130, 38, 230, 0.4);
-            padding: 10px;
-            border-radius: 8px;
-            color: #fff;
-            margin-bottom: 15px;
-        }
-
-        .admin-close {
-            background: #332255;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            float: left;
-        }
-
-        .admin-save {
-            background: var(--purple-main);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            float: right;
-            font-weight: 600;
-        }
-
-        /* Animacje CSS */
         @keyframes floatUp {
             0% { transform: translateY(105vh) translateX(0); opacity: 0; }
             10% { opacity: 0.4; }
@@ -508,10 +477,9 @@
             100% { transform: translateY(-5vh) translateX(50px); opacity: 0; }
         }
 
-        /* RWD */
         @media (max-width: 768px) {
             .nav-links { display: none; }
-            .hero h1 { font-size: 44px; }
+            .hero h1 { font-size: 46px; }
             .social-shop-container { grid-template-columns: 1fr; }
             .rules-container { padding: 20px; }
         }
@@ -519,7 +487,6 @@
 </head>
 <body>
 
-    <!-- Warstwa cząsteczek w tle -->
     <div class="particles" id="particles-container"></div>
 
     <!-- Pasek Nawigacji -->
@@ -535,8 +502,8 @@
 
     <!-- Główny ekran powitalny -->
     <section class="hero" id="home">
-        <h1>Bladex<span>MC</span></h1>
-        <p>Wejdź do świata pełnego fioletowej magii, potężnych gildii i unikalnych mechanik.</p>
+        <h1 id="txt-hero-title">Bladex<span>MC</span></h1>
+        <p id="txt-hero-desc">Wejdź do świata pełnego fioletowej magii, potężnych gildii i unikalnych mechanik.</p>
         
         <div class="ip-box" onclick="copyIP()">
             <i class="fa-solid fa-layer-group"></i>
@@ -544,206 +511,177 @@
         </div>
     </section>
 
-    <!-- Sekcja z Opisami Trybów -->
-    <section class="content-sec" id="modes">
-        <h2 class="section-title">Wybierz swój <span>Tryb</span></h2>
-        <div class="grid">
-            <div class="card">
-                <i class="fa-solid fa-skull-crossbones"></i>
-                <h3>ANARCHIA SMP</h3>
-                <p>Brak zasad, czysty survival, bezlitosna walka o przetrwanie i pełna wolność gancerska.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-shield-halved"></i>
-                <h3>DUELS</h3>
-                <p>Sprawdź swoje umiejętności PVP w bezpośrednich pojedynkach 1vs1 na specjalnych arenach.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-trophy"></i>
-                <h3>IGRZYSKA</h3>
-                <p>Walcz na arenie o przetrwanie do ostatniego żywego gracza. Zbieraj loot i wygraj turniej.</p>
-            </div>
-        </div>
-    </section>
+    <!-- GŁÓWNY KONTENER SEKCJI (Dla funkcji przesuwania góra/dół przez admina) -->
+    <div id="sections-wrapper">
 
-    <!-- 🛡️ SEKCJA: REGULAMIN DLA ADMINISTRACJI -->
-    <section class="content-sec" id="rules">
-        <h2 class="section-title">Zasady <span>Administracji</span></h2>
-        
-        <div class="rules-container">
-            <div class="rules-header">📜 ZASADY ORAZ OBOWIĄZKI ADMINISTRACJI 📜</div>
-
-            <div class="rule-item"><div class="rule-num">1</div><div class="rule-text" id="r1">ROZWIJANIE SERWERA I SPOŁECZNOŚCI 💪</div></div>
-            <div class="rule-item"><div class="rule-num">2</div><div class="rule-text" id="r2">ADMINISTRACJA ORAZ WŁAŚCICIEL MAJĄ OBOWIĄZEK PROMOWANIA SERWERA 📢</div></div>
-            <div class="rule-item"><div class="rule-num">3</div><div class="rule-text" id="r3">DOSTĘP DO STRONY OTRZYMUJĄ RANGI: HE 👑 DEV 💻 ZARZĄD 🛡️ CEO 💼</div></div>
-            <div class="rule-item"><div class="rule-num">4</div><div class="rule-text" id="r4">PROMOWANIE DISCORDA TO OBOWIĄZEK ADMINISTRACJI 🔥</div></div>
-            <div class="rule-item"><div class="rule-num">5</div><div class="rule-text" id="r5">NAGRYWANIE NA TIKTOKA ORAZ YOUTUBE – KLIPY, FILMY ITP. 🎬</div></div>
-            <div class="rule-item"><div class="rule-num">6</div><div class="rule-text" id="r6">ULEPSZANIE SERWERA ORAZ RESTARTY TO OBOWIĄZEK ADMINISTRACJI ⚡</div></div>
-            <div class="rule-item"><div class="rule-num">7</div><div class="rule-text" id="r7">POMOC GRACZOM W POTRZEBIE ❤️</div></div>
-
-            <div class="rules-footer">
-                🔥 EVENTY, DROPY, ATRAKCJE I WIELE WIĘCEJ JUŻ WKRÓTCE! 🔥 <br><br>
-                👑 POZDRAWIAMY — BLADEXMC
-            </div>
-        </div>
-    </section>
-
-    <!-- 👑 SEKCJA: EKIPA SERWERA (Zaktualizowana) -->
-    <section class="content-sec" id="team">
-        <h2 class="section-title">Nasza <span>Ekipa</span></h2>
-        <div class="team-grid">
-            
-            <div class="team-card">
-                <div class="avatar-box"><img src="https://crafatar.com" alt="Avatar"></div>
-                <h3>Mateusz05050</h3>
-                <div class="ranks-container">
-                    <span class="rank ceo">CEO</span>
-                    <span class="rank zarzad">Zarząd</span>
+        <!-- Sekcja z Opisami Trybów -->
+        <section class="content-sec" id="sec-modes">
+            <h2 class="section-title" id="txt-modes-title">Wybierz swój <span>Tryb</span></h2>
+            <div class="grid">
+                <div class="card" onclick="scrollToRules()">
+                    <i class="fa-solid fa-skull-crossbones"></i>
+                    <h3 id="txt-mode1-title">Anarchia SMP</h3>
+                    <p id="txt-mode1-desc">Brak zasad, czysty survival, bezlitosna walka i pełna wolność w świecie Minecraft.</p>
+                </div>
+                <div class="card" onclick="scrollToRules()">
+                    <i class="fa-solid fa-gavel"></i>
+                    <h3 id="txt-mode2-title">Duels</h3>
+                    <p id="txt-mode2-desc">Szybkie potyczki 1v1 na arenie. Sprawdź swoje umiejętności PVP i wbijaj ranking.</p>
+                </div>
+                <div class="card" onclick="scrollToRules()">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <h3 id="txt-mode3-title">Gildie</h3>
+                    <p id="txt-mode3-desc">Załóż potężny klan, buduj zamki, podbijaj terytoria wrogów i dominuj serwer.</p>
                 </div>
             </div>
+        </section>
 
-            <div class="team-card">
-                <div class="avatar-box"><img src="https://crafatar.com" alt="Avatar"></div>
-                <h3>igorekv</h3>
-                <div class="ranks-container">
-                    <span class="rank ceo">CEO</span>
-                    <span class="rank zarzad">Zarząd</span>
+        <!-- 🛡️ SEKCJA: REGULAMIN DLA ADMINISTRACJI -->
+        <section class="content-sec" id="sec-rules">
+            <h2 class="section-title" id="txt-rules-title">Zasady <span>Administracji</span></h2>
+            
+            <div class="rules-container" id="rules-box">
+                <div class="rules-header" id="txt-rules-header">📜 ZASADY ORAZ OBOWIĄZKI ADMINISTRACJI 📜</div>
+
+                <div class="rule-item">
+                    <div class="rule-num">1</div>
+                    <div class="rule-text" id="txt-rule1">ROZWIJANIE SERWERA I SPOŁECZNOŚCI 💪</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">2</div>
+                    <div class="rule-text" id="txt-rule2">ADMINISTRACJA ORAZ WŁAŚCICIEL MAJĄ OBOWIĄZEK PROMOWANIA SERWERA 📢</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">3</div>
+                    <div class="rule-text" id="txt-rule3">DOSTĘP DO STRONY OTRZYMUJĄ RANGI: HE 👑 ZARZĄD 🛡️ CEO 💼</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">4</div>
+                    <div class="rule-text" id="txt-rule4">PROMOWANIE DISCORDA TO OBOWIĄZEK ADMINISTRACJI 🔥</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">5</div>
+                    <div class="rule-text" id="txt-rule5">NAGRYWANIE FILMÓW ORAZ MATERIAŁÓW Z SERWERA NA SOCIAL MEDIA 🎬</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">6</div>
+                    <div class="rule-text" id="txt-rule6">ULEPSZANIE SERWERA 🔧 ORAZ RESTARTY TO OBOWIĄZEK ADMINISTRACJI ⚡</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">7</div>
+                    <div class="rule-text" id="txt-rule7">POMOC GRACZOM W POTRZEBIE ❤️</div>
+                </div>
+
+                <div class="rules-footer" id="txt-rules-footer">
+                    🔥 EVENTY, DROPY, ATRAKCJE I WIELE WIĘCEJ JUŻ WKRÓTCE! 🔥 <br><br>
+                    👑 POZDRAWIAMI — BLADEXMC
                 </div>
             </div>
+        </section>
 
-        </div>
-    </section>
-
-    <!-- 💬 SEKCJA: SPOŁECZNOŚCIOWE I DLA GRACZY -->
-    <section class="content-sec" id="community">
-        <h2 class="section-title">Dołącz do <span>Nas</span></h2>
-        <div class="social-shop-container">
-            
-            <div class="box-panel">
-                <i class="fa-brands fa-discord" style="font-size: 50px; color: #5865F2; margin-bottom: 20px;"></i>
-                <h3>Serwer Discord</h3>
-                <p style="margin-top: 10px; color: var(--text-muted)">Rozmawiaj z graczami, bierz udział w konkursach i odbieraj darmowe nagrody!</p>
-                <a href="https://discord.gg/GyjyEXfg6" target="_blank" class="btn-action dc-btn">Dołącz do Discorda</a>
-            </div>
-
-            <div class="box-panel">
-                <i class="fa-solid fa-basket-shopping" style="font-size: 50px; color: #ab66ff; margin-bottom: 20px;"></i>
-                <h3>ItemShop Serwera</h3>
-                <p style="margin-top: 10px; color: var(--text-muted)">Sklep serwerowy jest aktualnie w trakcie przygotowania. Zapraszamy wkrótce!</p>
-                <a onclick="alert('Itemshop jest jeszcze w trakcie konfiguracji!')" class="btn-action">Już wkrótce</a>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ✨ AUTOMATYCZNY POP-UP DISCORD (2s pokazywania, 5s przerwy) -->
-    <div class="popup-news" id="news-popup">
-        <i class="fa-brands fa-discord popup-icon"></i>
-        <div>
-            <h4 style="font-size: 15px; margin-bottom: 2px; color: #fff;">Dołącz do Społeczności!</h4>
-            <p style="font-size: 12px; color: var(--text-muted)">Wejdź na nasz serwer Discord i zobacz ogłoszenia.</p>
-        </div>
-    </div>
-
-    <!-- 🔐 WYZWALACZ I OKNO PANELU ADMINISTRATORA -->
-    <div class="admin-trigger" onclick="openAdminPanel()"><i class="fa-solid fa-lock"></i> Panel Admina</div>
-
-    <div class="admin-panel" id="panelBox">
-        <h3>Zarządzanie Regulaminem</h3>
-        <label>Zasada 1:</label>
-        <input type="text" id="edit-r1">
-        <label>Zasada 2:</label>
-        <input type="text" id="edit-r2">
-        <label>Zasada 3:</label>
-        <input type="text" id="edit-r3">
-        <label>Zasada 4:</label>
-        <input type="text" id="edit-r4">
-        
-        <div style="margin-top: 20px;">
-            <button class="admin-close" onclick="closeAdminPanel()">Zamknij</button>
-            <button class="admin-save" onclick="saveAdminChanges()">Zapisz zmiany</button>
-        </div>
-    </div>
-
-    <!-- Stopka -->
-    <footer>
-        <p>&copy; 2026 BladexMC. Wszelkie prawa zastrzeżone. Strona nie jest oficjalnym produktem Mojang.</p>
-    </footer>
-
-    <!-- Skrypty JavaScript -->
-    <script>
-        // 1. Generowanie cząsteczek w tle
-        const container = document.getElementById('particles-container');
-        for (let i = 0; i < 35; i++) {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            particle.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 5 + 2;
-            particle.style.width = size + 'px';
-            particle.style.height = size + 'px';
-            particle.style.animationDuration = (Math.random() * 5 + 6) + 's';
-            particle.style.animationDelay = (Math.random() * 8) + 's';
-            container.appendChild(particle);
-        }
-
-        // 2. Kopiowanie IP
-        function copyIP() {
-            const serverIP = "bladexmc.aternos.me";
-            navigator.clipboard.writeText(serverIP).then(() => {
-                const ipLabel = document.getElementById("ip-text");
-                ipLabel.innerText = "SKOPIOWANO ADRES IP!";
-                ipLabel.style.color = "#ab66ff";
-                setTimeout(() => {
-                    ipLabel.innerText = "IP: bladexmc.aternos.me";
-                    ipLabel.style.color = "#ffffff";
-                }, 2200);
-            });
-        }
-
-        // 3. Pętla powiadomień Discord (Pokazuje na 2s, chowa na 5s)
-        const popup = document.getElementById('news-popup');
-        function runPopupLoop() {
-            setTimeout(() => {
-                popup.classList.add('active'); // Pokazuje okienko
-                setTimeout(() => {
-                    popup.classList.remove('active'); // Ukrywa okienko po 2 sekundach
-                    runPopupLoop(); // Ponownie odpala pętlę (odczeka kolejne 5 sekund ukrycia)
-                }, 2000);
-            }, 5000);
-        }
-        runPopupLoop();
-
-        // 4. Obsługa Panelu Administratora z Hasłem
-        function openAdminPanel() {
-            const password = prompt("Wpisz hasło administratora:");
-            if (password === "BladexMC151505") {
-                // Przepisz aktualne wartości z regulaminu do pól edycji
-                document.getElementById('edit-r1').value = document.getElementById('r1').innerText;
-                document.getElementById('edit-r2').value = document.getElementById('r2').innerText;
-                document.getElementById('edit-r3').value = document.getElementById('r3').innerText;
-                document.getElementById('edit-r4').value = document.getElementById('r4').innerText;
+        <!-- 👑 SEKCJA: EKIPA SERWERA -->
+        <section class="content-sec" id="sec-team">
+            <h2 class="section-title" id="txt-team-title">Nasza <span>Ekipa</span></h2>
+            <div class="team-grid">
                 
-                document.getElementById('panelBox').classList.add('open');
-            } else if (password !== null) {
-                alert("Błędne hasło dostępu!");
-            }
-        }
+                <!-- Mateusz05050 -->
+                <div class="team-card">
+                    <div class="avatar-box">
+                        <img src="https://crafatar.com" alt="Avatar">
+                    </div>
+                    <h3 id="txt-member1-name">Mateusz05050</h3>
+                    <div class="ranks-container">
+                        <span class="rank ceo">CEO</span>
+                        <span class="rank zarzad">Zarząd</span>
+                    </div>
+                </div>
 
-        function closeAdminPanel() {
-            document.getElementById('panelBox').classList.remove('open');
-        }
+                <!-- igorekv -->
+                <div class="team-card">
+                    <div class="avatar-box">
+                        <img src="https://crafatar.com" alt="Avatar">
+                    </div>
+                    <h3 id="txt-member2-name">igorekv</h3>
+                    <div class="ranks-container">
+                        <span class="rank ceo">CEO</span>
+                        <span class="rank zarzad">Zarząd</span>
+                    </div>
+                </div>
 
-        function saveAdminChanges() {
-            // Zapisz wpisane wartości bezpośrednio na stronę internetową
-            document.getElementById('r1').innerText = document.getElementById('edit-r1').value;
-            document.getElementById('r2').innerText = document.getElementById('edit-r2').value;
-            document.getElementById('r3').innerText = document.getElementById('edit-r3').value;
-            document.getElementById('r4').innerText = document.getElementById('edit-r4').value;
+            </div>
+        </section>
+
+        <!-- 💬 SEKCJA: SPOŁECZNOŚCIOWE -->
+        <section class="content-sec" id="sec-community">
+            <h2 class="section-title" id="txt-community-title">Dołącz do <span>Nas</span></h2>
+            <div class="social-shop-container">
+                
+                <div class="box-panel">
+                    <i class="fa-brands fa-discord" style="font-size: 50px; color: #5865F2; margin-bottom: 20px;"></i>
+                    <h3 id="txt-dc-title">Serwer Discord</h3>
+                    <p id="txt-dc-desc" style="margin-top: 10px; color: var(--text-muted)">Rozmawiaj z graczami, bierz udział w konkursach i odbieraj darmowe nagrody!</p>
+                    <a href="https://discord.gg" target="_blank" class="btn-action dc-btn">Dołącz do Discorda</a>
+                </div>
+
+                <div class="box-panel">
+                    <i class="fa-solid fa-basket-shopping" style="font-size: 50px; color: #ab66ff; margin-bottom: 20px;"></i>
+                    <h3 id="txt-shop-title">ItemShop Serwera</h3>
+                    <p id="txt-shop-desc" style="margin-top: 10px; color: var(--text-muted)">Sklep serwera zostanie otwarty już niebawem. Przygotuj się na unikalne oferty!</p>
+                    <a href="#shop" class="btn-action">Otwórz Sklep</a>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ✨ CYKLICZNY POP-UP NEWS -->
+    <div class="popup-news" id="news-popup">
+        <i class="fa-solid fa-bullhorn popup-icon"></i>
+        <div>
+            <h4 id="popup-title" style="font-size: 16px; margin-bottom: 3px; color: #fff;">Powiadomienie</h4>
+            <p id="popup-desc" style="font-size: 13px; color: var(--text-muted)">Zapraszamy na nasz oficjalny serwer Discord!</p>
+        </div>
+    </div>
+
+    <!-- 🔐 UKRYTY PANEL ADMINA -->
+    <div class="admin-trigger" onclick="checkAdminPassword()" title="Panel Administratora">
+        <i class="fa-solid fa-lock" style="color: var(--purple-light); font-size: 14px;"></i>
+    </div>
+
+    <div class="admin-panel" id="panel-admin">
+        <i class="fa-solid fa-xmark admin-close" onclick="toggleAdminPanel()"></i>
+        <div class="admin-title">🛠️ PANEL ZARZĄDZANIA</div>
+        
+        <!-- Przesuwanie Sekcji -->
+        <div class="admin-group">
+            <label>Kolejność sekcji</label>
             
-            alert("Zmiany w regulaminie zostały pomyślnie wprowadzone!");
-            closeAdminPanel();
-        }
-    </script>
+            <div style="margin-bottom: 12px;">
+                <span style="font-size:13px; color:#fff;">1. Tryby Gry</span>
+                <div class="order-btn-group">
+                    <button class="order-btn" onclick="moveSection('sec-modes', 'up')">W górę</button>
+                    <button class="order-btn" onclick="moveSection('sec-modes', 'down')">W dół</button>
+                </div>
+            </div>
 
-</body>
-</html>
+            <div style="margin-bottom: 12px;">
+                <span style="font-size:13px; color:#fff;">2. Regulamin Admina</span>
+                <div class="order-btn-group">
+                    <button class="order-btn" onclick="moveSection('sec-rules', 'up')">W górę</button>
+                    <button class="order-btn" onclick="moveSection('sec-rules', 'down')">W dół</button>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <span style="font-size:13px; color:#fff;">3. Ekipa Serwera</span>
+                <div class="order-btn-group">
+                    <button class="order-btn" onclick="moveSection('sec-team', 'up')">W górę</button>
+                    <button class="order-btn" onclick="moveSection('sec-team', 'down')">W dół</button>
+                </div>
+            </div>
+
+            <div>
+                <span style="font-size:13px; color:#fff;">4. Społeczność</span>
+                <div class="order-btn-group">
+                    <button class="order-btn" onclick="moveSection('
