@@ -29,6 +29,7 @@
             --text-muted: #bdaed1;
             --neon-cyan: #00f0ff;
             --neon-pink: #ff007f;
+            --neon-green: #39ff14;
         }
 
         body {
@@ -51,24 +52,10 @@
             background: radial-gradient(circle at 50% 50%, #170b2e 0%, var(--bg-dark) 80%);
         }
 
-        .particle {
-            position: absolute;
-            background: var(--purple-light);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: floatUp 8s infinite linear;
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            50% { opacity: 0.4; }
-            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
-        }
-
         /* Menu nawigacyjne */
         nav {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             padding: 20px 8%;
             background: rgba(8, 6, 15, 0.85);
@@ -76,10 +63,17 @@
             position: fixed;
             width: 100%;
             top: 0;
-            z-index: 1000;
+            z-index: 999;
             border-bottom: 1px solid rgba(130, 38, 230, 0.2);
-            transition: all 0.5s ease;
         }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .logo span { color: var(--purple-light); }
 
         .nav-links {
             display: flex;
@@ -98,6 +92,132 @@
         .nav-links a:hover {
             color: var(--purple-light);
         }
+
+        /* NAJBARDZIEJ WIDOCZNY PANEL ADMINA W ROGU */
+        .admin-corner-btn {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            z-index: 10000;
+            background: linear-gradient(135deg, var(--neon-pink), var(--purple-main));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s transform ease, 0.3s box-shadow ease;
+        }
+
+        .admin-corner-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 0, 127, 0.9);
+        }
+
+        /* Rozbudowany, wysuwany panel boczny admina */
+        .admin-sidebar {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 420px;
+            height: 100vh;
+            background: #0d0a1a;
+            border-left: 2px solid var(--neon-pink);
+            z-index: 10001;
+            padding: 40px 30px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow-y: auto;
+        }
+
+        .admin-sidebar.active {
+            right: 0;
+        }
+
+        .admin-sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+        }
+
+        .close-admin {
+            background: none;
+            border: none;
+            color: #ff3333;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .admin-widget {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(130, 38, 230, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .admin-widget h4 {
+            margin-bottom: 15px;
+            color: var(--neon-cyan);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-grid-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .admin-stat-card {
+            background: rgba(0,0,0,0.4);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .admin-stat-card span {
+            display: block;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--neon-pink);
+        }
+
+        .admin-input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .admin-btn {
+            width: 100%;
+            padding: 10px;
+            background: var(--purple-main);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .admin-btn:hover { background: var(--purple-light); }
+        .admin-btn.danger { background: #cc0000; }
+        .admin-btn.danger:hover { background: #ff3333; }
 
         /* Sekcja główna (Hero) */
         .hero {
@@ -156,13 +276,7 @@
             box-shadow: 0 0 35px var(--purple-main);
         }
 
-        /* Kontener zarządzający układem sekcji dla panelu admina */
-        #sections-wrapper {
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Sekcja Ogólna dla Modułów */
+        /* Sekcje zawartości */
         section.content-sec {
             position: relative;
             z-index: 2;
@@ -207,17 +321,6 @@
             overflow: hidden;
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-            transition: 0.5s;
-        }
-
         .card.clickable {
             cursor: pointer;
         }
@@ -228,20 +331,15 @@
             box-shadow: 0 0 30px rgba(130, 38, 230, 0.4), 0 15px 45px rgba(0, 0, 0, 0.8);
         }
 
-        .card.clickable:hover::before {
-            left: 100%;
-        }
-
-        /* Efekt podświetlenia RGB (Glow) dla trybów gry */
-        .card.clickable:nth-child(1):hover { box-shadow: 0 0 30px rgba(255, 0, 127, 0.4), 0 0 50px rgba(255, 0, 127, 0.2); }
-        .card.clickable:nth-child(2):hover { box-shadow: 0 0 30px rgba(0, 240, 255, 0.4), 0 0 50px rgba(0, 240, 255, 0.1); }
-        .card.clickable:nth-child(3):hover { box-shadow: 0 0 30px rgba(130, 38, 230, 0.5), 0 0 50px rgba(130, 38, 230, 0.2); }
+        /* Efekt podświetlenia RGB dla trybów gry */
+        .card.clickable:nth-child(1):hover { box-shadow: 0 0 30px rgba(255, 0, 127, 0.4); border-color: var(--neon-pink); }
+        .card.clickable:nth-child(2):hover { box-shadow: 0 0 30px rgba(0, 240, 255, 0.4); border-color: var(--neon-cyan); }
+        .card.clickable:nth-child(3):hover { box-shadow: 0 0 30px rgba(57, 255, 20, 0.4); border-color: var(--neon-green); }
 
         .card i {
             font-size: 50px;
             color: var(--purple-light);
             margin-bottom: 25px;
-            text-shadow: 0 0 15px rgba(171, 102, 255, 0.4);
             transition: transform 0.3s ease;
         }
 
@@ -258,467 +356,345 @@
         .card p {
             color: var(--text-muted);
             font-size: 15px;
-            line-height: 1.7;
+            line-height: 1.6;
         }
 
-        /* MODUŁ: REGULAMINY */
-        .rules-container {
-            max-width: 900px;
+        /* Lista stałych zasad administracji (Niezmienna) */
+        .rules-list {
+            list-style: none;
+            max-width: 800px;
             margin: 0 auto;
-            background: var(--bg-card);
-            border: 2px solid rgba(130, 38, 230, 0.2);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: border-color 0.5s ease, box-shadow 0.5s ease, transform 0.3s ease;
         }
 
-        .rules-header {
-            text-align: center;
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            margin-bottom: 35px;
-            color: #fff;
-            border-bottom: 2px dashed rgba(130, 38, 230, 0.3);
-            padding-bottom: 15px;
-        }
-
-        .rule-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            padding: 18px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            position: relative;
-        }
-
-        .rule-item:last-child {
-            border-bottom: none;
-        }
-
-        .rule-num {
-            background: var(--purple-main);
-            color: white;
-            font-weight: 800;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 0 10px var(--purple-glow);
-        }
-
-        .rule-text {
+        .rules-list li {
+            background: rgba(255,255,255,0.02);
+            border-left: 4px solid var(--purple-main);
+            padding: 15px 25px;
+            margin-bottom: 15px;
+            border-radius: 0 12px 12px 0;
             font-size: 16px;
-            font-weight: 600;
-            color: #e3daf0;
-            line-height: 1.5;
-            flex-grow: 1;
         }
 
-        .rules-footer {
-            text-align: center;
-            margin-top: 35px;
-            font-size: 15px;
-            font-weight: 600;
-            color: #ffaa00;
-            text-shadow: 0 0 10px rgba(255,170,0,0.3);
-        }
-
-        /* PRZYCISKI EDYCJI W TRYBIE ADMINA */
-        .admin-edit-btn {
-            display: none;
-            margin-top: 15px;
-            background: var(--neon-cyan);
-            color: #000;
-            border: none;
-            padding: 6px 15px;
-            border-radius: 6px;
-            font-weight: 800;
-            font-size: 11px;
-            cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-            transition: 0.3s;
-            z-index: 10;
-            position: relative;
-        }
-
-        .admin-edit-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px var(--neon-cyan);
-        }
-
-        .rule-item .admin-edit-btn {
-            margin-top: 0;
-            margin-left: 15px;
-            align-self: center;
-        }
-
-        /* PEŁNOEKRANOWA NAKŁADKA MODAL (PODGLĄD TRYBU) */
-        .mode-modal {
+        /* OKNA MODALNE (Pop-up z regulaminami trybów) */
+        .modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(4, 2, 10, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 2000;
+            background: rgba(5, 3, 10, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 20000;
             display: flex;
             justify-content: center;
             align-items: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s ease;
-            padding: 20px;
+            transition: 0.3s ease;
         }
 
-        .mode-modal.active {
+        .modal.active {
             opacity: 1;
             pointer-events: auto;
         }
 
         .modal-content {
-            background: #110922;
+            background: var(--bg-card);
             border: 2px solid var(--purple-light);
-            border-radius: 32px;
-            max-width: 700px;
-            width: 100%;
-            padding: 50px;
-            text-align: center;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 600px;
+            padding: 40px;
             position: relative;
-            transform: translateY(50px) scale(0.9);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 0 60px rgba(130, 38, 230, 0.4);
+            transform: translateY(-50px);
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 50px rgba(130, 38, 230, 0.3);
         }
 
-        .mode-modal.active .modal-content {
-            transform: translateY(0) scale(1);
+        .modal.active .modal-content {
+            transform: translateY(0);
         }
 
         .modal-close {
             position: absolute;
-            top: 25px;
-            right: 30px;
-            font-size: 28px;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .modal-close:hover {
+            top: 20px;
+            right: 25px;
+            background: none;
+            border: none;
             color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+            transition: 0.2s;
         }
 
-        .modal-graphic {
-            font-size: 70px;
-            color: var(--neon-cyan);
-            margin-bottom: 25px;
-            animation: pulseGlow 2s infinite ease-in-out;
-        }
+        .modal-close:hover { color: var(--neon-pink); }
 
-        @keyframes pulseGlow {
-            0%, 100% { text-shadow: 0 0 10px rgba(0,240,255,0.4); }
-            50% { text-shadow: 0 0 30px rgba(0,240,255,0.8); }
-        }
-
-        .modal-content h2 {
-            font-size: 36px;
+        .modal-title {
+            font-size: 28px;
+            font-weight: 800;
             margin-bottom: 20px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            color: white;
         }
 
-        .modal-story {
-            font-size: 16px;
+        .modal-body {
             color: var(--text-muted);
             line-height: 1.8;
-            margin-bottom: 40px;
-            font-style: italic;
+            font-size: 15px;
         }
 
-        .modal-btn {
-            background: linear-gradient(135deg, var(--purple-main), #5014b8);
-            color: #fff;
-            border: none;
-            padding: 15px 40px;
+        .modal-body ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .modal-body li {
+            margin-bottom: 8px;
+        }
+
+        /* Powiadomienie o skopiowaniu */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(90deg, #110c22, var(--purple-main));
+            border: 1px solid var(--purple-light);
+            padding: 15px 35px;
             border-radius: 50px;
-            font-size: 18px;
+            z-index: 99999;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 0 20px var(--purple-glow);
-            transition: all 0.3s ease;
-        }
-
-        .modal-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 35px var(--purple-light);
-        }
-
-        /* AKTYWNY FUTURYSTYCZNY PANEL ADMINISTRATORA (HUD) */
-        body.admin-mode {
-            background: #030107;
-        }
-
-        body.admin-mode::after {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            border: 4px solid var(--neon-cyan);
             pointer-events: none;
-            z-index: 9999;
-            box-shadow: inset 0 0 30px rgba(0, 240, 255, 0.2);
-            animation: hudPulse 4s infinite alternate;
+            opacity: 0;
         }
 
-        @keyframes hudPulse {
-            0% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
-
-        body.admin-mode nav {
-            background: rgba(0, 0, 0, 0.95);
-            border-bottom: 1px solid var(--neon-cyan);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-        }
-
-        body.admin-mode .section-title span {
-            color: var(--neon-cyan);
-            text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
-        }
-
-        body.admin-mode .card {
-            border-color: rgba(0, 240, 255, 0.3);
-            background: #0b0716;
-        }
-
-        body.admin-mode .admin-edit-btn {
-            display: inline-block;
-        }
-
-        /* STAŁY NOWY PRZYCISK LOGOWANIA / NOWA PROPOZYCJA W ROGU */
-        .login-trigger-btn {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 999;
-            background: rgba(20, 14, 36, 0.85);
-            border: 1px solid var(--purple-main);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .login-trigger-btn:hover {
-            border-color: var(--purple-light);
-            box-shadow: 0 0 20px var(--purple-glow);
-            transform: translateY(-3px);
-        }
-
-        body.admin-mode .login-trigger-btn {
-            display: none;
-        }
-
-        /* STAŁY PŁYWAJĄCY PRZYCISK WYLOGOWANIA */
-        .logout-btn {
-            position: fixed;
-            top: 20px;
-            right: 4%;
-            z-index: 10000;
-            background: #000;
-            color: var(--neon-pink);
-            border: 2px solid var(--neon-pink);
-            padding: 10px 22px;
-            border-radius: 8px;
-            font-weight: 800;
-            font-size: 13px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
-            display: none;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            background: var(--neon-pink);
-            color: #000;
-            box-shadow: 0 0 25px var(--neon-pink);
-            transform: translateY(2px);
-        }
-
-        body.admin-mode .logout-btn {
-            display: inline-flex;
-        }
-
-        body.admin-mode .nav-links {
-            margin-right: 150px;
-        }
-
-        /* Stopka */
-        footer {
-            background: #030206;
-            padding: 40px 8%;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            border-top: 1px solid rgba(130, 38, 230, 0.1);
-            color: var(--text-muted);
-            font-size: 14px;
+        .notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
     </style>
 </head>
 <body>
 
-    <!-- Tło z cząsteczkami -->
-    <div class="particles" id="particles-container"></div>
+    <div class="particles" id="particles"></div>
 
-    <!-- Widoczny stały przycisk logowania do Panelu Admina -->
-    <button class="login-trigger-btn" onclick="loginAdmin()">
+    <!-- PRZYCISK PANELU ADMINA W ROGU -->
+    <button class="admin-corner-btn" onclick="toggleAdminSidebar()">
         <i class="fa-solid fa-user-gear"></i> Panel Admina
     </button>
 
-    <!-- Pływający Przycisk Wyloguj z Panelu Admina -->
-    <button class="logout-btn" onclick="logoutAdmin()">
-        <i class="fa-solid fa-power-off"></i> Wyloguj z Panelu
-    </button>
+    <!-- ROZBUDOWANY PANEL BOCZNY DLA ADMINISTRATORA -->
+    <div class="admin-sidebar" id="adminSidebar">
+        <div class="admin-sidebar-header">
+            <h3><i class="fa-solid fa-screwdriver-wrench"></i> Zarządzanie</h3>
+            <button class="close-admin" onclick="toggleAdminSidebar()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <!-- Widżet Statystyk Serwera Live -->
+        <div class="admin-widget">
+            <h4><i class="fa-solid fa-chart-simple"></i> Status Serwera</h4>
+            <div class="admin-grid-stats">
+                <div class="admin-stat-card">Gracze<span id="admin-online-counter">42/100</span></div>
+                <div class="admin-stat-card">TPS serwera<span>19.95</span></div>
+            </div>
+        </div>
+
+        <!-- Widżet Ogłoszeń sieciowych -->
+        <div class="admin-widget">
+            <h4><i class="fa-solid fa-bullhorn"></i> Nadaj Ogłoszenie Globalne</h4>
+            <input type="text" id="announceInput" class="admin-input" placeholder="Treść ogłoszenia na stronie...">
+            <button class="admin-btn" onclick="sendAdminAnnouncement()">Wyślij ogłoszenie</button>
+        </div>
+
+        <!-- Widżet Zarządzania Graczami (Bany/Mute) -->
+        <div class="admin-widget">
+            <h4><i class="fa-solid fa-user-slash"></i> Szybki Ban / Mute</h4>
+            <input type="text" id="targetPlayer" class="admin-input" placeholder="Nick gracza...">
+            <input type="text" id="banReason" class="admin-input" placeholder="Powód kary...">
+            <div style="display: flex; gap: 10px;">
+                <button class="admin-btn danger" style="flex:1;" onclick="adminAction('Zbanowano')">BAN</button>
+                <button class="admin-btn" style="flex:1; background: #e67e22;" onclick="adminAction('Wyciszono')">MUTE</button>
+            </div>
+        </div>
+
+        <!-- Kontrola Trybów Gry -->
+        <div class="admin-widget">
+            <h4><i class="fa-solid fa-power-off"></i> Przerwa Techniczna</h4>
+            <button class="admin-btn danger" onclick="toggleMaintenance()">Aktywuj White-List trybów</button>
+        </div>
+    </div>
 
     <!-- Nawigacja -->
     <nav>
+        <div class="logo">Bladex<span>MC</span></div>
         <ul class="nav-links">
-            <li><a href="#home">Start</a></li>
+            <li><a href="#hero">Start</a></li>
             <li><a href="#modes">Tryby Gry</a></li>
-            <li><a href="#rules">Regulamin</a></li>
+            <li><a href="#rules">Zasady Administracji</a></li>
         </ul>
     </nav>
 
-    <!-- Sekcja Hero -->
-    <header class="hero" id="home">
-        <h1>Bladex<span>MC</span></h1>
-        <p>Dołącz do najbardziej innowacyjnej społeczności Minecraft. Unikalne tryby, dopracowana rozgrywka i niezapomniane emocje czekają na Ciebie!</p>
-        <div class="ip-box" onclick="copyIP('bladexmc.pl')">
-            <i class="fa-solid fa-gamepad"></i>
-            <span id="ip-text">BLADEXMC.PL</span>
-        </div>
-    </header>
-
-    <!-- Główny kontener sekcji -->
-    <div id="sections-wrapper">
+    <!-- Hero / Ekran Startowy -->
+    <section class="hero" id="hero">
+        <h1>Witaj na <span>BladexMC</span></h1>
+        <p>Najlepsza sieć serwerów Minecraft w Polsce. Wejdź do gry i przeżyj niesamowitą przygodę z setkami graczy online!</p>
         
-        <!-- Sekcja Trybów Gry -->
-        <section class="content-sec" id="modes">
-            <h2 class="section-title">Nasze <span>Tryby</span></h2>
-            <div class="grid">
-                <!-- Karta 1: ANARCHIA SMP -->
-                <div class="card clickable" id="card-anarchia" onclick="openModeModal('anarchia')">
-                    <i class="fa-solid fa-skull" style="color: var(--neon-pink);"></i>
-                    <h3 class="mode-title">ANARCHIA SMP</h3>
-                    <p class="mode-short-desc">Brak zasad, czysty survival, kradzieże i nieustanna walka o przetrwanie w najbrutalniejszym świecie.</p>
-                    <button class="admin-edit-btn" onclick="editMode(event, 'anarchia')">Edytuj</button>
-                </div>
-                <!-- Karta 2: DUELS -->
-                <div class="card clickable" id="card-duels" onclick="openModeModal('duels')">
-                    <i class="fa-solid fa-swords" style="color: var(--neon-cyan);"></i>
-                    <h3 class="mode-title">DUELS</h3>
-                    <p class="mode-short-desc">Szybkie i dynamiczne pojedynki 1v1 na unikalnych arenach. Pokaż swoje umiejętności PvP i awansuj w rankingu.</p>
-                    <button class="admin-edit-btn" onclick="editMode(event, 'duels')">Edytuj</button>
-                </div>
-                <!-- Karta 3: GILDIE -->
-                <div class="card clickable" id="card-gildie" onclick="openModeModal('gildie')">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <h3 class="mode-title">GILDIE</h3>
-                    <p class="mode-short-desc">Załóż potężną gildię, rekrutuj zaufanych sojuszników, buduj zamki i walcz o całkowitą dominację na mapie.</p>
-                    <button class="admin-edit-btn" onclick="editMode(event, 'gildie')">Edytuj</button>
-                </div>
+        <!-- Główny boks kopiowania aktualnego IP -->
+        <div class="ip-box" onclick="copyServerIP('bladexmc.aternos.me')">
+            <i class="fa-solid fa-copy"></i>
+            <span id="ip-text">bladexmc.aternos.me</span>
+        </div>
+    </section>
+
+    <!-- Sekcja Trybów Gry -->
+    <section class="content-sec" id="modes">
+        <h2 class="section-title">Wybierz swój <span>Tryb Gry</span></h2>
+        <div class="grid">
+            
+            <!-- KARTA: DUELS -->
+            <div class="card clickable" onclick="openModeModal('duels')">
+                <i class="fa-solid fa-shield-halved" style="color: var(--neon-pink);"></i>
+                <h3>Duels 1v1</h3>
+                <p>Kliknij, aby otworzyć wewnętrzny regulamin tego trybu i zobaczyć dostępne areny walki.</p>
             </div>
-        </section>
 
-        <!-- Sekcja Regulaminu Administracji -->
-        <section class="content-sec" id="rules">
-            <h2 class="section-title">Zasady <span>Administracji</span></h2>
-            <div class="rules-container">
-                <div class="rules-header">📜 ZASADY ORAZ OBOWIĄZKI ADMINISTRACJI 📜</div>
-                
-                <div class="rule-item">
-                    <div class="rule-num">1</div>
-                    <div class="rule-text" id="rule-text-1">ROZWIJANIE SERWERA I SPOŁECZNOŚCI 💪</div>
-                    <button class="admin-edit-btn" onclick="editRule(event, 1)">Edytuj</button>
-                </div>
-                <div class="rule-item">
-                    <div class="rule-num">2</div>
-                    <div class="rule-text" id="rule-text-2">ADMINISTRACJA ORAZ WŁAŚCICIEL MAJĄ OBOWIĄZEK PROMOWANIA SERWERA 📢</div>
-                    <button class="admin-edit-btn" onclick="editRule(event, 2)">Edytuj</button>
-                </div>
-                <div class="rule-item">
-                    <div class="rule-num">3</div>
-                    <div class="rule-text" id="rule-text-3">DOSTĘP DO STRONY OTRZYMUJĄ RANGI: HE 👑 DEV 💻 ZARZĄD 🛡️ CEO 💼</div>
-                    <button class="admin-edit-btn" onclick="editRule(event, 3)">Edytuj</button>
-                </div>
-                <div class="rule-item">
-                    <div class="rule-num">4</div>
-                    <div class="rule-text" id="rule-text-4">PROMOWANIE DISCORDA TO OBOWIĄZEK ADMINISTRACJI 🔥</div>
-                    <button class="admin-edit-btn" onclick="editRule(event, 4)">Edytuj</button>
-                </div>
-                <div class="rule-item">
-                    <div class="rule-num">5</div>
-                    <div class="rule-text" id="rule-text-5">NAGRYWANIE NA TIKTOKA 🎬 ORAZ YOUTUBE ▶️ – KLIPY, FILMY ITP.</div>
-                    <button class="admin-edit-btn" onclick="editRule(event, 5)">Edytuj</button>
-                </div>
-                <div class="rule-item">
-                    <div class="rule-num">6</div>
-                    <div class="rule-text" id="rule-text-6">ULEPSZANIE SERWERA 🔧 ORAZ RESTARTY TO OBOWIĄZEK ADMINISTRACJI ⚡</div>
-                    <button class="admin-edit-btn" onclick="editRule(event, 6)">Edytuj</button>
-                </div>
-                <div class="rule-item">
-                    <div class="rule-num">7</div>
-                    <div class="rule-text" id="rule-text-7">POMOC GRACZOM W POTRZEBIE ❤️</div>
-                    <button class="admin-edit-btn" onclick="editRule(event, 7)">Edytuj</button>
-                </div>
-
-                <div class="rules-footer">🔥 EVENTY, DROPY, ATRAKCJE I WIELE WIĘCEJ JUŻ WKRÓTCE! 🔥</div>
+            <!-- KARTA: ANARCHIA -->
+            <div class="card clickable" onclick="openModeModal('anarchia')">
+                <i class="fa-solid fa-skull" style="color: var(--neon-cyan);"></i>
+                <h3>Anarchia</h3>
+                <p>Kliknij, aby poznać brutalny zestaw reguł panujących w świecie bez klasycznej administracji.</p>
             </div>
-        </section>
 
-    </div>
+            <!-- KARTA: GILDIE -->
+            <div class="card clickable" onclick="openModeModal('gildie')">
+                <i class="fa-solid fa-fort-awesome" style="color: var(--neon-green);"></i>
+                <h3>Gildie (Survival+Faction)</h3>
+                <p>Kliknij, aby poznać zasady zakładania frakcji, podbijania terenów oraz taryfikator wojen gildiowych.</p>
+            </div>
 
-    <!-- PEŁNOEKRANOWY MODAL PODGLĄDU TRYBU -->
-    <div class="mode-modal" id="modeModal" onclick="closeModeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="modal-close" onclick="document.getElementById('modeModal').classList.remove('active')">&times;</span>
-            <div class="modal-graphic" id="modalIcon"></div>
-            <h2 id="modalTitle">Nazwa Trybu</h2>
-            <p class="modal-story" id="modalDescription">Opis fabularny trybu gry...</p>
-            <button class="modal-btn" onclick="document.getElementById('modeModal').classList.remove('active'); window.location.href='#home';">Szybki Start</button>
+        </div>
+    </section>
+
+    <!-- Sekcja Stałego Regulaminu Administracji (Niezmienna) -->
+    <section class="content-sec" id="rules">
+        <h2 class="section-title">Zasady <span>Administracji</span></h2>
+        <ul class="rules-list">
+            <li><strong>§1.1</strong> Członek administracji ma obowiązek zachowania pełnej bezstronności w sporach.</li>
+            <li><strong>§1.2</strong> Każda nałożona kara musi posiadać jasny powód oraz czytelny dowód w panelu.</li>
+            <li><strong>§1.3</strong> Administracja wyższa nie bierze odpowiedzialności za straty wynikające z udostępniania kont.</li>
+            <li><strong>§1.4</strong> Zakazuje się faworyzowania jakichkolwiek grup graczy pod groźbą natychmiastowej degradacji.</li>
+            <li><strong>§1.5</strong> Zgłoszenia graczy rozpatrywane są w czasie nie dłuższym niż 24 godziny od ich wpłynięcia.</li>
+        </ul>
+    </section>
+
+    <!-- INTERAKTYWNE OKNO MODALNE (Zasady i regulaminy konkretnych trybów) -->
+    <div class="modal" id="modeModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModeModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="modal-title" id="modalTitle">Nazwa Trybu</h3>
+            <div class="modal-body" id="modalBody">
+                <!-- Zawartość generowana przez skrypt JavaScript -->
+            </div>
         </div>
     </div>
 
-    <!-- Stopka -->
-    <footer>
-        <p>&copy; 2026 BladexMC. Wszelkie prawa zastrzeżone. Strona nie jest powiązana z firmą Mojang Synergies AB.</p>
-        <p style="margin-top: 10px; font-size: 12px; opacity: 0.5;">👑 POZDRAWIAMY — BLADEXMC</p>
-    </footer>
+    <!-- Toast powiadomienia -->
+    <div class="notification" id="notif">IP Serwera zostało skopiowane do schowka!</div>
 
-    <!-- Skrypty JavaScript -->
     <script>
-        // Lokalne bazy danych dla elementów zmienianych dynamicznie na żywo
-        const modeData = {
+        // Skrypt generowania pływających cząsteczek w tle
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 40; i++) {
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            p.style.width = p.style.height = Math.random() * 6 + 2 + 'px';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDelay = Math.random() * 8 + 's';
+            p.style.animationDuration = Math.random() * 6 + 6 + 's';
+            particlesContainer.appendChild(p);
+        }
+
+        // Kopiowanie IP
+        function copyServerIP(ip) {
+            navigator.clipboard.writeText(ip);
+            const notif = document.getElementById('notif');
+            notif.classList.add('show');
+            setTimeout(() => { notif.classList.remove('show'); }, 3000);
+        }
+
+        // Przełączanie widoczności panelu bocznego admina
+        function toggleAdminSidebar() {
+            document.getElementById('adminSidebar').classList.toggle('active');
+        }
+
+        // Funkcje wykonawcze w Panelu Admina
+        function sendAdminAnnouncement() {
+            const txt = document.getElementById('announceInput').value;
+            if(txt.trim() !== "") {
+                alert("Ogłoszenie wysłane na serwer: " + txt);
+                document.getElementById('announceInput').value = "";
+            } else {
+                alert("Wpisz treść ogłoszenia!");
+            }
+        }
+
+        // Akcje moderatorskie
+        function adminAction(type) {
+            const player = document.getElementById('targetPlayer').value;
+            const reason = document.getElementById('banReason').value;
+            if(player.trim() && reason.trim()) {
+                alert(`Akcja wykonana pomyślnie!\nStatus: ${type}\nCel: ${player}\nPowód: ${reason}`);
+                document.getElementById('targetPlayer').value = "";
+                document.getElementById('banReason').value = "";
+            } else {
+                alert("Uzupełnij nick gracza oraz powód kary!");
+            }
+        }
+
+        function toggleMaintenance() {
+            alert("Przerwa techniczna aktywowana. Wejście na tryby zablokowane dla zwykłych graczy.");
+        }
+
+        // Baza danych regulaminów konkretnych trybów po kliknięciu
+        const modeRules = {
+            duels: {
+                title: "Regulamin trybu: Duels 1v1",
+                content: "Witaj na Arenach Śmierci. Przed wejściem do walki zapoznaj się z poniższymi regułami:<br><ul><li>Zakaz używania niedozwolonych modyfikacji klienta (AutoClicker, Reach, Aura).</li><li>Celowe opuszczanie pojedynku (Combat Log) skutkuje automatyczną przegraną i stratą punktów rankingu.</li><li>Wykorzystywanie błędów map do wychodzenia poza tekstury kończy się banem na 7 dni.</li></ul>"
+            },
             anarchia: {
-                title: "ANARCHIA SMP",
-                icon: '<i class="fa-solid fa-skull"></i>',
-                short: "Brak zasad, czysty survival, kradzieże i nieustanna walka o przetrwanie w najbrutalniejszym świecie.",
-                desc: "Wkraczas
+                title: "Zasady Świata: Anarchia",
+                content: "To brutalna ziemia bez standardowego prawa, pamiętaj jednak o fundamentalnych filarach serwera:<br><ul><li>Dozwolone jest okradanie, griefowanie baz oraz oszukiwanie innych graczy w handlu.</li><li>Zakazane jest stosowanie cheatów dających przewagę w poruszaniu się (Fly, Speed, Teleport).</li><li>Używanie crash-maszyn obciążających silnik Aternos/serwera skutkuje permamentną blokadą IP.</li></ul>"
+            },
+            gildie: {
+                title: "Regulamin trybu: Wojny Gildii",
+                content: "Zbuduj potęgę, zbierz sojuszników i podbij serwer. Obowiązujące zasady:<br><ul><li>Zakaz sojuszy ponad ustalony limit maksymalny członków jednej frakcji.</li><li>Wykorzystywanie błędów z generatorami obsydianu lub kopiowaniem przedmiotów grozi permanentnym banem dla całej gildii.</li><li>Sojusze taktyczne podczas oblężeń baz muszą być zgłaszane i zatwierdzone przez komendę systemową serwera.</li></ul>"
+            }
+        };
+
+        // Otwieranie regulaminu wybranego trybu
+        function openModeModal(modeKey) {
+            const data = modeRules[modeKey];
+            if(data) {
+                document.getElementById('modalTitle').innerHTML = data.title;
+                document.getElementById('modalBody').innerHTML = data.content;
+                document.getElementById('modeModal').classList.add('active');
+            }
+        }
+
+        // Zamykanie okna modalnego
+        function closeModeModal() {
+            document.getElementById('modeModal').classList.remove('active');
+        }
+
+        // Zamknij modal po kliknięciu poza jego obszarem
+        window.onclick = function(event) {
+            const modal = document.getElementById('modeModal');
+            if (event.target == modal) {
+                modal.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
