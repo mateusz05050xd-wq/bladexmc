@@ -42,7 +42,6 @@
             100% { transform: translate(-45%, -55%) scale(1.3); opacity: 0.9; }
         }
 
-        /* Spadające cząsteczki w CSS */
         .particles {
             position: fixed;
             width: 100%;
@@ -53,7 +52,7 @@
             pointer-events: none;
         }
 
-        /* Nawigacja z efektem szkła (Glassmorphism) */
+        /* Nawigacja */
         nav {
             width: 100%;
             background: rgba(15, 10, 25, 0.7);
@@ -160,10 +159,6 @@
             transition: 0.3s;
         }
 
-        .copy-btn:hover {
-            background: #c084fc;
-        }
-
         /* Animowane sekcje */
         .tab-content {
             display: none;
@@ -178,7 +173,6 @@
             transform: translateY(0) scale(1);
         }
 
-        /* Nagłówki podstron */
         .section-title {
             font-size: 2.5rem;
             margin-top: 20px;
@@ -187,7 +181,7 @@
             text-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
         }
 
-        /* Siatki i ulepszone potężne karty */
+        /* Siatki i ulepszone karty */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -208,24 +202,10 @@
             justify-content: space-between;
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            border-radius: 20px;
-            background: linear-gradient(45deg, transparent, rgba(168, 85, 247, 0.1), transparent);
-            transition: 0.5s;
-            opacity: 0;
-        }
-
         .card:hover {
             border-color: #c084fc;
             transform: translateY(-12px) scale(1.02);
             box-shadow: 0 20px 40px rgba(168, 85, 247, 0.25);
-        }
-
-        .card:hover::before {
-            opacity: 1;
         }
 
         .card h3 {
@@ -254,27 +234,30 @@
 
         .buy-btn {
             background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
-            color: white;
+            color: white !important;
             border: none;
-            padding: 12px 25px;
+            padding: 14px 25px;
             font-weight: bold;
             font-size: 1rem;
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
+            text-decoration: none !important;
+            display: block;
+            text-align: center;
             box-shadow: 0 4px 15px rgba(126, 34, 206, 0.4);
             text-transform: uppercase;
+            position: relative;
+            z-index: 10; /* Zapewnia, że przycisk zawsze da się kliknąć */
         }
 
         .buy-btn:hover {
             background: linear-gradient(135deg, #c084fc 0%, #a855f7 100%);
             box-shadow: 0 0 25px rgba(168, 85, 247, 0.8);
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
-        /* Sekcja Wsparcia (Custom Donacja) */
+        /* Sekcja Wsparcia */
         .donate-box {
             background: rgba(30, 15, 50, 0.8);
             border: 3px dashed #a855f7;
@@ -306,12 +289,6 @@
             width: 140px;
             text-align: center;
             outline: none;
-            transition: 0.3s;
-        }
-
-        .donate-input:focus {
-            box-shadow: 0 0 15px #c084fc;
-            border-color: #c084fc;
         }
 
         .currency-label {
@@ -339,11 +316,6 @@
             background: #c084fc;
             cursor: pointer;
             box-shadow: 0 0 10px #a855f7;
-            transition: 0.2s;
-        }
-
-        .slider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
         }
 
         /* Social Media */
@@ -384,7 +356,6 @@
             box-shadow: 0 10px 30px rgba(168, 85, 247, 0.5);
             transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 2000;
-            letter-spacing: 0.5px;
         }
     </style>
 </head>
@@ -430,22 +401,16 @@
             <h2 class="section-title">Wybierz Swoje Przeznaczenie</h2>
             <div class="grid">
                 <div class="card">
-                    <div>
-                        <h3>Anarchia SMP</h3>
-                        <p>Pełna wolność, brak zasad gildyjnych i bezwzględna walka o przetrwanie. Skrytki, zdrady i prawdziwy survival.</p>
-                    </div>
+                    <h3>Anarchia SMP</h3>
+                    <p>Pełna wolność, brak zasad gildyjnych i bezwzględna walka o przetrwanie. Skrytki, zdrady i prawdziwy survival.</p>
                 </div>
                 <div class="card">
-                    <div>
-                        <h3>Gildie</h3>
-                        <p>Klasyczna rywalizacja zespołowa. Zakładaj frakcje, powiększaj terytoria, buduj fortyfikacje i bierz udział w wielkich wojnach.</p>
-                    </div>
+                    <h3>Gildie</h3>
+                    <p>Klasyczna rywalizacja zespołowa. Zakładaj frakcje, powiększaj terytoria, buduj fortyfikacje i bierz udział w wielkich wojnach.</p>
                 </div>
                 <div class="card">
-                    <div>
-                        <h3>Duels</h3>
-                        <p>Sprawdź swoje czyste umiejętności mechaniczne. Pojedynki 1v1, zbalansowane zestawy przedmiotów oraz zero opóźnień.</p>
-                    </div>
+                    <h3>Duels</h3>
+                    <p>Sprawdź swoje czyste umiejętności mechaniczne. Pojedynki 1v1, zbalansowane zestawy przedmiotów oraz zero opóźnień.</p>
                 </div>
             </div>
         </div>
@@ -453,82 +418,58 @@
         <!-- ZAKŁADKA: ITEM SHOP -->
         <div id="shop" class="tab-content">
             <h2 class="section-title">Sklep Serwerowy</h2>
-            <p style="color: #c0a8da;">Zdobądź przewagę lub wyróżnij się na czacie, wspierając utrzymanie serwera!</p>
+            <p style="color: #c0a8da; margin-bottom: 20px;">Zdobądź przewagę lub wyróżnij się na czacie, wspierając utrzymanie serwera!</p>
             
-            <!-- Podział na klucze -->
+            <!-- Magiczne Klucze -->
             <h3 style="margin-top: 40px; color: #d8b4fe; text-align: left; font-size: 1.8rem; border-left: 4px solid #a855f7; padding-left: 10px;">🔑 Magiczne Klucze</h3>
             <div class="grid">
                 <div class="card">
-                    <div>
-                        <h3>Klucz Bladex</h3>
-                        <p>Unikalny klucz naszej sieci. Gwarantuje drop spersonalizowanych przedmiotów niedostępnych nigdzie indziej.</p>
-                    </div>
-                    <div>
-                        <span class="shop-price">3.00 PLN</span>
-                        <a href="https://discord.gg" target="_blank" class="buy-btn">Zakup Klucz</a>
-                    </div>
+                    <h3>Klucz Bladex</h3>
+                    <p>Unikalny klucz naszej sieci. Gwarantuje drop spersonalizowanych przedmiotów niedostępnych nigdzie indziej.</p>
+                    <span class="shop-price">3.00 PLN</span>
+                    <a href="https://discord.gg" target="_blank" class="buy-btn">Zakup Klucz</a>
                 </div>
                 <div class="card">
-                    <div>
-                        <h3>Klucz Legendarny</h3>
-                        <p>Otwiera Legendarną Skrzynię na spawnie. Szansa na potężne zbroje, miecze z wysokimi poziomami zaklęć.</p>
-                    </div>
-                    <div>
-                        <span class="shop-price">2.00 PLN</span>
-                        <a href="https://discord.gg" target="_blank" class="buy-btn">Zakup Klucz</a>
-                    </div>
+                    <h3>Klucz Legendarny</h3>
+                    <p>Otwiera Legendarną Skrzynię na spawnie. Szansa na potężne zbroje, miecze z wysokimi poziomami zaklęć.</p>
+                    <span class="shop-price">2.00 PLN</span>
+                    <a href="https://discord.gg" target="_blank" class="buy-btn">Zakup Klucz</a>
                 </div>
                 <div class="card">
-                    <div>
-                        <h3>Klucz Skarbów</h3>
-                        <p>Najbogatszy drop na serwerze. Zawiera ogromne pakiety waluty, rzadkie surowce oraz szansę na darmową rangę!</p>
-                    </div>
-                    <div>
-                        <span class="shop-price">5.00 PLN</span>
-                        <a href="https://discord.gg" target="_blank" class="buy-btn">Zakup Klucz</a>
-                    </div>
+                    <h3>Klucz Skarbów</h3>
+                    <p>Najbogatszy drop na serwerze. Zawiera ogromne pakiety waluty, rzadkie surowce oraz szansę na darmową rangę!</p>
+                    <span class="shop-price">5.00 PLN</span>
+                    <a href="https://discord.gg" target="_blank" class="buy-btn">Zakup Klucz</a>
                 </div>
             </div>
 
-            <!-- Podział na rangi -->
+            <!-- Elitarne Rangi -->
             <h3 style="margin-top: 50px; color: #d8b4fe; text-align: left; font-size: 1.8rem; border-left: 4px solid #a855f7; padding-left: 10px;">👑 Elitarne Rangi</h3>
             <div class="grid">
                 <div class="card">
-                    <div>
-                        <h3>Ranga VIP</h3>
-                        <p>Podstawowy pakiet premium. Prefiks na czacie, rezerwacja miejsca gdy serwer jest pełen oraz zestaw /kit vip.</p>
-                    </div>
-                    <div>
-                        <span class="shop-price">od 10.00 PLN</span>
-                        <a href="https://discord.gg" target="_blank" class="buy-btn">Wybierz VIP</a>
-                    </div>
+                    <h3>Ranga VIP</h3>
+                    <p>Podstawowy pakiet premium. Prefiks na czacie, rezerwacja miejsca gdy serwer jest pełen oraz zestaw /kit vip.</p>
+                    <span class="shop-price">od 10.00 PLN</span>
+                    <a href="https://discord.gg" target="_blank" class="buy-btn">Wybierz VIP</a>
                 </div>
                 <div class="card">
-                    <div>
-                        <h3>Ranga SVIP</h3>
-                        <p>Rozszerzone przywileje. Dostęp do komendy /fly w wyznaczonych strefach, potężniejszy zestaw startowy i własny kolor czatu.</p>
-                    </div>
-                    <div>
-                        <span class="shop-price">od 15.00 PLN</span>
-                        <a href="https://discord.gg" target="_blank" class="buy-btn">Wybierz SVIP</a>
-                    </div>
+                    <h3>Ranga SVIP</h3>
+                    <p>Rozszerzone przywileje. Dostęp do komendy /fly w wyznaczonych strefach, potężniejszy zestaw startowy i własny kolor czatu.</p>
+                    <span class="shop-price">od 15.00 PLN</span>
+                    <a href="https://discord.gg" target="_blank" class="buy-btn">Wybierz SVIP</a>
                 </div>
                 <div class="card">
-                    <div>
-                        <h3>Ranga GVIP</h3>
-                        <p>Absolutny szczyt hierarchii. Unikalne efekty cząsteczkowe wokół postaci, komenda /heal (co 10 minut), potężny zestaw /kit gvip i miano legendy.</p>
-                    </div>
-                    <div>
-                        <span class="shop-price">od 20.00 PLN</span>
-                        <a href="https://discord.gg" target="_blank" class="buy-btn">Wybierz GVIP</a>
-                    </div>
+                    <h3>Ranga GVIP</h3>
+                    <p>Absolutny szczyt hierarchii. Unikalne efekty cząsteczkowe wokół postaci, komenda /heal, potężny zestaw /kit gvip i miano legendy.</p>
+                    <span class="shop-price">od 20.00 PLN</span>
+                    <a href="https://discord.gg" target="_blank" class="buy-btn">Wybierz GVIP</a>
                 </div>
             </div>
 
             <!-- DOWOLNE WSPARCIE -->
             <div class="donate-box">
                 <h3>💜 Wsparcie Serwera (Dowolna Kwota)</h3>
-                <p style="font-size: 0.9rem; margin-top: 5px;">Sam decydujesz, jaką kwotą chcesz nas zasilić. Każdy grosz pomaga nam ulepszać serwer!</p>
+                <p style="font-size: 0.9rem; margin-top: 5px; color: #c0a8da;">Sam decydujesz, jaką kwotą chcesz nas zasilić. Każdy grosz pomaga nam ulepszać serwer!</p>
                 
                 <div class="donate-input-group">
                     <input type="number" class="donate-input" id="donateAmount" value="25" min="1" oninput="syncSlider()">
@@ -537,7 +478,7 @@
                 
                 <input type="range" min="1" max="200" value="25" class="slider" id="donateSlider" oninput="syncInput()">
                 
-                <a href="https://discord.gg" target="_blank" class="buy-btn" style="width: 100%;">Przekaż Wsparcie</a>
+                <a href="https://discord.gg" target="_blank" class="buy-btn">Przekaż Wsparcie</a>
             </div>
 
         </div>
@@ -549,16 +490,12 @@
         // Zakładki
         function openTab(tabId) {
             const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => {
-                content.classList.remove('active');
-            });
+            contents.forEach(content => content.classList.remove('active'));
             
             const buttons = document.querySelectorAll('nav button');
             buttons.forEach(button => button.classList.remove('active'));
             
-            const selectedTab = document.getElementById(tabId);
-            selectedTab.classList.add('active');
-            
+            document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
 
@@ -588,7 +525,7 @@
             else slider.value = input.value;
         }
 
-        // Prosty system generowania mikro gwiazd w tle dla lepszego efektu wizualnego
+        // Generowanie mikro gwiazd w tle
         const particlesContainer = document.getElementById('particles');
         for (let i = 0; i < 40; i++) {
             const star = document.createElement('div');
