@@ -3,302 +3,373 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Librus Synergia - Panel Nauczyciela</title>
+    <title>Librus Synergia - Panel Nauczyciela Modern</title>
     <style>
         :root {
-            --librus-blue: #1a5276;
-            --librus-light-blue: #2980b9;
-            --librus-bg: #f4f6f7;
-            --librus-panel: #ffffff;
-            --text-color: #2c3e50;
-            --border-color: #bdc3c7;
-            --presence-ob: #2ecc71;
-            --presence-nb: #e74c3c;
-            --presence-sp: #f1c40f;
-            --presence-u: #9b59b6;
+            --primary: #2563eb;
+            --primary-light: #eff6ff;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            
+            /* Statusy obecności */
+            --ob-color: #10b981;
+            --nb-color: #ef4444;
+            --sp-color: #f59e0b;
+            --u-color: #8b5cf6;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         body {
-            background-color: var(--librus-bg);
-            color: var(--text-color);
-            padding: 20px;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            padding: 24px;
+            line-height: 1.5;
         }
 
+        /* Nowoczesny Header */
         header {
-            background-color: var(--librus-blue);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            background: var(--bg-card);
+            padding: 16px 24px;
+            border-radius: 16px;
+            margin-bottom: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
         }
 
-        h1 { font-size: 24px; }
-        h2 { font-size: 18px; margin-bottom: 15px; color: var(--librus-blue); border-bottom: 2px solid var(--librus-blue); padding-bottom: 5px; }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-        .container {
+        .logo-icon {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .header-title h1 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .header-title p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        /* Główny Układ Grid */
+        .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 24px;
         }
 
-        @media(min-width: 992px) {
-            .container {
-                grid-template-columns: 1fr 3fr;
+        @media(min-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 280px 1fr;
             }
         }
 
-        .panel {
-            background: var(--librus-panel);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border: 1px solid #e0e0e0;
+        /* Karty / Panele */
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+            padding: 24px;
+            overflow: hidden;
         }
 
-        /* Plan lekcji */
-        .timetable-day {
-            margin-bottom: 15px;
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-main);
         }
-        .timetable-day strong {
-            display: block;
-            color: var(--librus-light-blue);
-            margin-bottom: 5px;
+
+        /* Nowoczesny Plan Lekcji */
+        .day-bucket {
+            margin-bottom: 16px;
         }
-        .timetable-item {
+
+        .day-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .lesson-pill {
             font-size: 13px;
-            padding: 6px 10px;
-            background: #f8f9fa;
-            border-left: 3px solid var(--librus-light-blue);
-            margin-bottom: 4px;
-            border-radius: 0 4px 4px 0;
+            padding: 10px 12px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #334155;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .lesson-pill:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(2px);
         }
 
-        /* Tabele */
-        .table-responsive {
+        /* Elegancka Tabela */
+        .table-wrapper {
             overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
-            background: white;
-        }
-
-        th, td {
-            border: 1px solid var(--border-color);
-            padding: 10px;
             text-align: left;
-            font-size: 14px;
+            background: var(--bg-card);
         }
 
         th {
-            background-color: #ebf5fb;
-            color: var(--librus-blue);
+            background: #f8fafc;
+            padding: 14px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 16px;
+            font-size: 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .student-name {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .student-id {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Stylowe Formularze i Przyciski */
+        select, input[type="text"], textarea {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 13px;
+            color: var(--text-main);
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        select:focus, input[type="text"]:focus, textarea:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .action-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        input[type="text"].grade-input {
+            width: 60px;
+            text-align: center;
             font-weight: 600;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9fbfd;
+        textarea.remark-textarea {
+            width: 100%;
+            height: 38px;
+            resize: none;
         }
 
-        /* Ocenianie i Uwagi */
-        .grade-badge {
-            display: inline-block;
-            background: #e1e8ed;
-            padding: 3px 8px;
-            margin: 2px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 13px;
-        }
-        .input-group {
-            display: flex;
-            gap: 5px;
-        }
-        input[type="text"], select, textarea {
-            padding: 6px 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 13px;
-        }
-        input[type="text"] { width: 60px; text-align: center; }
-        textarea { width: 100%; resize: vertical; height: 32px; }
-
-        button {
-            background-color: var(--librus-light-blue);
+        button.btn-add {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
+            padding: 8px 14px;
+            border-radius: 8px;
             font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
             transition: background 0.2s;
         }
-        button:hover { background-color: var(--librus-blue); }
 
-        /* Obecność (style jak w Librusie) */
-        .presence-select {
-            font-weight: bold;
-            padding: 5px;
-            border-radius: 4px;
-            color: white;
+        button.btn-add:hover {
+            background: #1d4ed8;
         }
-        .p-ob { background-color: var(--presence-ob); border-color: #27ae60; color: white; }
-        .p-nb { background-color: var(--presence-nb); border-color: #c0392b; color: white; }
-        .p-sp { background-color: var(--presence-sp); border-color: #f39c12; color: #333; }
-        .p-u { background-color: var(--presence-u); border-color: #8e44ad; color: white; }
 
-        .summary-box {
-            margin-top: 15px;
-            font-size: 13px;
-            color: #555;
-            background: #eef6f9;
-            padding: 10px;
+        /* Wygląd Ocen i Klasy Statusów */
+        .grades-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 8px;
+            min-height: 28px;
+        }
+
+        .grade-pill {
+            background: #f1f5f9;
+            color: #1e293b;
+            font-weight: 700;
+            font-size: 12px;
+            padding: 4px 10px;
             border-radius: 6px;
+            border: 1px solid #cbd5e1;
+        }
+
+        /* Selektor Obecności - Kolorowe Kropki */
+        .select-presence-wrapper {
+            position: relative;
+        }
+
+        .p-select {
+            font-weight: 600;
+            padding-left: 28px;
+            cursor: pointer;
+        }
+
+        .presence-indicator {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Kolory wskaźników */
+        .ind-ob { background-color: var(--ob-color); }
+        .ind-nb { background-color: var(--nb-color); }
+        .ind-sp { background-color: var(--sp-color); }
+        .ind-u { background-color: var(--u-color); }
+
+        /* Lista uwag */
+        .remarks-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            max-height: 80px;
+            overflow-y: auto;
+            margin-bottom: 8px;
+        }
+
+        .remark-item {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .remark-item.uwaga {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .remark-item.pochwala {
+            background: #ecfdf5;
+            color: #065f46;
+        }
+
+        .footer-info {
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
+    <!-- GŁÓWNY PANEL GÓRNY -->
     <header>
-        <div>
-            <h1>LIBRUS synergia</h1>
-            <small>Widok nauczyciela | Klasa 1A</small>
+        <div class="header-logo">
+            <div class="logo-icon">L</div>
+            <div class="header-title">
+                <h1>Librus Synergia</h1>
+                <p>Panel Nauczycielski • Klasa 1A (Matematyczno-Fizyczna)</p>
+            </div>
         </div>
-        <div>
-            <strong>Zalogowany: mgr Jan Kowalski</strong>
+        <div class="user-profile">
+            <div class="text-right" style="text-align: right;">
+                <p style="font-weight: 600;">mgr Jan Kowalski</p>
+                <p style="font-size: 12px; color: var(--text-muted);">Nauczyciel matematyki</p>
+            </div>
+            <div class="avatar">JK</div>
         </div>
     </header>
 
-    <div class="container">
+    <!-- UKŁAD STRONY -->
+    <div class="dashboard-grid">
         
-        <!-- LEWY PANEL: PLAN LEKCJI -->
-        <div class="panel">
-            <h2>Mój Plan Lekcji (Wymyślony)</h2>
-            <div id="timetable">
-                <!-- Generowane przez JS -->
+        <!-- LEWA KOLUMNA: PLAN LEKCJI -->
+        <aside class="card">
+            <div class="card-title">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Plan Lekcji Tygodnia
             </div>
-        </div>
+            <div id="timetable-container"></div>
+        </aside>
 
-        <!-- PRAWY PANEL: DZIENNIK KLASOWY -->
-        <div class="panel">
-            <h2>Dziennik Lekcyjny - 12 Uczniów</h2>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="width: 5%;">LP</th>
-                            <th style="width: 20%;">Imię i Nazwisko</th>
-                            <th style="width: 15%;">Obecność</th>
-                            <th style="width: 25%;">Oceny</th>
-                            <th style="width: 35%;">Uwagi i Pochwały</th>
-                        </tr>
-                    </thead>
-                    <tbody id="students-table-body">
-                        <!-- Generowane przez JS -->
-                    </tbody>
-                </table>
-            </div>
-            <div class="summary-box">
-                * Dane zapisują się automatycznie w przeglądarce po zmianie statusu obecności, wpisaniu oceny lub dodaniu uwagi.
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        // Lista 12 uczniów
-        const students = [
-            "Baran Arkadiusz", "Czarnecka Barbara", "Duda Dariusz", "Głowacka Ewa",
-            "Jankowski Filip", "Kaczmarek Hanna", "Lewandowski Igor", "Michalak Julia",
-            "Nowak Kamil", "Piotrowska Lena", "Szymański Mateusz", "Woźniak Natalia"
-        ];
-
-        // Przykładowy plan lekcji
-        const timetableData = {
-            "Poniedziałek": ["1. Matematyka", "2. Matematyka", "3. J. polski"],
-            "Wtorek": ["1. J. angielski", "2. Historia", "3. Biologia"],
-            "Środa": ["2. J. polski", "3. Geografia", "4. Informatyka"],
-            "Czwartek": ["1. W-F", "2. W-F", "3. Chemia"],
-            "Piątek": ["2. Fizyka", "3. Godzina wychowawcza"]
-        };
-
-        // Ładowanie bazy danych z localStorage lub tworzenie nowej
-        let librusData = JSON.parse(localStorage.getItem('librus_db')) || {};
-
-        // Inicjalizacja bazy jeśli pusta
-        students.forEach((name, index) => {
-            if (!librusData[index]) {
-                librusData[index] = {
-                    name: name,
-                    presence: "ob",
-                    grades: [4, 5, 3], // Przykładowe startowe oceny
-                    remarks: []
-                };
-            }
-        });
-
-        function saveToStorage() {
-            localStorage.setItem('librus_db', JSON.stringify(librusData));
-        }
-
-        // Renderowanie planu lekcji
-        function renderTimetable() {
-            const container = document.getElementById('timetable');
-            let html = '';
-            for (const [day, lessons] of Object.entries(timetableData)) {
-                html += `<div class="timetable-day"><strong>${day}</strong>`;
-                lessons.forEach(lesson => {
-                    html += `<div class="timetable-item">${lesson}</div>`;
-                });
-                html += `</div>`;
-            }
-            container.innerHTML = html;
-        }
-
-        // Zmiana koloru selecta obecności zależnie od wyboru
-        function updateSelectColor(selectElement) {
-            selectElement.className = 'presence-select';
-            if(selectElement.value === 'ob') selectElement.classList.add('p-ob');
-            if(selectElement.value === 'nb') selectElement.classList.add('p-nb');
-            if(selectElement.value === 'sp') selectElement.classList.add('p-sp');
-            if(selectElement.value === 'u') selectElement.classList.add('p-u');
-        }
-
-        // Funkcje obsługi danych uczniów
-        window.changePresence = function(index, value) {
-            librusData[index].presence = value;
-            saveToStorage();
-            const select = document.getElementById(`pres-${index}`);
-            updateSelectColor(select);
-        };
-
-        window.addGrade = function(index) {
-            const input = document.getElementById(`grade-input-${index}`);
-            const val = input.value.trim();
-            if(val) {
-                librusData[index].grades.push(val);
-                saveToStorage();
-                input.value = '';
-                renderStudents();
-            }
-        };
-
-        window.addRemark = function(index) {
-            const textarea = document.getElementById(`remark-input-${index}`);
-            const type = document.getElementById(`remark-type-${index}`).value;
-            const text = textarea.value.trim();
-            if(text) {
-                const prefix = type === 'pochwala' ? '[POCHWAŁA]' : '[UWAGA]';
+        <!-- PRAWA KOLUMNA: DZIENNIK KLASY -->
+        <main class="card">
+            <div class="card-title">
