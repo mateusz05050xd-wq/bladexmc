@@ -1,543 +1,282 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BladexMC - Fioletowa Dominacja</title>
-    <style>
-        /* Reset i baza */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', 'Segoe UI', sans-serif;
-        }
+<meta charset="UTF-8">
+<title>Szkoła3310 PRO</title>
 
-        body {
-            background: #0a0512;
-            color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-        /* Zaawansowane animowane tło fioletowe */
-        .bg-glow {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(147, 51, 234, 0.2) 0%, rgba(0,0,0,0) 70%);
-            transform: translate(-50%, -50%);
-            z-index: -2;
-            animation: floatGlow 10s ease infinite alternate;
-        }
+<style>
+body {
+  margin:0;
+  font-family: Arial;
+  background:#0b1220;
+  color:white;
+}
 
-        @keyframes floatGlow {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-            100% { transform: translate(-45%, -55%) scale(1.3); opacity: 0.9; }
-        }
+#loginBox {
+  text-align:center;
+  padding:30px;
+}
 
-        .particles {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            pointer-events: none;
-        }
+input, select, button {
+  padding:10px;
+  margin:5px;
+  border-radius:8px;
+  border:none;
+}
 
-        /* Nawigacja */
-        nav {
-            width: 100%;
-            background: rgba(15, 10, 25, 0.7);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 20px;
-            position: fixed;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            border-bottom: 2px solid rgba(168, 85, 247, 0.4);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-        }
+button {
+  background:#38bdf8;
+  cursor:pointer;
+  font-weight:bold;
+}
 
-        nav button {
-            background: transparent;
-            border: 2px solid transparent;
-            color: #d8b4fe;
-            padding: 12px 28px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+#app { display:none; }
 
-        nav button:hover, nav button.active {
-            border-color: #a855f7;
-            color: #ffffff;
-            background: rgba(168, 85, 247, 0.2);
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
-            transform: translateY(-2px);
-        }
+/* PANEL */
+.container {
+  display:flex;
+  height:100vh;
+}
 
-        /* Kontener główny */
-        .container {
-            margin-top: 140px;
-            width: 90%;
-            max-width: 1200px;
-            text-align: center;
-            padding-bottom: 80px;
-        }
+/* LEFT */
+.sidebar {
+  width:200px;
+  background:#111827;
+  padding:10px;
+}
 
-        /* Epicki Nagłówek */
-        header h1 {
-            font-size: 4.5rem;
-            font-weight: 900;
-            background: linear-gradient(to right, #ffffff, #c084fc, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.5));
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
+/* CENTER */
+.main {
+  flex:2;
+  padding:15px;
+  overflow:auto;
+}
 
-        header p {
-            color: #c084fc;
-            font-size: 1.2rem;
-            letter-spacing: 1px;
-        }
+/* RIGHT */
+.right {
+  width:300px;
+  background:#111827;
+  padding:10px;
+  overflow:auto;
+}
 
-        /* Klikalna ramka IP */
-        .ip-box {
-            background: rgba(168, 85, 247, 0.08);
-            padding: 18px 35px;
-            border-radius: 50px;
-            display: inline-flex;
-            align-items: center;
-            gap: 20px;
-            margin: 30px 0;
-            border: 2px solid rgba(168, 85, 247, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.1);
-        }
-
-        .ip-box:hover {
-            transform: scale(1.05) translateY(-3px);
-            background: rgba(168, 85, 247, 0.15);
-            border-color: #a855f7;
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
-        }
-
-        .ip-text {
-            font-family: 'Consolas', monospace;
-            font-size: 1.4rem;
-            color: #f3e8ff;
-            font-weight: bold;
-        }
-
-        .copy-btn {
-            background: #a855f7;
-            border: none;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        /* Animowane sekcje */
-        .tab-content {
-            display: none;
-            opacity: 0;
-            transform: translateY(30px) scale(0.98);
-            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .tab-content.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            color: #f3e8ff;
-            text-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
-        }
-
-        /* Siatki i ulepszone karty */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .card {
-            background: rgba(20, 10, 35, 0.65);
-            border: 2px solid rgba(168, 85, 247, 0.2);
-            border-radius: 20px;
-            padding: 35px 25px;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            position: relative;
-            backdrop-filter: blur(5px);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card:hover {
-            border-color: #c084fc;
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.25);
-        }
-
-        .card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: #e9d5ff;
-            letter-spacing: 0.5px;
-        }
-
-        .card p {
-            color: #c0a8da;
-            line-height: 1.6;
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-        }
-
-        /* Ceny i przyciski zakupowe */
-        .shop-price {
-            font-size: 1.8rem;
-            color: #a855f7;
-            font-weight: 800;
-            margin: 15px 0;
-            text-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
-            display: block;
-        }
-
-        .buy-btn {
-            background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
-            color: white !important;
-            border: none;
-            padding: 14px 25px;
-            font-weight: bold;
-            font-size: 1rem;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none !important;
-            display: block;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(126, 34, 206, 0.4);
-            text-transform: uppercase;
-            position: relative;
-            z-index: 10; /* Zapewnia, że przycisk zawsze da się kliknąć */
-        }
-
-        .buy-btn:hover {
-            background: linear-gradient(135deg, #c084fc 0%, #a855f7 100%);
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.8);
-            transform: scale(1.03);
-        }
-
-        /* Sekcja Wsparcia */
-        .donate-box {
-            background: rgba(30, 15, 50, 0.8);
-            border: 3px dashed #a855f7;
-            border-radius: 20px;
-            padding: 40px;
-            margin-top: 50px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.1);
-        }
-
-        .donate-input-group {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin: 25px 0;
-        }
-
-        .donate-input {
-            background: #0f081d;
-            border: 2px solid #a855f7;
-            color: white;
-            padding: 12px 20px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            border-radius: 10px;
-            width: 140px;
-            text-align: center;
-            outline: none;
-        }
-
-        .currency-label {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #c084fc;
-        }
-
-        .slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 8px;
-            border-radius: 5px;
-            background: #2e1649;
-            outline: none;
-            margin-bottom: 25px;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: #c084fc;
-            cursor: pointer;
-            box-shadow: 0 0 10px #a855f7;
-        }
-
-        /* Social Media */
-        .socials {
-            margin-top: 50px;
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-        }
-
-        .social-btn {
-            padding: 15px 35px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            color: white;
-            transition: all 0.3s ease;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .dc-btn { background: #5865F2; box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4); }
-        .dc-btn:hover { box-shadow: 0 0 25px #5865F2; transform: translateY(-3px); }
-        .yt-btn { background: #FF0000; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4); }
-        .yt-btn:hover { box-shadow: 0 0 25px #FF0000; transform: translateY(-3px); }
-
-        /* Alert powiadomienia */
-        #notification {
-            position: fixed;
-            bottom: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #a855f7;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-weight: bold;
-            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.5);
-            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 2000;
-        }
-    </style>
+.card {
+  background:#1e293b;
+  padding:10px;
+  margin:8px 0;
+  border-radius:10px;
+}
+</style>
 </head>
+
 <body>
 
-    <div class="bg-glow"></div>
-    <div class="particles" id="particles"></div>
+<!-- LOGIN -->
+<div id="loginBox">
+  <h2>🔐 Szkoła3310</h2>
 
-    <!-- Nawigacja -->
-    <nav>
-        <button class="active" onclick="openTab('home')">Strona Główna</button>
-        <button onclick="openTab('modes')">Tryby Gry</button>
-        <button onclick="openTab('shop')">Sklep (Item Shop) 🔮</button>
-    </nav>
+  <input id="pass" type="password" placeholder="Hasło">
 
-    <div class="container">
-        <!-- Nagłówek -->
-        <header>
-            <h1>BladexMC</h1>
-            <p>Wejdź do fioletowego wymiaru rozgrywki</p>
-            
-            <div class="ip-box" onclick="copyIP()">
-                <span class="ip-text" id="server-ip">bladexmc.aternos.me</span>
-                <button class="copy-btn">Kopiuj IP</button>
-            </div>
-        </header>
+  <select id="role">
+    <option value="teacher">👨‍🏫 Nauczyciel</option>
+    <option value="student">👨‍🎓 Uczeń</option>
+  </select>
 
-        <!-- ZAKŁADKA: STRONA GŁÓWNA -->
-        <div id="home" class="tab-content active">
-            <h2 class="section-title">Witaj Wojowniku!</h2>
-            <p style="max-width: 700px; margin: 20px auto; line-height: 1.9; color: #c0a8da; font-size: 1.1rem;">
-                Przeżyj niezapomnianą przygodę na serwerze stworzonym z pasji. Wybierz swój własny kierunek rozwoju, twórz unikalne sojusze, walcz na dopracowanych arenach PVP i dominuj tabele wyników. Wszystko w doskonałej płynności i pod okiem aktywnej administracji!
-            </p>
-            
-            <div class="socials">
-                <a href="https://discord.gg" target="_blank" class="social-btn dc-btn">Dołącz do Discorda</a>
-                <a href="https://youtube.com" target="_blank" class="social-btn yt-btn">Subskrybuj YouTube</a>
-            </div>
-        </div>
+  <button onclick="login()">Wejdź</button>
+</div>
 
-        <!-- ZAKŁADKA: TRYBY GRY -->
-        <div id="modes" class="tab-content">
-            <h2 class="section-title">Wybierz Swoje Przeznaczenie</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Anarchia SMP</h3>
-                    <p>Pełna wolność, brak zasad gildyjnych i bezwzględna walka o przetrwanie. Skrytki, zdrady i prawdziwy survival.</p>
-                </div>
-                <div class="card">
-                    <h3>Gildie</h3>
-                    <p>Klasyczna rywalizacja zespołowa. Zakładaj frakcje, powiększaj terytoria, buduj fortyfikacje i bierz udział w wielkich wojnach.</p>
-                </div>
-                <div class="card">
-                    <h3>Duels</h3>
-                    <p>Sprawdź swoje czyste umiejętności mechaniczne. Pojedynki 1v1, zbalansowane zestawy przedmiotów oraz zero opóźnień.</p>
-                </div>
-            </div>
-        </div>
+<!-- APP -->
+<div id="app">
 
-        <!-- ZAKŁADKA: ITEM SHOP -->
-        <div id="shop" class="tab-content">
-            <h2 class="section-title">Sklep Serwerowy</h2>
-            <p style="color: #c0a8da; margin-bottom: 20px;">Zdobądź przewagę lub wyróżnij się na czacie, wspierając utrzymanie serwera!</p>
-            
-            <!-- Magiczne Klucze -->
-            <h3 style="margin-top: 40px; color: #d8b4fe; text-align: left; font-size: 1.8rem; border-left: 4px solid #a855f7; padding-left: 10px;">🔑 Magiczne Klucze</h3>
-            <div class="grid">
-                <div class="card">
-                    <h3>Klucz Bladex</h3>
-                    <p>Unikalny klucz naszej sieci. Gwarantuje drop spersonalizowanych przedmiotów niedostępnych nigdzie indziej.</p>
-                    <span class="shop-price">3.00 PLN</span>
-                    <a href="https://discord.gg" target="_blank" class="buy-btn">Zakup Klucz</a>
-                </div>
-                <div class="card">
-                    <h3>Klucz Legendarny</h3>
-                    <p>Otwiera Legendarną Skrzynię na spawnie. Szansa na potężne zbroje, miecze z wysokimi poziomami zaklęć.</p>
-                    <span class="shop-price">2.00 PLN</span>
-                    <a href="https://discord.gg" target="_blank" class="buy-btn">Zakup Klucz</a>
-                </div>
-                <div class="card">
-                    <h3>Klucz Skarbów</h3>
-                    <p>Najbogatszy drop na serwerze. Zawiera ogromne pakiety waluty, rzadkie surowce oraz szansę na darmową rangę!</p>
-                    <span class="shop-price">5.00 PLN</span>
-                    <a href="https://discord.gg" target="_blank" class="buy-btn">Zakup Klucz</a>
-                </div>
-            </div>
+<div class="container">
 
-            <!-- Elitarne Rangi -->
-            <h3 style="margin-top: 50px; color: #d8b4fe; text-align: left; font-size: 1.8rem; border-left: 4px solid #a855f7; padding-left: 10px;">👑 Elitarne Rangi</h3>
-            <div class="grid">
-                <div class="card">
-                    <h3>Ranga VIP</h3>
-                    <p>Podstawowy pakiet premium. Prefiks na czacie, rezerwacja miejsca gdy serwer jest pełen oraz zestaw /kit vip.</p>
-                    <span class="shop-price">od 10.00 PLN</span>
-                    <a href="https://discord.gg" target="_blank" class="buy-btn">Wybierz VIP</a>
-                </div>
-                <div class="card">
-                    <h3>Ranga SVIP</h3>
-                    <p>Rozszerzone przywileje. Dostęp do komendy /fly w wyznaczonych strefach, potężniejszy zestaw startowy i własny kolor czatu.</p>
-                    <span class="shop-price">od 15.00 PLN</span>
-                    <a href="https://discord.gg" target="_blank" class="buy-btn">Wybierz SVIP</a>
-                </div>
-                <div class="card">
-                    <h3>Ranga GVIP</h3>
-                    <p>Absolutny szczyt hierarchii. Unikalne efekty cząsteczkowe wokół postaci, komenda /heal, potężny zestaw /kit gvip i miano legendy.</p>
-                    <span class="shop-price">od 20.00 PLN</span>
-                    <a href="https://discord.gg" target="_blank" class="buy-btn">Wybierz GVIP</a>
-                </div>
-            </div>
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h3>📚 Klasy</h3>
+    <button onclick="setClass('3a')">3A</button>
+    <button onclick="setClass('3b')">3B</button>
+    <button onclick="setClass('3c')">3C</button>
+    <button onclick="setClass('4a')">4A</button>
+    <button onclick="setClass('4b')">4B</button>
+    <button onclick="setClass('4c')">4C</button>
+    <button onclick="setClass('5a')">5A</button>
+    <button onclick="setClass('5b')">5B</button>
+    <button onclick="setClass('5c')">5C</button>
+  </div>
 
-            <!-- DOWOLNE WSPARCIE -->
-            <div class="donate-box">
-                <h3>💜 Wsparcie Serwera (Dowolna Kwota)</h3>
-                <p style="font-size: 0.9rem; margin-top: 5px; color: #c0a8da;">Sam decydujesz, jaką kwotą chcesz nas zasilić. Każdy grosz pomaga nam ulepszać serwer!</p>
-                
-                <div class="donate-input-group">
-                    <input type="number" class="donate-input" id="donateAmount" value="25" min="1" oninput="syncSlider()">
-                    <span class="currency-label">PLN</span>
-                </div>
-                
-                <input type="range" min="1" max="200" value="25" class="slider" id="donateSlider" oninput="syncInput()">
-                
-                <a href="https://discord.gg" target="_blank" class="buy-btn">Przekaż Wsparcie</a>
-            </div>
+  <!-- MAIN -->
+  <div class="main">
 
-        </div>
+    <h2>📊 Oceny / Uwagi</h2>
+
+    <div id="teacherPanel" style="display:none">
+      <input id="student" placeholder="Uczeń">
+
+      <input id="grade" placeholder="Ocena (1-6)">
+      <button onclick="addGrade()">Dodaj ocenę</button>
+
+      <br>
+
+      <input id="note" placeholder="Uwaga (np. brak pracy domowej)">
+      <button onclick="addNote()">Dodaj uwagę</button>
     </div>
 
-    <div id="notification">Pomyślnie skopiowano fioletowe IP! 🌟</div>
+    <div id="list"></div>
 
-    <script>
-        // Zakładki
-        function openTab(tabId) {
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
-            
-            const buttons = document.querySelectorAll('nav button');
-            buttons.forEach(button => button.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
+  </div>
 
-        // Kopiowanie IP
-        function copyIP() {
-            const ipText = document.getElementById('server-ip').innerText;
-            navigator.clipboard.writeText(ipText).then(() => {
-                const notification = document.getElementById('notification');
-                notification.style.bottom = '30px';
-                setTimeout(() => {
-                    notification.style.bottom = '-60px';
-                }, 3000);
-            });
-        }
+  <!-- RIGHT -->
+  <div class="right">
+    <h2>🏆 Ranking</h2>
+    <div id="ranking"></div>
+  </div>
 
-        // Synchronizacja suwaka i wpisywania w donacjach
-        function syncInput() {
-            const slider = document.getElementById('donateSlider');
-            const input = document.getElementById('donateAmount');
-            input.value = slider.value;
-        }
+</div>
 
-        function syncSlider() {
-            const slider = document.getElementById('donateSlider');
-            const input = document.getElementById('donateAmount');
-            if(input.value > 200) slider.value = 200;
-            else slider.value = input.value;
-        }
+</div>
 
-        // Generowanie mikro gwiazd w tle
-        const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 40; i++) {
-            const star = document.createElement('div');
-            star.style.position = 'absolute';
-            star.style.width = Math.random() * 3 + 'px';
-            star.style.height = star.style.width;
-            star.style.background = 'rgba(192, 132, 252, ' + Math.random() + ')';
-            star.style.top = Math.random() * 100 + 'vh';
-            star.style.left = Math.random() * 100 + 'vw';
-            star.style.borderRadius = '50%';
-            particlesContainer.appendChild(star);
-        }
-    </script>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  onSnapshot,
+  query,
+  where
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "TWOJ_KEY",
+  authDomain: "TWOJ_PROJECT.firebaseapp.com",
+  projectId: "TWOJ_PROJECT",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const col = collection(db, "grades");
+
+let currentClass = "3a";
+let role = "student";
+let allData = [];
+
+window.login = function () {
+  let pass = document.getElementById("pass").value;
+  role = document.getElementById("role").value;
+
+  if (pass === "Szkoła3310") {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("app").style.display = "block";
+
+    if (role === "teacher") {
+      document.getElementById("teacherPanel").style.display = "block";
+    }
+
+  } else {
+    alert("Złe hasło");
+  }
+};
+
+window.setClass = function(c) {
+  currentClass = c;
+  listen();
+};
+
+window.addGrade = async function () {
+  let student = document.getElementById("student").value;
+  let grade = Number(document.getElementById("grade").value);
+
+  if (!student || !grade) return;
+
+  await addDoc(col, {
+    type: "grade",
+    student,
+    grade,
+    class: currentClass,
+    date: new Date().toISOString()
+  });
+};
+
+window.addNote = async function () {
+  let student = document.getElementById("student").value;
+  let note = document.getElementById("note").value;
+
+  if (!student || !note) return;
+
+  await addDoc(col, {
+    type: "note",
+    student,
+    note,
+    class: currentClass,
+    date: new Date().toISOString()
+  });
+};
+
+function listen() {
+  const q = query(col, where("class", "==", currentClass));
+
+  onSnapshot(q, (snap) => {
+    allData = [];
+    snap.forEach(doc => allData.push(doc.data()));
+    render();
+  });
+}
+
+function render() {
+
+  // LISTA
+  let html = "";
+
+  allData.forEach(d => {
+    if (d.type === "grade") {
+      html += `<div class="card">👨‍🎓 ${d.student} — ⭐ ${d.grade}</div>`;
+    }
+
+    if (d.type === "note") {
+      html += `<div class="card">⚠️ ${d.student}: ${d.note}</div>`;
+    }
+  });
+
+  document.getElementById("list").innerHTML = html;
+
+  // RANKING (średnie)
+  let map = {};
+
+  allData.forEach(d => {
+    if (d.type !== "grade") return;
+
+    if (!map[d.student]) map[d.student] = [];
+    map[d.student].push(d.grade);
+  });
+
+  let ranking = [];
+
+  for (let s in map) {
+    let sum = map[s].reduce((a,b)=>a+b,0);
+    let avg = sum / map[s].length;
+    ranking.push({ name: s, avg: avg.toFixed(2) });
+  }
+
+  ranking.sort((a,b)=>b.avg - a.avg);
+
+  let rhtml = "";
+
+  ranking.forEach((r,i) => {
+    rhtml += `<div class="card">🏅 ${i+1}. ${r.name}<br>📊 ${r.avg}</div>`;
+  });
+
+  document.getElementById("ranking").innerHTML = rhtml;
+}
+
+window.onload = () => {
+  listen();
+};
+
+</script>
+
 </body>
 </html>
