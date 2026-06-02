@@ -3,373 +3,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Librus Synergia - Panel Nauczyciela Modern</title>
+    <title>E-Dziennik | Portal Ucznia</title>
+    <!-- Nowoczesna czcionka i ikony -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    
     <style>
+        /* --- ZMIENNE I RESET --- */
         :root {
-            --primary: #2563eb;
-            --primary-light: #eff6ff;
-            --bg-main: #f8fafc;
-            --bg-card: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            
-            /* Statusy obecności */
-            --ob-color: #10b981;
-            --nb-color: #ef4444;
-            --sp-color: #f59e0b;
-            --u-color: #8b5cf6;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --primary: #4a6cf7;
+            --success: #2ed573;
+            --danger: #ff4757;
+            --warning: #ffa502;
+            --text-main: #2f3542;
+            --text-muted: #747d8c;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            background-color: var(--bg-main);
+            background: var(--bg-gradient);
             color: var(--text-main);
-            padding: 24px;
-            line-height: 1.5;
+            min-height: 100vh;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
 
-        /* Nowoczesny Header */
+        /* --- KONTENER GŁÓWNY --- */
+        .dashboard {
+            width: 100%;
+            max-width: 1400px;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInMain 0.8s var(--transition) forwards;
+        }
+
+        /* --- NAGŁÓWEK --- */
         header {
-            background: var(--bg-card);
-            padding: 16px 24px;
-            border-radius: 16px;
-            margin-bottom: 24px;
+            grid-column: span 12;
+            background: var(--card-bg);
+            padding: 1.5rem 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid var(--border);
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
-        }
-
-        .header-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icon {
-            background: var(--primary);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        .header-title h1 {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .header-title p {
-            font-size: 13px;
-            color: var(--text-muted);
+            backdrop-filter: blur(10px);
         }
 
         .user-profile {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 14px;
+            gap: 1rem;
         }
 
         .avatar {
-            width: 36px;
-            height: 36px;
-            background: #cbd5e1;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.2rem;
             font-weight: 600;
-            color: #475569;
+            box-shadow: 0 4px 10px rgba(74, 108, 247, 0.3);
         }
 
-        /* Główny Układ Grid */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 24px;
-        }
-
-        @media(min-width: 1200px) {
-            .dashboard-grid {
-                grid-template-columns: 280px 1fr;
-            }
-        }
-
-        /* Karty / Panele */
+        /* --- WSPÓLNE STYLE KART --- */
         .card {
-            background: var(--bg-card);
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
-            padding: 24px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             overflow: hidden;
         }
 
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
         .card-title {
-            font-size: 16px;
+            font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 0.5rem;
             color: var(--text-main);
+            border-bottom: 2px solid #f1f2f6;
+            padding-bottom: 0.5rem;
         }
 
-        /* Nowoczesny Plan Lekcji */
-        .day-bucket {
-            margin-bottom: 16px;
+        /* --- SIATKA DIZANU (GRID LAYOUT) --- */
+        .col-grades { grid-column: span 8; }
+        .col-attendance { grid-column: span 4; }
+        .col-timetable { grid-column: span 7; }
+        .col-notes { grid-column: span 5; }
+
+        @media (max-width: 1024px) {
+            .col-grades, .col-attendance, .col-timetable, .col-notes {
+                grid-column: span 12;
+            }
         }
 
-        .day-title {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .lesson-pill {
-            font-size: 13px;
-            padding: 10px 12px;
-            background: #f1f5f9;
-            border-radius: 10px;
-            margin-bottom: 6px;
-            font-weight: 500;
-            color: #334155;
-            transition: transform 0.2s, background 0.2s;
-        }
-        .lesson-pill:hover {
-            background: var(--primary-light);
-            color: var(--primary);
-            transform: translateX(2px);
-        }
-
-        /* Elegancka Tabela */
-        .table-wrapper {
-            overflow-x: auto;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-
-        table {
+        /* --- OCENY --- */
+        .grades-table {
             width: 100%;
             border-collapse: collapse;
+        }
+
+        .grades-table th, .grades-table td {
+            padding: 0.75rem 1rem;
             text-align: left;
-            background: var(--bg-card);
         }
 
-        th {
-            background: #f8fafc;
-            padding: 14px 16px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-muted);
-            border-bottom: 1px solid var(--border);
+        .grades-table tr {
+            border-bottom: 1px solid #f1f2f6;
+            transition: var(--transition);
         }
 
-        td {
-            padding: 16px;
-            font-size: 14px;
-            border-bottom: 1px solid var(--border);
-            vertical-align: top;
+        .grades-table tbody tr:hover {
+            background-color: rgba(7a, 108, 247, 0.04);
         }
 
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        .student-name {
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
-        .student-id {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        /* Stylowe Formularze i Przyciski */
-        select, input[type="text"], textarea {
-            background: #f8fafc;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 8px 12px;
-            font-size: 13px;
-            color: var(--text-main);
-            outline: none;
-            transition: all 0.2s;
-        }
-
-        select:focus, input[type="text"]:focus, textarea:focus {
-            border-color: var(--primary);
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .action-row {
-            display: flex;
-            gap: 6px;
-            margin-top: 8px;
-        }
-
-        input[type="text"].grade-input {
-            width: 60px;
+        .grade-badge {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
             text-align: center;
-            font-weight: 600;
-        }
-
-        textarea.remark-textarea {
-            width: 100%;
-            height: 38px;
-            resize: none;
-        }
-
-        button.btn-add {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 8px 14px;
             border-radius: 8px;
             font-weight: 600;
+            margin-right: 0.4rem;
             cursor: pointer;
-            font-size: 13px;
-            transition: background 0.2s;
+            transition: var(--transition);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
         }
 
-        button.btn-add:hover {
-            background: #1d4ed8;
+        .grade-badge:hover {
+            transform: scale(1.15);
         }
 
-        /* Wygląd Ocen i Klasy Statusów */
-        .grades-container {
+        .g-good { background: rgba(46, 213, 115, 0.15); color: var(--success); }
+        .g-avg { background: rgba(255, 165, 2, 0.15); color: var(--warning); }
+        .g-bad { background: rgba(255, 71, 87, 0.15); color: var(--danger); }
+
+        /* --- OBECNOŚĆ --- */
+        .attendance-stats {
             display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 8px;
-            min-height: 28px;
+            justify-content: space-around;
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
 
-        .grade-pill {
-            background: #f1f5f9;
-            color: #1e293b;
+        .stat-circle {
+            font-size: 1.5rem;
             font-weight: 700;
-            font-size: 12px;
-            padding: 4px 10px;
-            border-radius: 6px;
-            border: 1px solid #cbd5e1;
+            color: var(--primary);
         }
 
-        /* Selektor Obecności - Kolorowe Kropki */
-        .select-presence-wrapper {
-            position: relative;
+        .attendance-list {
+            list-style: none;
         }
 
-        .p-select {
-            font-weight: 600;
-            padding-left: 28px;
-            cursor: pointer;
-        }
-
-        .presence-indicator {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        /* Kolory wskaźników */
-        .ind-ob { background-color: var(--ob-color); }
-        .ind-nb { background-color: var(--nb-color); }
-        .ind-sp { background-color: var(--sp-color); }
-        .ind-u { background-color: var(--u-color); }
-
-        /* Lista uwag */
-        .remarks-container {
+        .attendance-item {
             display: flex;
-            flex-direction: column;
-            gap: 4px;
-            max-height: 80px;
-            overflow-y: auto;
-            margin-bottom: 8px;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px dashed #e4e7eb;
+            font-size: 0.9rem;
         }
 
-        .remark-item {
-            font-size: 12px;
-            padding: 4px 8px;
-            border-radius: 6px;
+        .status {
             font-weight: 500;
         }
+        .status.present { color: var(--success); }
+        .status.absent { color: var(--danger); }
 
-        .remark-item.uwaga {
-            background: #fef2f2;
-            color: #991b1b;
+        /* --- PLAN LEKCJI --- */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
         }
 
-        .remark-item.pochwala {
-            background: #ecfdf5;
-            color: #065f46;
+        .tab-btn {
+            background: #f1f2f6;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
         }
 
-        .footer-info {
-            margin-top: 16px;
-            font-size: 13px;
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .timetable-row {
+            display: grid;
+            grid-template-columns: 80px 1fr 120px;
+            padding: 0.75rem 0.5rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .timetable-row:hover {
+            background: #f8f9fa;
+            padding-left: 1rem;
+        }
+
+        .time { color: var(--text-muted); font-size: 0.85rem; }
+        .subject { font-weight: 500; }
+        .room { text-align: right; color: var(--text-muted); font-size: 0.85rem; }
+
+        /* --- UWAGI I POCHWAŁY --- */
+        .note-item {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+            animation: slideIn 0.6s var(--transition) backwards;
+        }
+
+        .note-item.praise {
+            background: rgba(46, 213, 115, 0.08);
+            border-color: var(--success);
+        }
+
+        .note-item.reprimand {
+            background: rgba(255, 71, 87, 0.08);
+            border-color: var(--danger);
+        }
+
+        .note-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            text-align: center;
+            margin-bottom: 0.4rem;
         }
+
+        .note-teacher { font-weight: 600; color: var(--text-main); }
+
+        /* --- ANIMACJE (KEYFRAMES) --- */
+        @keyframes fadeInMain {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Opóźnienia dla płynnego efektu ładowania */
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
 
-    <!-- GŁÓWNY PANEL GÓRNY -->
-    <header>
-        <div class="header-logo">
-            <div class="logo-icon">L</div>
-            <div class="header-title">
-                <h1>Librus Synergia</h1>
-                <p>Panel Nauczycielski • Klasa 1A (Matematyczno-Fizyczna)</p>
-            </div>
-        </div>
-        <div class="user-profile">
-            <div class="text-right" style="text-align: right;">
-                <p style="font-weight: 600;">mgr Jan Kowalski</p>
-                <p style="font-size: 12px; color: var(--text-muted);">Nauczyciel matematyki</p>
-            </div>
-            <div class="avatar">JK</div>
-        </div>
-    </header>
-
-    <!-- UKŁAD STRONY -->
-    <div class="dashboard-grid">
+    <div class="dashboard">
         
-        <!-- LEWA KOLUMNA: PLAN LEKCJI -->
-        <aside class="card">
-            <div class="card-title">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                Plan Lekcji Tygodnia
+        <!-- NAGŁÓWEK -->
+        <header>
+            <div class="user-profile">
+                <div class="avatar">JK</div>
+                <div>
+                    <h2>Jan Kowalski</h2>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Klasa 3A • Profil Matematyczno-Informatyczny</p>
+                </div>
             </div>
-            <div id="timetable-container"></div>
-        </aside>
+            <div style="text-align: right;">
+                <p id="live-date" style="font-weight: 500;"></p>
+                <p style="color: var(--success); font-size: 0.85rem;"><i class="fa-solid fa-circle"></i> Połączono online</p>
+            </div>
+        </header>
 
-        <!-- PRAWA KOLUMNA: DZIENNIK KLASY -->
-        <main class="card">
-            <div class="card-title">
+        <!-- KARTA: OCENY -->
+        <section class="card col-grades">
+            <h3 class="card-title"><i class="fa-solid fa-graduation-cap" style="color: var(--primary);"></i> Ostatnie Oceny</h3>
+            <table class="grades-table">
+                <thead>
+                    <tr>
+                        <th>Przedmiot</th>
+                        <th>Oceny cząstkowe</th>
+                        <th>Średnia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="subject">Matematyka</td>
+                        <td>
