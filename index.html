@@ -3,182 +3,94 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Librus Synergia - Portal e-Dziennika</title>
+<title>Librus Synergia - Portal Edukacyjny (Panel Nauczyciela)</title>
 
-<!-- Zewnętrzne zasoby: Silnik wykresów oraz zestaw ikon -->
+<!-- Biblioteki zewnętrzne: Wykresy oraz Profesjonalne Ikony -->
 <script src="https://jsdelivr.net"></script>
 <link rel="stylesheet" href="https://cloudflare.com">
 
 <style>
 :root {
-  --librus-navy: #1a365d;
-  --librus-blue: #2b6cb0;
-  --librus-light-blue: #ebf8ff;
-  --librus-gray-bg: #f7fafc;
-  --librus-border: #cbd5e0;
-  --text-dark: #2d3748;
-  --text-muted: #718096;
-  --color-present: #38a169;
-  --color-absent: #e53e3e;
-  --color-excused: #d69e2e;
-  --color-late: #805ad5;
+  --librus-navy: #1a365d;       /* Oficjalny granat Librusa */
+  --librus-blue: #2b6cb0;       /* Jasny niebieski Librusa */
+  --librus-light-blue: #ebf8ff; /* Tło zaznaczenia */
+  --librus-gray-bg: #f7fafc;    /* Główne tło portalu */
+  --librus-border: #e2e8f0;     /* Kolor linii i ramek */
+  --text-dark: #2d3748;         /* Główny kolor tekstu */
+  --text-muted: #718096;        /* Pomocniczy kolor tekstu */
+  --accent-green: #38a169;      /* Kolor obecności i pochwał */
+  --accent-red: #e53e3e;        /* Kolor nieobecności i uwag */
+  --accent-yellow: #d69e2e;     /* Kolor usprawiedliwienia */
+  --accent-purple: #805ad5;     /* Kolor spóźnienia */
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 body {
   background: var(--librus-gray-bg);
   color: var(--text-dark);
-  font-size: 13px;
-  line-height: 1.4;
-}
-
-/* SYNERGIA PANEL LOGOWANIA */
-#loginScreen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: #edf2f7;
-}
-
-.login-box {
-  background: white;
-  width: 100%;
-  max-width: 380px;
-  border-radius: 4px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  border-top: 4px solid var(--librus-navy);
-}
-
-.login-header {
-  padding: 25px 20px;
-  text-align: center;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.login-header h2 {
-  color: var(--librus-navy);
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.login-header h2 span {
-  color: #ff7a00;
-}
-
-.login-body {
-  padding: 20px;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: var(--text-dark);
-}
-
-.form-group input, .form-group select {
-  width: 100%;
-  padding: 9px;
-  border: 1px solid var(--librus-border);
-  border-radius: 3px;
-  font-size: 13px;
-}
-
-.form-group input:focus, .form-group select:focus {
-  border-color: var(--librus-blue);
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
-}
-
-.btn-login {
-  width: 100%;
-  padding: 11px;
-  background: var(--librus-navy);
-  color: white;
-  border: none;
-  border-radius: 3px;
   font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
 }
 
-.btn-login:hover {
-  background: var(--librus-blue);
-}
-
-/* SYSTEM GLÓWNY */
-#app {
-  display: none;
-}
-
-.header-nav {
+/* GÓRNY PASEK NAWIGACJI LIBRUS */
+.navbar {
   background: var(--librus-navy);
   color: white;
-  height: 50px;
   padding: 0 20px;
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.nav-logo {
-  font-size: 16px;
+.navbar-brand {
+  font-size: 18px;
   font-weight: bold;
 }
 
-.nav-logo span {
-  color: #ff7a00;
+.navbar-brand span {
+  color: #ff7a00; /* Pomarańczowy akcent Synergia */
 }
 
-.nav-user {
+.user-info-bar {
   display: flex;
   align-items: center;
   gap: 15px;
+  font-size: 13px;
 }
 
-.logout-link {
-  color: #feb2b2;
-  text-decoration: none;
-  font-weight: bold;
-  cursor: pointer;
+.user-info-bar strong {
+  color: #fff;
 }
 
-.logout-link:hover {
-  text-decoration: underline;
-}
-
-.app-container {
+/* UKŁAD STRONY Z PANELAMI */
+.main-layout {
   display: grid;
-  grid-template-columns: 200px 1fr;
-  min-height: calc(100vh - 50px);
+  grid-template-columns: 220px 1fr;
+  min-height: calc(100vh - 60px);
 }
 
-@media (max-width: 950px) {
-  .app-container {
+@media (max-width: 900px) {
+  .main-layout {
     grid-template-columns: 1fr;
   }
 }
 
-/* BOCZNA NAWIGACJA SZKOŁY */
-.sidebar {
+/* LEWE MENU */
+.sub-sidebar {
   background: #edf2f7;
   border-right: 1px solid var(--librus-border);
-  padding: 15px 0;
+  padding: 20px 0;
 }
 
-.sidebar-title {
-  padding: 0 15px;
+.menu-section-title {
+  padding: 0 20px;
   font-size: 11px;
   font-weight: bold;
   color: var(--text-muted);
@@ -187,168 +99,182 @@ body {
   letter-spacing: 0.5px;
 }
 
-.menu-item {
+.class-nav-link {
   display: block;
   width: 100%;
-  padding: 10px 15px;
+  padding: 12px 20px;
   background: transparent;
   border: none;
   text-align: left;
   color: var(--text-dark);
+  font-size: 14px;
   cursor: pointer;
-  border-left: 3px solid transparent;
+  border-left: 4px solid transparent;
 }
 
-.menu-item:hover {
+.class-nav-link:hover {
   background: rgba(0,0,0,0.03);
 }
 
-.menu-item.active {
+.class-nav-link.active {
   background: white;
   border-left-color: var(--librus-blue);
   color: var(--librus-blue);
   font-weight: bold;
 }
 
-/* PANEL CENTRALNY DANYCH */
-.main-viewport {
-  padding: 20px;
+/* CENTRUM SYSTEMU */
+.content-wrapper {
+  padding: 25px;
 }
 
-.alert-bar {
+.info-alert {
   background: #fffaf0;
   border: 1px solid #feebc8;
   border-left: 4px solid #dd6b20;
-  padding: 10px 15px;
+  padding: 12px 15px;
   border-radius: 4px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  font-size: 13px;
   color: #744210;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.dashboard-layout {
+.section-grid {
   display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 20px;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
 }
 
-@media (max-width: 1200px) {
-  .dashboard-layout {
+@media (max-width: 1100px) {
+  .section-grid {
     grid-template-columns: 1fr;
   }
 }
 
-/* KARTOTEKI I TABELE LIBRUS */
-.librus-box {
+/* SZKOLNE KARTY I TABELE */
+.librus-card {
   background: white;
   border: 1px solid var(--librus-border);
-  border-radius: 3px;
-  padding: 15px;
-  margin-bottom: 20px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.librus-box h3 {
-  font-size: 15px;
+.librus-card h3 {
+  font-size: 16px;
   color: var(--librus-navy);
   border-bottom: 2px solid var(--librus-navy);
-  padding-bottom: 8px;
-  margin-bottom: 12px;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.table-responsive {
+/* KONTENER Z SCROLLEM DLA WIELU PRZEDMIOTÓW */
+.librus-table-container {
   overflow-x: auto;
+  margin-bottom: 15px;
+  border: 1px solid var(--librus-border);
+  border-radius: 3px;
 }
 
-table.grid-table {
+table.librus-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 1200px; /* Wymuszenie szerokości dla ładnego przewijania w poziomie */
 }
 
-table.grid-table th {
+table.librus-table th {
   background: #f1f5f9;
   color: var(--librus-navy);
   font-weight: bold;
-  padding: 8px;
+  font-size: 12px;
+  padding: 10px;
   border: 1px solid var(--librus-border);
   text-align: left;
 }
 
-table.grid-table td {
-  padding: 10px 8px;
+table.librus-table td {
+  padding: 10px;
   border: 1px solid var(--librus-border);
   vertical-align: middle;
 }
 
-table.grid-table tr:nth-child(even) {
+table.librus-table tr:nth-child(even) {
   background: #f8fafc;
 }
 
-/* OCENY I FREKWENCJA */
-.badge-grade {
+/* ODZNAKI OCEN I FREKWENCJI */
+.grade-item {
   display: inline-block;
   background: #edf2f7;
   color: #2d3748;
   font-weight: bold;
+  font-size: 12px;
   width: 24px;
   height: 24px;
   line-height: 24px;
   text-align: center;
   border-radius: 3px;
-  margin-right: 4px;
+  margin-right: 3px;
+  margin-bottom: 3px;
   border: 1px solid #cbd5e0;
 }
 
-.badge-att {
+.att-badge {
   display: inline-block;
   font-weight: bold;
-  font-size: 10px;
-  padding: 1px 4px;
-  border-radius: 2px;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 3px;
   color: white;
-  margin-right: 2px;
+  margin-right: 3px;
 }
-.att-p { background: var(--color-present); }
-.att-a { background: var(--color-absent); }
-.att-u { background: var(--color-excused); }
-.att-l { background: var(--color-late); }
+.att-o { background: var(--accent-green); }
+.att-n { background: var(--accent-red); }
+.att-u { background: var(--accent-yellow); }
+.att-s { background: var(--accent-purple); }
 
-/* SEKCIJE DLA NAUCZYCIELI - PANEL OPERACYJNY */
-.control-panel {
+/* FORMULARZE */
+.form-box {
   background: #f7fafc;
   border: 1px solid var(--librus-border);
-  padding: 12px;
+  padding: 15px;
   border-radius: 4px;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
-.control-panel h4 {
-  font-size: 12px;
+.form-box h4 {
+  font-size: 13px;
   color: var(--librus-navy);
-  margin-bottom: 10px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.input-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
   margin-bottom: 12px;
+  font-weight: bold;
 }
 
-.input-row select, .input-row input {
-  padding: 6px 10px;
-  border: 1px solid var(--librus-border);
+.inline-inputs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.inline-inputs select, .inline-inputs input {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e0;
   border-radius: 3px;
+  font-size: 13px;
   background: white;
   flex: 1;
-  min-width: 130px;
-  font-size: 13px;
+  min-width: 140px;
 }
 
-.btn-submit {
-  padding: 6px 15px;
+.action-submit-btn {
+  padding: 8px 16px;
   background: var(--librus-blue);
   color: white;
   border: none;
@@ -358,101 +284,109 @@ table.grid-table tr:nth-child(even) {
   font-size: 13px;
 }
 
-.btn-submit:hover {
+.action-submit-btn:hover {
   background: var(--librus-navy);
 }
 
-/* KARTOTEKA WPISÓW ZACHOWANIA */
-.remark-box {
-  padding: 8px 10px;
+/* UWAGI I POCHWAŁY */
+.remark-row {
+  padding: 10px 12px;
   border-radius: 3px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  font-size: 13px;
   border: 1px solid var(--librus-border);
 }
-.rem-negative { background: #fff5f5; border-left: 4px solid var(--color-absent); }
-.rem-positive { background: #f0fff4; border-left: 4px solid var(--color-present); }
-
-.director-card {
-  display: none;
-  background: #ebf8ff;
-  border: 1px solid #bee3f8;
-  border-left: 4px solid var(--librus-blue);
-}
+.rem-neg { background: #fff5f5; border-left: 4px solid var(--accent-red); }
+.rem-pos { background: #f0fff4; border-left: 4px solid var(--accent-green); }
 </style>
 </head>
 <body>
 
-<!-- PANEL LOGOWANIA -->
-<div id="loginScreen">
-  <div class="login-box">
-    <div class="login-header">
-      <h2>LIBRUS <span>Synergia</span></h2>
-    </div>
-    <div class="login-body">
-      <div class="form-group">
-        <label>Profil uprawnień</label>
-        <select id="loginRole">
-          <option value="teacher">Nauczyciel (Wychowawca)</option>
-          <option value="director">Dyrektor Szkoły</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Hasło dostępowe</label>
-        <input type="password" id="loginPass" placeholder="Wprowadź klucz dostępu">
-      </div>
-      <button class="btn-login" onclick="handleLogin()">Zaloguj do systemu</button>
-    </div>
+<!-- GÓRNY PASEK -->
+<div class="navbar">
+  <div class="navbar-brand">
+    LIBRUS <span>Synergia</span>
+  </div>
+  <div class="user-info-bar">
+    <div>Zalogowany: <strong>mgr Ekaterina Kowalczyk</strong> (Nauczyciel / Wychowawca)</div>
   </div>
 </div>
 
-<!-- GŁÓWNY INTERFEJS -->
-<div id="app">
+<!-- UKŁAD STRONY -->
+<div class="main-layout">
   
-  <div class="header-nav">
-    <div class="nav-logo">LIBRUS <span>Synergia</span></div>
-    <div class="nav-user">
-      <div>Użytkownik: <strong id="loggedUserName">---</strong> [<span id="loggedUserRole">---</span>]</div>
-      <a class="logout-link" onclick="handleLogout()"><i class="fa-solid fa-power-off"></i> Wyloguj</a>
+  <!-- LEWY SIDEBAR -->
+  <div class="sub-sidebar">
+    <div class="menu-section-title">Oddziały / Klasy</div>
+    <div id="classButtonsContainer">
+      <button class="class-nav-link active" id="btn-3a" onclick="switchClass('3A')"><i class="fa-solid fa-folder" style="margin-right:6px;"></i> Klasa 3A</button>
+      <button class="class-nav-link" id="btn-3b" onclick="switchClass('3B')"><i class="fa-solid fa-folder" style="margin-right:6px;"></i> Klasa 3B</button>
     </div>
   </div>
 
-  <div class="app-container">
+  <!-- CENTRUM ZAWARTOŚCI -->
+  <div class="content-wrapper">
     
-    <!-- MENU BOCZNE -->
-    <div class="sidebar">
-      <div class="sidebar-title">Struktura Klasowa</div>
-      <div id="sidebarButtons">
-        <button class="menu-item active" id="btn-3a" onclick="switchClass('3A')"><i class="fa-solid fa-folder"></i> Klasa 3A</button>
-        <button class="menu-item" id="btn-3b" onclick="switchClass('3B')"><i class="fa-solid fa-folder"></i> Klasa 3B</button>
-      </div>
+    <div class="info-alert">
+      <i class="fa-solid fa-circle-info" style="font-size:16px; color:#dd6b20;"></i>
+      <span><strong>Panel Bezpośredni:</strong> Rozbudowano arkusze o dodatkowe przedmioty kierunkowe. Użyj dolnego suwaka tabeli, aby zobaczyć wszystkie kolumny.</span>
     </div>
 
-    <!-- PANELE OPERACYJNE -->
-    <div class="main-viewport">
+    <div class="section-grid">
       
-      <div class="alert-bar">
-        <i class="fa-solid fa-circle-info"></i> <strong>Informacja:</strong> Trwa bieżąca sesja lekcyjna. Wszystkie wpisy frekwencji oraz ocen są rejestrowane w dzienniku głównym.
-      </div>
+      <!-- LEWA STRONA: DZIENNIK -->
+      <div>
+        <div class="librus-card">
+          <h3 id="tableTitle"><i class="fa-solid fa-table"></i> Oceny i frekwencja - Klasa 3A</h3>
+          
+          <div class="librus-table-container">
+            <table class="librus-table">
+              <thead>
+                <tr>
+                  <th style="min-width: 180px;">Nazwisko i imię ucznia</th>
+                  <th>Matematyka</th>
+                  <th>J. polski</th>
+                  <th>J. angielski</th>
+                  <th>Geografia</th>
+                  <th>Biologia</th>
+                  <th>Chemia</th>
+                  <th>Historia</th>
+                  <th>Informatyka</th>
+                  <th>WF</th>
+                  <th style="min-width: 110px;">Frekwencja</th>
+                </tr>
+              </thead>
+              <tbody id="gradesTableBody"></tbody>
+            </table>
+          </div>
 
-      <!-- PANEL DYREKCJI -->
-      <div class="librus-card librus-box director-card" id="directorPanel">
-        <h3><i class="fa-solid fa-user-shield"></i> Panel Nadzorczy Dyrektora Szkoły</h3>
-        <p style="margin-bottom:10px;">Masz pełny wgląd w bazy oceniania, statystyki frekwencji oraz rejestry uwag wszystkich oddziałów.</p>
-        <button class="btn-submit" style="background:var(--librus-navy)" onclick="alert('Generowanie sprawozdania rocznego...')">Pobierz raport zbiorczy szkoły</button>
-      </div>
-
-      <div class="dashboard-layout">
-        
-        <!-- DZIENNIK KLASOWY -->
-        <div>
-          <div class="librus-box">
-            <h3 id="tableTitle"><i class="fa-solid fa-table"></i> Dziennik Klasy 3A</h3>
+          <!-- PANEL WPISYWANIA DANYCH -->
+          <div class="form-box">
             
-            <div class="table-responsive">
-              <table class="grid-table">
-                <thead>
-                  <tr>
-                    <th>Nazwisko i imię ucznia</th>
-                    <th style="width: 18%;">Matematyka</th>
-                    <th style="width: 18%;">Język polski</th>
-                    <th style="width: 18%;">Język angielski</th>
+            <!-- OCENY -->
+            <h4><i class="fa-solid fa-plus" style="color:var(--librus-blue)"></i> Wprowadzanie ocen do dziennika lekcyjnego</h4>
+            <div class="inline-inputs" style="border-bottom:1px solid var(--librus-border); padding-bottom:12px; margin-bottom:12px;">
+              <select id="formStudentSelect"></select>
+              <select id="formSubjectSelect">
+                <option value="math">Matematyka</option>
+                <option value="polish">Język polski</option>
+                <option value="english">Język angielski</option>
+                <option value="geography">Geografia</option>
+                <option value="biology">Biologia</option>
+                <option value="chemistry">Chemia</option>
+                <option value="history">Historia</option>
+                <option value="it">Informatyka</option>
+                <option value="pe">WF</option>
+              </select>
+              <select id="formGradeSelect">
+                <option value="6">6</option>
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+              </select>
+              <button class="action-submit-btn" onclick="addGradeFromForm()">Wpisz ocenę</button>
+            </div>
+
+            <!-- OBECNOŚĆ -->
