@@ -55,7 +55,7 @@ body {
 }
 
 .navbar-brand span {
-  color: #ff7a00; /* Pomarańczowy akcent Synergia */
+  color: #ff7a00;
 }
 
 .user-info-bar {
@@ -176,7 +176,6 @@ body {
   gap: 8px;
 }
 
-/* KONTENER Z SCROLLEM DLA WIELU PRZEDMIOTÓW */
 .librus-table-container {
   overflow-x: auto;
   margin-bottom: 15px;
@@ -187,7 +186,7 @@ body {
 table.librus-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 1200px; /* Wymuszenie szerokości dla ładnego przewijania w poziomie */
+  min-width: 1350px; /* Szerokość dostosowana pod 9 przedmiotów + frekwencja */
 }
 
 table.librus-table th {
@@ -329,7 +328,7 @@ table.librus-table tr:nth-child(even) {
     
     <div class="info-alert">
       <i class="fa-solid fa-circle-info" style="font-size:16px; color:#dd6b20;"></i>
-      <span><strong>Panel Bezpośredni:</strong> Rozbudowano arkusze o dodatkowe przedmioty kierunkowe. Użyj dolnego suwaka tabeli, aby zobaczyć wszystkie kolumny.</span>
+      <span><strong>Panel Zaktualizowany:</strong> Wszystkie 9 przedmiotów szkolnych zostało poprawnie załadowanych z przykładowymi ocenami startowymi.</span>
     </div>
 
     <div class="section-grid">
@@ -353,7 +352,7 @@ table.librus-table tr:nth-child(even) {
                   <th>Historia</th>
                   <th>Informatyka</th>
                   <th>WF</th>
-                  <th style="min-width: 110px;">Frekwencja</th>
+                  <th style="min-width: 150px;">Frekwencja</th>
                 </tr>
               </thead>
               <tbody id="gradesTableBody"></tbody>
@@ -390,3 +389,4 @@ table.librus-table tr:nth-child(even) {
             </div>
 
             <!-- OBECNOŚĆ -->
+            <h4><i class="fa-solid fa-clipboard-user" style="color:var(--librus-blue)"></i> Sprawdzanie listy obecności na lekcji</h4>
