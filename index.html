@@ -4,124 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Dziennik | Portal Ucznia</title>
-    <!-- Nowoczesna czcionka i ikony -->
-    <link href="https://googleapis.com" rel="stylesheet">
-    <link rel="stylesheet" href="https://cloudflare.com">
-    
     <style>
-        /* --- ZMIENNE I RESET --- */
+        /* --- ZMIENNE I KOLORY --- */
         :root {
-            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --card-bg: rgba(255, 255, 255, 0.95);
+            --bg-color: #ebf0f7;
+            --card-bg: #ffffff;
             --primary: #4a6cf7;
             --success: #2ed573;
             --danger: #ff4757;
             --warning: #ffa502;
             --text-main: #2f3542;
             --text-muted: #747d8c;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --radius: 16px;
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: Arial, sans-serif;
         }
 
         body {
-            background: var(--bg-gradient);
+            background-color: var(--bg-color);
             color: var(--text-main);
-            min-height: 100vh;
-            padding: 2rem;
+            padding: 20px;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
         }
 
-        /* --- KONTENER GŁÓWNY --- */
+        /* --- UKŁAD STRONY --- */
         .dashboard {
             width: 100%;
-            max-width: 1400px;
+            max-width: 1200px;
             display: grid;
             grid-template-columns: repeat(12, 1fr);
-            gap: 1.5rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInMain 0.8s var(--transition) forwards;
+            gap: 20px;
+            /* Płynne wejście całej strony */
+            animation: fadeIn 0.6s ease-out forwards;
         }
 
-        /* --- NAGŁÓWEK --- */
         header {
             grid-column: span 12;
             background: var(--card-bg);
-            padding: 1.5rem 2rem;
+            padding: 20px;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            backdrop-filter: blur(10px);
         }
 
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .avatar {
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(74, 108, 247, 0.3);
-        }
-
-        /* --- WSPÓLNE STYLE KART --- */
+        /* --- BLOKI (KARTY) --- */
         .card {
             background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 1.5rem;
+            padding: 20px;
             box-shadow: var(--shadow);
-            backdrop-filter: blur(10px);
-            transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            overflow: hidden;
+            transition: transform 0.3s ease;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+            transform: translateY(-3px);
         }
 
         .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-main);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
             border-bottom: 2px solid #f1f2f6;
-            padding-bottom: 0.5rem;
+            color: var(--primary);
         }
 
-        /* --- SIATKA DIZANU (GRID LAYOUT) --- */
+        /* Rozmiary okien na komputerze */
         .col-grades { grid-column: span 8; }
         .col-attendance { grid-column: span 4; }
         .col-timetable { grid-column: span 7; }
         .col-notes { grid-column: span 5; }
 
-        @media (max-width: 1024px) {
+        /* Dostosowanie do telefonów */
+        @media (max-width: 900px) {
             .col-grades, .col-attendance, .col-timetable, .col-notes {
                 grid-column: span 12;
             }
@@ -134,162 +97,87 @@
         }
 
         .grades-table th, .grades-table td {
-            padding: 0.75rem 1rem;
+            padding: 10px;
             text-align: left;
-        }
-
-        .grades-table tr {
             border-bottom: 1px solid #f1f2f6;
-            transition: var(--transition);
-        }
-
-        .grades-table tbody tr:hover {
-            background-color: rgba(7a, 108, 247, 0.04);
         }
 
         .grade-badge {
             display: inline-block;
-            width: 36px;
-            height: 36px;
-            line-height: 36px;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
             text-align: center;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-right: 0.4rem;
-            cursor: pointer;
-            transition: var(--transition);
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-right: 5px;
+            transition: transform 0.2s;
+            animation: popIn 0.4s ease-out backwards;
         }
 
-        .grade-badge:hover {
-            transform: scale(1.15);
-        }
-
-        .g-good { background: rgba(46, 213, 115, 0.15); color: var(--success); }
-        .g-avg { background: rgba(255, 165, 2, 0.15); color: var(--warning); }
-        .g-bad { background: rgba(255, 71, 87, 0.15); color: var(--danger); }
+        .grade-badge:hover { transform: scale(1.2); }
+        .g-good { background: #e3fcef; color: var(--success); }
+        .g-avg { background: #fff4e5; color: var(--warning); }
+        .g-bad { background: #ffe5e5; color: var(--danger); }
 
         /* --- OBECNOŚĆ --- */
         .attendance-stats {
             display: flex;
             justify-content: space-around;
-            margin-bottom: 1.5rem;
+            margin-bottom: 15px;
             text-align: center;
         }
 
-        .stat-circle {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .attendance-list {
-            list-style: none;
-        }
-
+        .stat-num { font-size: 1.6rem; font-weight: bold; color: var(--primary); }
         .attendance-item {
             display: flex;
             justify-content: space-between;
-            padding: 0.6rem 0;
+            padding: 8px 0;
             border-bottom: 1px dashed #e4e7eb;
-            font-size: 0.9rem;
         }
-
-        .status {
-            font-weight: 500;
-        }
-        .status.present { color: var(--success); }
-        .status.absent { color: var(--danger); }
 
         /* --- PLAN LEKCJI --- */
-        .tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
+        .tabs { display: flex; gap: 5px; margin-bottom: 15px; }
         .tab-btn {
-            background: #f1f2f6;
+            background: #e4e7eb;
             border: none;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
+            padding: 6px 12px;
+            border-radius: 6px;
             cursor: pointer;
-            font-weight: 500;
-            transition: var(--transition);
+            font-weight: bold;
         }
-
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--primary);
-            color: white;
-        }
-
+        .tab-btn.active, .tab-btn:hover { background: var(--primary); color: white; }
         .timetable-row {
             display: grid;
-            grid-template-columns: 80px 1fr 120px;
-            padding: 0.75rem 0.5rem;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-            transition: var(--transition);
+            grid-template-columns: 100px 1fr 80px;
+            padding: 8px 5px;
+            border-bottom: 1px solid #f1f2f6;
         }
 
-        .timetable-row:hover {
-            background: #f8f9fa;
-            padding-left: 1rem;
-        }
-
-        .time { color: var(--text-muted); font-size: 0.85rem; }
-        .subject { font-weight: 500; }
-        .room { text-align: right; color: var(--text-muted); font-size: 0.85rem; }
-
-        /* --- UWAGI I POCHWAŁY --- */
+        /* --- UWAGI --- */
         .note-item {
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
             border-left: 4px solid;
-            animation: slideIn 0.6s var(--transition) backwards;
+            animation: slideIn 0.4s ease-out backwards;
         }
+        .note-item.praise { background: #e3fcef; border-color: var(--success); }
+        .note-item.reprimand { background: #ffe5e5; border-color: var(--danger); }
 
-        .note-item.praise {
-            background: rgba(46, 213, 115, 0.08);
-            border-color: var(--success);
-        }
-
-        .note-item.reprimand {
-            background: rgba(255, 71, 87, 0.08);
-            border-color: var(--danger);
-        }
-
-        .note-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 0.4rem;
-        }
-
-        .note-teacher { font-weight: 600; color: var(--text-main); }
-
-        /* --- ANIMACJE (KEYFRAMES) --- */
-        @keyframes fadeInMain {
+        /* --- ANIMACJE KROK PO KROKU --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes popIn {
-            from { opacity: 0; transform: scale(0.5); }
+            from { opacity: 0; transform: scale(0.7); }
             to { opacity: 1; transform: scale(1); }
         }
-
         @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
+            from { opacity: 0; transform: translateX(-10px); }
             to { opacity: 1; transform: translateX(0); }
         }
-
-        /* Opóźnienia dla płynnego efektu ładowania */
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
@@ -298,31 +186,100 @@
         
         <!-- NAGŁÓWEK -->
         <header>
-            <div class="user-profile">
-                <div class="avatar">JK</div>
-                <div>
-                    <h2>Jan Kowalski</h2>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Klasa 3A • Profil Matematyczno-Informatyczny</p>
-                </div>
+            <div>
+                <h2>Jan Kowalski</h2>
+                <p style="color: var(--text-muted);">Klasa 3A • Portal Ucznia</p>
             </div>
             <div style="text-align: right;">
-                <p id="live-date" style="font-weight: 500;"></p>
-                <p style="color: var(--success); font-size: 0.85rem;"><i class="fa-solid fa-circle"></i> Połączono online</p>
+                <p id="live-date" style="font-weight: bold;"></p>
+                <p style="color: var(--success);">● System aktywny</p>
             </div>
         </header>
 
-        <!-- KARTA: OCENY -->
+        <!-- OCENY -->
         <section class="card col-grades">
-            <h3 class="card-title"><i class="fa-solid fa-graduation-cap" style="color: var(--primary);"></i> Ostatnie Oceny</h3>
+            <h3 class="card-title">📝 Oceny cząstkowe</h3>
             <table class="grades-table">
                 <thead>
                     <tr>
                         <th>Przedmiot</th>
-                        <th>Oceny cząstkowe</th>
+                        <th>Oceny</th>
                         <th>Średnia</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="subject">Matematyka</td>
+                        <td><b>Matematyka</b></td>
                         <td>
+                            <span class="grade-badge g-good" style="animation-delay: 0.1s;">5</span>
+                            <span class="grade-badge g-good" style="animation-delay: 0.2s;">4</span>
+                            <span class="grade-badge g-bad" style="animation-delay: 0.3s;">2</span>
+                        </td>
+                        <td><b>3.66</b></td>
+                    </tr>
+                    <tr>
+                        <td><b>Język Angielski</b></td>
+                        <td>
+                            <span class="grade-badge g-good" style="animation-delay: 0.2s;">6</span>
+                            <span class="grade-badge g-good" style="animation-delay: 0.3s;">5</span>
+                        </td>
+                        <td><b>5.50</b></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- OBECNOŚĆ -->
+        <section class="card col-attendance">
+            <h3 class="card-title">📅 Frekwencja</h3>
+            <div class="attendance-stats">
+                <div>
+                    <div class="stat-num">94%</div>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">Obecności</p>
+                </div>
+                <div>
+                    <div class="stat-num" style="color: var(--danger);">2</div>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">Ucieczki</p>
+                </div>
+            </div>
+            <div class="attendance-item">
+                <span>02.06 - Matematyka</span>
+                <span style="color: var(--success); font-weight: bold;">Obecny</span>
+            </div>
+            <div class="attendance-item">
+                <span>01.06 - Fizyka</span>
+                <span style="color: var(--danger); font-weight: bold;">Nieobecny</span>
+            </div>
+        </section>
+
+        <!-- PLAN LEKCJI -->
+        <section class="card col-timetable">
+            <h3 class="card-title">🕒 Plan lekcji</h3>
+            <div class="tabs">
+                <button class="tab-btn active">Pon</button>
+                <button class="tab-btn">Wt</button>
+                <button class="tab-btn">Śr</button>
+                <button class="tab-btn">Czw</button>
+                <button class="tab-btn">Pt</button>
+            </div>
+            <div class="timetable-row">
+                <span style="color: var(--text-muted);">08:00 - 08:45</span>
+                <span><b>Matematyka</b></span>
+                <span style="color: var(--text-muted); text-align: right;">S. 204</span>
+            </div>
+            <div class="timetable-row">
+                <span style="color: var(--text-muted);">08:55 - 09:40</span>
+                <span><b>Informatyka</b></span>
+                <span style="color: var(--text-muted); text-align: right;">Lab 12</span>
+            </div>
+        </section>
+
+        <!-- UWAGI -->
+        <section class="card col-notes">
+            <h3 class="card-title">🔔 Uwagi i Pochwały</h3>
+            <div class="note-item praise" style="animation-delay: 0.1s;">
+                <p style="font-size: 0.8rem; color: var(--text-muted);">28.05 - mgr A. Nowak</p>
+                <p><b>Pochwała:</b> Pomoc przy naprawie komputera w sali.</p>
+            </div>
+            <div class="note-item reprimand" style="animation-delay: 0.2s;">
+                <p style="font-size: 0.8rem; color: var(--text-muted);">15.05 - dr J. Kowal</p>
