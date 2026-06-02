@@ -1,438 +1,304 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Librus Synergia - Portal Edukacyjny (Panel Nauczyciela)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Librus Synergia - Panel Nauczyciela</title>
+    <style>
+        :root {
+            --librus-blue: #1a5276;
+            --librus-light-blue: #2980b9;
+            --librus-bg: #f4f6f7;
+            --librus-panel: #ffffff;
+            --text-color: #2c3e50;
+            --border-color: #bdc3c7;
+            --presence-ob: #2ecc71;
+            --presence-nb: #e74c3c;
+            --presence-sp: #f1c40f;
+            --presence-u: #9b59b6;
+        }
 
-<!-- Biblioteka ikon FontAwesome -->
-<link rel="stylesheet" href="https://cloudflare.com">
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<style>
-:root {
-  --librus-navy: #1a365d;       /* Oficjalny granat Librusa */
-  --librus-blue: #2b6cb0;       /* Jasny niebieski Librusa */
-  --librus-light-blue: #ebf8ff; /* Tło zaznaczenia */
-  --librus-gray-bg: #f7fafc;    /* Główne tło portalu */
-  --librus-border: #e2e8f0;     /* Kolor linii i ramek */
-  --text-dark: #2d3748;         /* Główny kolor tekstu */
-  --text-muted: #718096;        /* Pomocniczy kolor tekstu */
-  --accent-green: #38a169;      /* Kolor obecności i pochwał */
-  --accent-red: #e53e3e;        /* Kolor nieobecności i uwag */
-  --accent-yellow: #d69e2e;     /* Kolor usprawiedliwienia */
-  --accent-purple: #805ad5;     /* Kolor spóźnienia */
-}
+        body {
+            background-color: var(--librus-bg);
+            color: var(--text-color);
+            padding: 20px;
+        }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
+        header {
+            background-color: var(--librus-blue);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
 
-body {
-  background: var(--librus-gray-bg);
-  color: var(--text-dark);
-  font-size: 14px;
-}
+        h1 { font-size: 24px; }
+        h2 { font-size: 18px; margin-bottom: 15px; color: var(--librus-blue); border-bottom: 2px solid var(--librus-blue); padding-bottom: 5px; }
 
-/* GÓRNY PASEK NAWIGACJI LIBRUS */
-.navbar {
-  background: var(--librus-navy);
-  color: white;
-  padding: 0 20px;
-  height: 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+        .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
 
-.navbar-brand {
-  font-size: 18px;
-  font-weight: bold;
-}
+        @media(min-width: 992px) {
+            .container {
+                grid-template-columns: 1fr 3fr;
+            }
+        }
 
-.navbar-brand span {
-  color: #ff7a00;
-}
+        .panel {
+            background: var(--librus-panel);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid #e0e0e0;
+        }
 
-.user-info-bar {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  font-size: 13px;
-}
+        /* Plan lekcji */
+        .timetable-day {
+            margin-bottom: 15px;
+        }
+        .timetable-day strong {
+            display: block;
+            color: var(--librus-light-blue);
+            margin-bottom: 5px;
+        }
+        .timetable-item {
+            font-size: 13px;
+            padding: 6px 10px;
+            background: #f8f9fa;
+            border-left: 3px solid var(--librus-light-blue);
+            margin-bottom: 4px;
+            border-radius: 0 4px 4px 0;
+        }
 
-.user-info-bar strong {
-  color: #fff;
-}
+        /* Tabele */
+        .table-responsive {
+            overflow-x: auto;
+        }
 
-/* UKŁAD STRONY Z PANELAMI */
-.main-layout {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  min-height: calc(100vh - 60px);
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: white;
+        }
 
-@media (max-width: 992px) {
-  .main-layout {
-    grid-template-columns: 1fr;
-  }
-}
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: left;
+            font-size: 14px;
+        }
 
-/* LEWE MENU */
-.sub-sidebar {
-  background: #edf2f7;
-  border-right: 1px solid var(--librus-border);
-  padding: 20px 0;
-}
+        th {
+            background-color: #ebf5fb;
+            color: var(--librus-blue);
+            font-weight: 600;
+        }
 
-.menu-section-title {
-  padding: 0 20px;
-  font-size: 11px;
-  font-weight: bold;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: 8px;
-  letter-spacing: 0.5px;
-}
+        tr:nth-child(even) {
+            background-color: #f9fbfd;
+        }
 
-.class-nav-link {
-  display: block;
-  width: 100%;
-  padding: 12px 20px;
-  background: transparent;
-  border: none;
-  text-align: left;
-  color: var(--text-dark);
-  font-size: 14px;
-  cursor: pointer;
-  border-left: 4px solid transparent;
-  transition: all 0.2s;
-}
+        /* Ocenianie i Uwagi */
+        .grade-badge {
+            display: inline-block;
+            background: #e1e8ed;
+            padding: 3px 8px;
+            margin: 2px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .input-group {
+            display: flex;
+            gap: 5px;
+        }
+        input[type="text"], select, textarea {
+            padding: 6px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        input[type="text"] { width: 60px; text-align: center; }
+        textarea { width: 100%; resize: vertical; height: 32px; }
 
-.class-nav-link:hover {
-  background: rgba(0,0,0,0.03);
-}
+        button {
+            background-color: var(--librus-light-blue);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        button:hover { background-color: var(--librus-blue); }
 
-.class-nav-link.active {
-  background: white;
-  border-left-color: var(--librus-blue);
-  color: var(--librus-blue);
-  font-weight: bold;
-}
+        /* Obecność (style jak w Librusie) */
+        .presence-select {
+            font-weight: bold;
+            padding: 5px;
+            border-radius: 4px;
+            color: white;
+        }
+        .p-ob { background-color: var(--presence-ob); border-color: #27ae60; color: white; }
+        .p-nb { background-color: var(--presence-nb); border-color: #c0392b; color: white; }
+        .p-sp { background-color: var(--presence-sp); border-color: #f39c12; color: #333; }
+        .p-u { background-color: var(--presence-u); border-color: #8e44ad; color: white; }
 
-/* CENTRUM SYSTEMU */
-.content-wrapper {
-  padding: 25px;
-}
-
-.info-alert {
-  background: #fffaf0;
-  border: 1px solid #feebc8;
-  border-left: 4px solid #dd6b20;
-  padding: 12px 15px;
-  border-radius: 4px;
-  margin-bottom: 25px;
-  font-size: 13px;
-  color: #744210;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.section-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 25px;
-}
-
-/* SZKOLNE KARTY I TABELE */
-.librus-card {
-  background: white;
-  border: 1px solid var(--librus-border);
-  border-radius: 4px;
-  padding: 20px;
-  margin-bottom: 25px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-.librus-card h3 {
-  font-size: 16px;
-  color: var(--librus-navy);
-  border-bottom: 2px solid var(--librus-navy);
-  padding-bottom: 10px;
-  margin-bottom: 15px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.librus-table-container {
-  overflow-x: auto;
-  margin-bottom: 15px;
-  border: 1px solid var(--librus-border);
-  border-radius: 3px;
-}
-
-table.librus-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 1000px;
-}
-
-table.librus-table th {
-  background: #f1f5f9;
-  color: var(--librus-navy);
-  font-weight: bold;
-  font-size: 12px;
-  padding: 10px;
-  border: 1px solid var(--librus-border);
-  text-align: left;
-}
-
-table.librus-table td {
-  padding: 10px;
-  border: 1px solid var(--librus-border);
-  vertical-align: middle;
-}
-
-table.librus-table tr:nth-child(even) {
-  background: #f8fafc;
-}
-
-/* ODZNAKI OCEN I FREKWENCJI */
-.grade-item {
-  display: inline-block;
-  background: #edf2f7;
-  color: #2d3748;
-  font-weight: bold;
-  font-size: 12px;
-  width: 24px;
-  height: 24px;
-  line-height: 24px;
-  text-align: center;
-  border-radius: 3px;
-  margin-right: 3px;
-  margin-bottom: 3px;
-  border: 1px solid #cbd5e0;
-}
-
-.att-badge {
-  display: inline-block;
-  font-weight: bold;
-  font-size: 11px;
-  padding: 2px 6px;
-  border-radius: 3px;
-  color: white;
-  margin-right: 3px;
-}
-.att-o { background: var(--accent-green); }
-.att-n { background: var(--accent-red); }
-.att-u { background: var(--accent-yellow); }
-.att-s { background: var(--accent-purple); }
-
-/* SYSTEM WPISYWANIA OCEN I AKTUALIZACJI */
-.form-box {
-  background: #f7fafc;
-  border: 1px solid var(--librus-border);
-  padding: 15px;
-  border-radius: 4px;
-  margin-top: 15px;
-}
-
-.form-box h4 {
-  font-size: 13px;
-  color: var(--librus-navy);
-  margin-bottom: 12px;
-  font-weight: bold;
-}
-
-.inline-inputs {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.inline-inputs select, .inline-inputs input {
-  padding: 8px 12px;
-  border: 1px solid #cbd5e0;
-  border-radius: 3px;
-  font-size: 13px;
-  background: white;
-  flex: 1;
-  min-width: 140px;
-}
-
-.action-submit-btn {
-  padding: 8px 16px;
-  background: var(--librus-blue);
-  color: white;
-  border: none;
-  border-radius: 3px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.action-submit-btn:hover {
-  background: var(--librus-navy);
-}
-
-/* UWAGI I POCHWAŁY */
-.remark-row {
-  padding: 10px 12px;
-  border-radius: 3px;
-  margin-bottom: 10px;
-  font-size: 13px;
-  border: 1px solid var(--librus-border);
-}
-.rem-neg { background: #fff5f5; border-left: 4px solid var(--accent-red); }
-.rem-pos { background: #f0fff4; border-left: 4px solid var(--accent-green); }
-
-/* ARCHITEKTURA PLANU LEKCJI (KLASA 6) */
-.timetable-grid {
-  display: grid;
-  grid-template-columns: 80px repeat(5, 1fr);
-  border: 1px solid var(--librus-border);
-  background: #fff;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.timetable-header {
-  background: var(--librus-navy);
-  color: white;
-  padding: 12px 5px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 12px;
-  border-right: 1px solid rgba(255,255,255,0.1);
-}
-
-.timetable-time-cell {
-  background: #f1f5f9;
-  padding: 10px 5px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 11px;
-  border-bottom: 1px solid var(--librus-border);
-  border-right: 1px solid var(--librus-border);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.timetable-time-cell span {
-  color: var(--text-muted);
-  font-weight: normal;
-  font-size: 10px;
-}
-
-.timetable-cell {
-  padding: 10px;
-  border-bottom: 1px solid var(--librus-border);
-  border-right: 1px solid var(--librus-border);
-  min-height: 55px;
-  background: #fff;
-}
-
-.timetable-cell:nth-child(6n) {
-  border-right: none;
-}
-
-.subject-tag {
-  font-weight: bold;
-  color: var(--librus-blue);
-  font-size: 12px;
-  margin-bottom: 2px;
-}
-
-.room-tag {
-  font-size: 11px;
-  color: var(--text-muted);
-}
-
-.empty-cell {
-  background: #fafafa;
-  color: #cbd5e0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-style: italic;
-  font-size: 11px;
-}
-</style>
+        .summary-box {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #555;
+            background: #eef6f9;
+            padding: 10px;
+            border-radius: 6px;
+        }
+    </style>
 </head>
 <body>
 
-<!-- GÓRNY PASEK -->
-<div class="navbar">
-  <div class="navbar-brand">
-    LIBRUS <span>Synergia</span>
-  </div>
-  <div class="user-info-bar">
-    <div>Zalogowany: <strong>mgr Ekaterina Kowalczyk</strong> (Nauczyciel / Wychowawca klasy 6A)</div>
-  </div>
-</div>
+    <header>
+        <div>
+            <h1>LIBRUS synergia</h1>
+            <small>Widok nauczyciela | Klasa 1A</small>
+        </div>
+        <div>
+            <strong>Zalogowany: mgr Jan Kowalski</strong>
+        </div>
+    </header>
 
-<!-- UKŁAD STRONY -->
-<div class="main-layout">
-  
-  <!-- LEWY SIDEBAR -->
-  <div class="sub-sidebar">
-    <div class="menu-section-title">Oddziały / Klasy 6</div>
-    <div id="classButtonsContainer">
-      <button class="class-nav-link active" id="btn-6A" onclick="switchClass('6A')"><i class="fa-solid fa-folder" style="margin-right:6px;"></i> Klasa 6A</button>
-      <button class="class-nav-link" id="btn-6B" onclick="switchClass('6B')"><i class="fa-solid fa-folder" style="margin-right:6px;"></i> Klasa 6B</button>
-    </div>
-  </div>
-
-  <!-- CENTRUM ZAWARTOŚCI -->
-  <div class="content-wrapper">
-    
-    <div class="info-alert">
-      <i class="fa-solid fa-circle-info" style="font-size:16px; color:#dd6b20;"></i>
-      <span><strong>Panel Zaktualizowany:</strong> Załadowano oficjalny plan lekcji, oceny oraz frekwencję dla <strong>Klasy 6</strong>. Wybierz ucznia, aby zmodyfikować dane.</span>
-    </div>
-
-    <div class="section-grid">
-      
-      <!-- KARTA 1: DZIENNIK KLASOWY -->
-      <div class="librus-card">
-        <h3 id="tableTitle"><i class="fa-solid fa-table"></i> Oceny i frekwencja - Klasa 6A</h3>
+    <div class="container">
         
-        <div class="librus-table-container">
-          <table class="librus-table">
-            <thead>
-              <tr>
-                <th style="min-width: 180px;">Nazwisko i imię ucznia</th>
-                <th>J. polski</th>
-                <th>Matematyka</th>
-                <th>J. angielski</th>
-                <th>Historia</th>
-                <th>Biologia</th>
-                <th>Geografia</th>
-                <th>Informatyka</th>
-                <th>Technika</th>
-                <th>WF</th>
-                <th style="min-width: 130px;">Frekwencja</th>
-              </tr>
-            </thead>
-            <tbody id="gradesTableBody">
-              <!-- Generowane przez JavaScript -->
-            </tbody>
-          </table>
+        <!-- LEWY PANEL: PLAN LEKCJI -->
+        <div class="panel">
+            <h2>Mój Plan Lekcji (Wymyślony)</h2>
+            <div id="timetable">
+                <!-- Generowane przez JS -->
+            </div>
         </div>
 
-        <!-- SZYBKIE ZARZĄDZANIE DZIENNIKIEM -->
-        <div class="form-box">
-          <h4><i class="fa-solid fa-pen-to-square"></i> Dodaj ocenę lub zmień frekwencję</h4>
-          <div class="inline-inputs">
-            <select id="studentSelect">
-              <!-- Generowane dynamicznie -->
-            </select>
-            <select id="subjectSelect">
-              <option value="polski">J. polski</option>
+        <!-- PRAWY PANEL: DZIENNIK KLASOWY -->
+        <div class="panel">
+            <h2>Dziennik Lekcyjny - 12 Uczniów</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">LP</th>
+                            <th style="width: 20%;">Imię i Nazwisko</th>
+                            <th style="width: 15%;">Obecność</th>
+                            <th style="width: 25%;">Oceny</th>
+                            <th style="width: 35%;">Uwagi i Pochwały</th>
+                        </tr>
+                    </thead>
+                    <tbody id="students-table-body">
+                        <!-- Generowane przez JS -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="summary-box">
+                * Dane zapisują się automatycznie w przeglądarce po zmianie statusu obecności, wpisaniu oceny lub dodaniu uwagi.
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Lista 12 uczniów
+        const students = [
+            "Baran Arkadiusz", "Czarnecka Barbara", "Duda Dariusz", "Głowacka Ewa",
+            "Jankowski Filip", "Kaczmarek Hanna", "Lewandowski Igor", "Michalak Julia",
+            "Nowak Kamil", "Piotrowska Lena", "Szymański Mateusz", "Woźniak Natalia"
+        ];
+
+        // Przykładowy plan lekcji
+        const timetableData = {
+            "Poniedziałek": ["1. Matematyka", "2. Matematyka", "3. J. polski"],
+            "Wtorek": ["1. J. angielski", "2. Historia", "3. Biologia"],
+            "Środa": ["2. J. polski", "3. Geografia", "4. Informatyka"],
+            "Czwartek": ["1. W-F", "2. W-F", "3. Chemia"],
+            "Piątek": ["2. Fizyka", "3. Godzina wychowawcza"]
+        };
+
+        // Ładowanie bazy danych z localStorage lub tworzenie nowej
+        let librusData = JSON.parse(localStorage.getItem('librus_db')) || {};
+
+        // Inicjalizacja bazy jeśli pusta
+        students.forEach((name, index) => {
+            if (!librusData[index]) {
+                librusData[index] = {
+                    name: name,
+                    presence: "ob",
+                    grades: [4, 5, 3], // Przykładowe startowe oceny
+                    remarks: []
+                };
+            }
+        });
+
+        function saveToStorage() {
+            localStorage.setItem('librus_db', JSON.stringify(librusData));
+        }
+
+        // Renderowanie planu lekcji
+        function renderTimetable() {
+            const container = document.getElementById('timetable');
+            let html = '';
+            for (const [day, lessons] of Object.entries(timetableData)) {
+                html += `<div class="timetable-day"><strong>${day}</strong>`;
+                lessons.forEach(lesson => {
+                    html += `<div class="timetable-item">${lesson}</div>`;
+                });
+                html += `</div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        // Zmiana koloru selecta obecności zależnie od wyboru
+        function updateSelectColor(selectElement) {
+            selectElement.className = 'presence-select';
+            if(selectElement.value === 'ob') selectElement.classList.add('p-ob');
+            if(selectElement.value === 'nb') selectElement.classList.add('p-nb');
+            if(selectElement.value === 'sp') selectElement.classList.add('p-sp');
+            if(selectElement.value === 'u') selectElement.classList.add('p-u');
+        }
+
+        // Funkcje obsługi danych uczniów
+        window.changePresence = function(index, value) {
+            librusData[index].presence = value;
+            saveToStorage();
+            const select = document.getElementById(`pres-${index}`);
+            updateSelectColor(select);
+        };
+
+        window.addGrade = function(index) {
+            const input = document.getElementById(`grade-input-${index}`);
+            const val = input.value.trim();
+            if(val) {
+                librusData[index].grades.push(val);
+                saveToStorage();
+                input.value = '';
+                renderStudents();
+            }
+        };
+
+        window.addRemark = function(index) {
+            const textarea = document.getElementById(`remark-input-${index}`);
+            const type = document.getElementById(`remark-type-${index}`).value;
+            const text = textarea.value.trim();
+            if(text) {
+                const prefix = type === 'pochwala' ? '[POCHWAŁA]' : '[UWAGA]';
