@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Librus Synergia - Portal Edukacyjny (Panel Nauczyciela)</title>
 
-<!-- Biblioteki zewnętrzne: Wykresy oraz Profesjonalne Ikony -->
-<script src="https://jsdelivr.net"></script>
+<!-- Biblioteka ikon FontAwesome -->
 <link rel="stylesheet" href="https://cloudflare.com">
 
 <style>
@@ -72,11 +71,11 @@ body {
 /* UKŁAD STRONY Z PANELAMI */
 .main-layout {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 240px 1fr;
   min-height: calc(100vh - 60px);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 992px) {
   .main-layout {
     grid-template-columns: 1fr;
   }
@@ -110,6 +109,7 @@ body {
   font-size: 14px;
   cursor: pointer;
   border-left: 4px solid transparent;
+  transition: all 0.2s;
 }
 
 .class-nav-link:hover {
@@ -144,14 +144,8 @@ body {
 
 .section-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr;
   gap: 25px;
-}
-
-@media (max-width: 1100px) {
-  .section-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* SZKOLNE KARTY I TABELE */
@@ -186,7 +180,7 @@ body {
 table.librus-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 1350px; /* Szerokość dostosowana pod 9 przedmiotów + frekwencja */
+  min-width: 1000px;
 }
 
 table.librus-table th {
@@ -240,13 +234,13 @@ table.librus-table tr:nth-child(even) {
 .att-u { background: var(--accent-yellow); }
 .att-s { background: var(--accent-purple); }
 
-/* FORMULARZE */
+/* SYSTEM WPISYWANIA OCEN I AKTUALIZACJI */
 .form-box {
   background: #f7fafc;
   border: 1px solid var(--librus-border);
   padding: 15px;
   border-radius: 4px;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .form-box h4 {
@@ -297,6 +291,79 @@ table.librus-table tr:nth-child(even) {
 }
 .rem-neg { background: #fff5f5; border-left: 4px solid var(--accent-red); }
 .rem-pos { background: #f0fff4; border-left: 4px solid var(--accent-green); }
+
+/* ARCHITEKTURA PLANU LEKCJI (KLASA 6) */
+.timetable-grid {
+  display: grid;
+  grid-template-columns: 80px repeat(5, 1fr);
+  border: 1px solid var(--librus-border);
+  background: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.timetable-header {
+  background: var(--librus-navy);
+  color: white;
+  padding: 12px 5px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 12px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.timetable-time-cell {
+  background: #f1f5f9;
+  padding: 10px 5px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 11px;
+  border-bottom: 1px solid var(--librus-border);
+  border-right: 1px solid var(--librus-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.timetable-time-cell span {
+  color: var(--text-muted);
+  font-weight: normal;
+  font-size: 10px;
+}
+
+.timetable-cell {
+  padding: 10px;
+  border-bottom: 1px solid var(--librus-border);
+  border-right: 1px solid var(--librus-border);
+  min-height: 55px;
+  background: #fff;
+}
+
+.timetable-cell:nth-child(6n) {
+  border-right: none;
+}
+
+.subject-tag {
+  font-weight: bold;
+  color: var(--librus-blue);
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+.room-tag {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.empty-cell {
+  background: #fafafa;
+  color: #cbd5e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: italic;
+  font-size: 11px;
+}
 </style>
 </head>
 <body>
@@ -307,7 +374,7 @@ table.librus-table tr:nth-child(even) {
     LIBRUS <span>Synergia</span>
   </div>
   <div class="user-info-bar">
-    <div>Zalogowany: <strong>mgr Ekaterina Kowalczyk</strong> (Nauczyciel / Wychowawca)</div>
+    <div>Zalogowany: <strong>mgr Ekaterina Kowalczyk</strong> (Nauczyciel / Wychowawca klasy 6A)</div>
   </div>
 </div>
 
@@ -316,10 +383,10 @@ table.librus-table tr:nth-child(even) {
   
   <!-- LEWY SIDEBAR -->
   <div class="sub-sidebar">
-    <div class="menu-section-title">Oddziały / Klasy</div>
+    <div class="menu-section-title">Oddziały / Klasy 6</div>
     <div id="classButtonsContainer">
-      <button class="class-nav-link active" id="btn-3a" onclick="switchClass('3A')"><i class="fa-solid fa-folder" style="margin-right:6px;"></i> Klasa 3A</button>
-      <button class="class-nav-link" id="btn-3b" onclick="switchClass('3B')"><i class="fa-solid fa-folder" style="margin-right:6px;"></i> Klasa 3B</button>
+      <button class="class-nav-link active" id="btn-6A" onclick="switchClass('6A')"><i class="fa-solid fa-folder" style="margin-right:6px;"></i> Klasa 6A</button>
+      <button class="class-nav-link" id="btn-6B" onclick="switchClass('6B')"><i class="fa-solid fa-folder" style="margin-right:6px;"></i> Klasa 6B</button>
     </div>
   </div>
 
@@ -328,65 +395,44 @@ table.librus-table tr:nth-child(even) {
     
     <div class="info-alert">
       <i class="fa-solid fa-circle-info" style="font-size:16px; color:#dd6b20;"></i>
-      <span><strong>Panel Zaktualizowany:</strong> Wszystkie 9 przedmiotów szkolnych zostało poprawnie załadowanych z przykładowymi ocenami startowymi.</span>
+      <span><strong>Panel Zaktualizowany:</strong> Załadowano oficjalny plan lekcji, oceny oraz frekwencję dla <strong>Klasy 6</strong>. Wybierz ucznia, aby zmodyfikować dane.</span>
     </div>
 
     <div class="section-grid">
       
-      <!-- LEWA STRONA: DZIENNIK -->
-      <div>
-        <div class="librus-card">
-          <h3 id="tableTitle"><i class="fa-solid fa-table"></i> Oceny i frekwencja - Klasa 3A</h3>
-          
-          <div class="librus-table-container">
-            <table class="librus-table">
-              <thead>
-                <tr>
-                  <th style="min-width: 180px;">Nazwisko i imię ucznia</th>
-                  <th>Matematyka</th>
-                  <th>J. polski</th>
-                  <th>J. angielski</th>
-                  <th>Geografia</th>
-                  <th>Biologia</th>
-                  <th>Chemia</th>
-                  <th>Historia</th>
-                  <th>Informatyka</th>
-                  <th>WF</th>
-                  <th style="min-width: 150px;">Frekwencja</th>
-                </tr>
-              </thead>
-              <tbody id="gradesTableBody"></tbody>
-            </table>
-          </div>
+      <!-- KARTA 1: DZIENNIK KLASOWY -->
+      <div class="librus-card">
+        <h3 id="tableTitle"><i class="fa-solid fa-table"></i> Oceny i frekwencja - Klasa 6A</h3>
+        
+        <div class="librus-table-container">
+          <table class="librus-table">
+            <thead>
+              <tr>
+                <th style="min-width: 180px;">Nazwisko i imię ucznia</th>
+                <th>J. polski</th>
+                <th>Matematyka</th>
+                <th>J. angielski</th>
+                <th>Historia</th>
+                <th>Biologia</th>
+                <th>Geografia</th>
+                <th>Informatyka</th>
+                <th>Technika</th>
+                <th>WF</th>
+                <th style="min-width: 130px;">Frekwencja</th>
+              </tr>
+            </thead>
+            <tbody id="gradesTableBody">
+              <!-- Generowane przez JavaScript -->
+            </tbody>
+          </table>
+        </div>
 
-          <!-- PANEL WPISYWANIA DANYCH -->
-          <div class="form-box">
-            
-            <!-- OCENY -->
-            <h4><i class="fa-solid fa-plus" style="color:var(--librus-blue)"></i> Wprowadzanie ocen do dziennika lekcyjnego</h4>
-            <div class="inline-inputs" style="border-bottom:1px solid var(--librus-border); padding-bottom:12px; margin-bottom:12px;">
-              <select id="formStudentSelect"></select>
-              <select id="formSubjectSelect">
-                <option value="math">Matematyka</option>
-                <option value="polish">Język polski</option>
-                <option value="english">Język angielski</option>
-                <option value="geography">Geografia</option>
-                <option value="biology">Biologia</option>
-                <option value="chemistry">Chemia</option>
-                <option value="history">Historia</option>
-                <option value="it">Informatyka</option>
-                <option value="pe">WF</option>
-              </select>
-              <select id="formGradeSelect">
-                <option value="6">6</option>
-                <option value="5">5</option>
-                <option value="4">4</option>
-                <option value="3">3</option>
-                <option value="2">2</option>
-                <option value="1">1</option>
-              </select>
-              <button class="action-submit-btn" onclick="addGradeFromForm()">Wpisz ocenę</button>
-            </div>
-
-            <!-- OBECNOŚĆ -->
-            <h4><i class="fa-solid fa-clipboard-user" style="color:var(--librus-blue)"></i> Sprawdzanie listy obecności na lekcji</h4>
+        <!-- SZYBKIE ZARZĄDZANIE DZIENNIKIEM -->
+        <div class="form-box">
+          <h4><i class="fa-solid fa-pen-to-square"></i> Dodaj ocenę lub zmień frekwencję</h4>
+          <div class="inline-inputs">
+            <select id="studentSelect">
+              <!-- Generowane dynamicznie -->
+            </select>
+            <select id="subjectSelect">
+              <option value="polski">J. polski</option>
