@@ -14,7 +14,7 @@
   --bg-main: #0f172a;
   --bg-sidebar: #1e293b;
   --bg-card: #334155;
-  --accent: #10b981; /* Librusowy zielony */
+  --accent: #10b981;
   --accent-hover: #059669;
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
@@ -34,7 +34,6 @@ body {
   overflow-x: hidden;
 }
 
-/* ANIMACJE */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
@@ -50,14 +49,12 @@ body {
   animation: fadeIn 0.4s ease forwards;
 }
 
-/* EKRAN LOGOWANIA */
 #loginScreen {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
-  padding: 20px;
 }
 
 .login-card {
@@ -66,7 +63,7 @@ body {
   padding: 40px;
   border-radius: 16px;
   width: 100%;
-  max-width: 440px;
+  max-width: 420px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.5);
   border: 1px solid rgba(255,255,255,0.1);
   text-align: center;
@@ -132,34 +129,6 @@ body {
   transform: translateY(-2px);
 }
 
-.credentials-box {
-  margin-top: 20px;
-  background: rgba(15, 23, 42, 0.6);
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 12px;
-  text-align: left;
-  border: 1px solid rgba(255,255,255,0.05);
-}
-
-.credentials-box h4 {
-  color: var(--text-main);
-  margin-bottom: 8px;
-  font-size: 13px;
-  text-align: center;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  padding-bottom: 4px;
-}
-
-.cred-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-.cred-row span:first-child { color: var(--text-muted); }
-.cred-row span:last-child { color: var(--accent); font-family: monospace; font-weight: bold; }
-
-/* INTERFEJS GŁÓWNY */
 #app {
   display: none;
 }
@@ -169,7 +138,6 @@ body {
   height: 100vh;
 }
 
-/* PANEL BOCZNY */
 .sidebar {
   width: 260px;
   background: var(--bg-sidebar);
@@ -244,11 +212,11 @@ body {
   font-weight: bold;
   text-align: center;
 }
+
 .logout-btn:hover {
   background: #dc2626;
 }
 
-/* KONTENER GŁÓWNY */
 .main-content {
   flex: 1;
   padding: 25px;
@@ -256,7 +224,6 @@ body {
   background: var(--bg-main);
 }
 
-/* POWIADOMIENIA LIBRUS */
 .librus-notify {
   background: linear-gradient(135deg, #b91c1c, #ef4444);
   padding: 15px;
@@ -268,14 +235,13 @@ body {
   animation: pulseNotify 3s infinite ease-in-out;
 }
 
-/* STRUKTURA KART */
 .grid-2 {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .grid-2 {
     grid-template-columns: 1fr;
   }
@@ -300,7 +266,6 @@ body {
   gap: 8px;
 }
 
-/* TABELE I FORMULARZE */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -361,40 +326,14 @@ th {
   background: var(--accent-hover);
 }
 
-/* WIDOK UCZNIA */
-.student-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.stat-box {
-  background: var(--bg-sidebar);
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-  border: 1px solid rgba(255,255,255,0.05);
-}
-
-.stat-box h4 { color: var(--text-muted); font-size: 14px; margin-bottom: 5px; }
-.stat-box p { font-size: 28px; font-weight: bold; color: var(--accent); }
-
-/* LISTA UWAG */
-.remarks-list {
-  max-height: 250px;
-  overflow-y: auto;
-  font-size: 13px;
-}
 .remark-item {
   padding: 10px;
   border-radius: 6px;
   margin-bottom: 8px;
-  line-height: 1.4;
+  font-size: 14px;
 }
 .remark-negative { background: rgba(239, 68, 68, 0.15); border-left: 4px solid #ef4444; }
 .remark-positive { background: rgba(16, 185, 129, 0.15); border-left: 4px solid #10b981; }
-.remark-meta { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
 
 .admin-only {
   display: none;
@@ -413,27 +352,18 @@ th {
     
     <div class="input-group">
       <label>Konto (Rola)</label>
-      <select id="loginRole" onchange="autofillPassword()">
+      <select id="loginRole">
+        <option value="teacher">👨‍🏫 Nauczyciel</option>
         <option value="director">🧑‍💼 Dyrektor</option>
-        <option value="teacher" selected>👨‍🏫 Nauczyciel</option>
-        <option value="student">👨‍🎓 Uczeń (Jan Kowalski)</option>
       </select>
     </div>
 
     <div class="input-group">
       <label>Hasło dostępowe</label>
-      <input type="password" id="loginPass" value="Szkoła3310" placeholder="Wpisz klucz autoryzacji">
+      <input type="password" id="loginPass" placeholder="Wpisz klucz autoryzacji">
     </div>
 
     <button class="login-btn" onclick="handleLogin()">Zaloguj się bezpiecznie</button>
-    
-    <!-- Centralna baza haseł -->
-    <div class="credentials-box">
-      <h4><i class="fa-solid fa-key"></i> Autoryzowane Hasła Systemowe</h4>
-      <div class="cred-row"><span>Rola Dyrektora:</span> <span>Szkoła1033</span></div>
-      <div class="cred-row"><span>Rola Nauczyciela:</span> <span>Szkoła3310</span></div>
-      <div class="cred-row"><span>Rola Ucznia:</span> <span>Szkoła1010</span></div>
-    </div>
   </div>
 </div>
 
@@ -441,7 +371,7 @@ th {
 <div id="app">
   <div class="layout">
     
-    <!-- PANEL BOCZNY -->
+    <!-- SIDEBAR -->
     <div class="sidebar">
       <div class="brand">
         <i class="fa-solid fa-graduation-cap" style="color:var(--accent)"></i> LIBRUS PRO
@@ -451,6 +381,56 @@ th {
         <span id="loggedUserRole">Rola w systemie</span>
       </div>
       
-      <div class="class-list" id="sidebarClassSection">
-        <h3><i class="fa-solid fa-users"></i> Menu / Klasy</h3>
+      <div class="class-list">
+        <h3><i class="fa-solid fa-users"></i> Klasy</h3>
         <div id="classButtonsContainer">
+          <button class="class-btn active" id="btn-3a" onclick="switchClass('3A')">Klasa 3A <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="class-btn" id="btn-3b" onclick="switchClass('3B')">Klasa 3B <i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+      
+      <button class="logout-btn" onclick="handleLogout()"><i class="fa-solid fa-sign-out-alt"></i> Wyloguj się</button>
+    </div>
+
+    <!-- ZAWARTOŚĆ GŁÓWNA -->
+    <div class="main-content">
+      
+      <div class="librus-notify">
+        <div>
+          <i class="fa-solid fa-circle-exclamation" style="margin-right:8px;"></i>
+          <span id="notifyText">Wymagane zatwierdzenie arkuszy ocen końcowych.</span>
+        </div>
+      </div>
+
+      <div class="card admin-only" id="directorPanel">
+        <h3><i class="fa-solid fa-lock-open" style="color:#3b82f6"></i> Panel Zarządzania Placówką</h3>
+        <p style="font-size:14px; margin-bottom:10px;">Tryb Administratora Głównego. Pełen podgląd logów szkolnych i modyfikacji struktury.</p>
+        <button class="btn-action" style="background:#3b82f6" onclick="alert('Generowanie pełnego raportu szkolnego PDF...')">Wygeneruj Raport Semestralny</button>
+      </div>
+
+      <div class="grid-2">
+        
+        <!-- KOLUMNA LEWA -->
+        <div>
+          <div class="card animated">
+            <h3 id="tableTitle"><i class="fa-solid fa-book"></i> Dziennik ocen - Klasa 3A</h3>
+            
+            <div style="overflow-x:auto;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Uczeń</th>
+                    <th>Matematyka</th>
+                    <th>J. Polski</th>
+                    <th>J. Angielski</th>
+                    <th>Frekwencja</th>
+                  </tr>
+                </thead>
+                <tbody id="gradesTableBody"></tbody>
+              </table>
+            </div>
+
+            <!-- Panel wpisów do dziennika -->
+            <div id="teacherActionsForm" class="card" style="margin-top:20px; background: rgba(0,0,0,0.15);">
+              <h4><i class="fa-solid fa-pen-to-square"></i> Dodaj wpis do dziennika</h4>
+              
