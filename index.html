@@ -2,281 +2,455 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<title>Szkoła3310 PRO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Librus Szkoła3310 PRO</title>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- Biblioteki zewnętrzne: Wykresy oraz Ikony -->
+<script src="https://jsdelivr.net"></script>
+<link rel="stylesheet" href="https://cloudflare.com">
 
 <style>
+:root {
+  --bg-main: #0f172a;
+  --bg-sidebar: #1e293b;
+  --bg-card: #334155;
+  --accent: #10b981; /* Librusowy zielony */
+  --accent-hover: #059669;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
 body {
-  margin:0;
-  font-family: Arial;
-  background:#0b1220;
-  color:white;
+  background: var(--bg-main);
+  color: var(--text-main);
+  overflow-x: hidden;
 }
 
-#loginBox {
-  text-align:center;
-  padding:30px;
+/* ANIMACJE */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-input, select, button {
-  padding:10px;
-  margin:5px;
-  border-radius:8px;
-  border:none;
+@keyframes pulseNotify {
+  0% { transform: scale(1); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
+  50% { transform: scale(1.01); box-shadow: 0 4px 25px rgba(239, 68, 68, 0.6); }
+  100% { transform: scale(1); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
 }
 
-button {
-  background:#38bdf8;
-  cursor:pointer;
-  font-weight:bold;
+.animated {
+  animation: fadeIn 0.4s ease forwards;
 }
 
-#app { display:none; }
-
-/* PANEL */
-.container {
-  display:flex;
-  height:100vh;
+/* EKRAN LOGOWANIA */
+#loginScreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+  padding: 20px;
 }
 
-/* LEFT */
+.login-card {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.login-card h2 {
+  font-size: 28px;
+  margin-bottom: 5px;
+  color: var(--text-main);
+}
+
+.login-card p {
+  color: var(--text-muted);
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.input-group input, .input-group select {
+  width: 100%;
+  padding: 12px;
+  background: #0f172a;
+  border: 1px solid #475569;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+}
+
+.input-group input:focus, .input-group select:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+}
+
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.login-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+.credentials-box {
+  margin-top: 20px;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 12px;
+  text-align: left;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.credentials-box h4 {
+  color: var(--text-main);
+  margin-bottom: 8px;
+  font-size: 13px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 4px;
+}
+
+.cred-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.cred-row span:first-child { color: var(--text-muted); }
+.cred-row span:last-child { color: var(--accent); font-family: monospace; font-weight: bold; }
+
+/* INTERFEJS GŁÓWNY */
+#app {
+  display: none;
+}
+
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+/* PANEL BOCZNY */
 .sidebar {
-  width:200px;
-  background:#111827;
-  padding:10px;
+  width: 260px;
+  background: var(--bg-sidebar);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(255,255,255,0.05);
 }
 
-/* CENTER */
-.main {
-  flex:2;
-  padding:15px;
-  overflow:auto;
+.brand {
+  padding: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* RIGHT */
-.right {
-  width:300px;
-  background:#111827;
-  padding:10px;
-  overflow:auto;
+.user-profile {
+  padding: 15px 20px;
+  background: rgba(0,0,0,0.1);
+  font-size: 13px;
+}
+
+.user-profile span {
+  display: block;
+  color: var(--text-muted);
+}
+
+.class-list {
+  padding: 15px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.class-list h3 {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.class-btn {
+  width: 100%;
+  padding: 10px 15px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  text-align: left;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 4px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.class-btn:hover, .class-btn.active {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.logout-btn {
+  padding: 15px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+}
+.logout-btn:hover {
+  background: #dc2626;
+}
+
+/* KONTENER GŁÓWNY */
+.main-content {
+  flex: 1;
+  padding: 25px;
+  overflow-y: auto;
+  background: var(--bg-main);
+}
+
+/* POWIADOMIENIA LIBRUS */
+.librus-notify {
+  background: linear-gradient(135deg, #b91c1c, #ef4444);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: pulseNotify 3s infinite ease-in-out;
+}
+
+/* STRUKTURA KART */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
 }
 
 .card {
-  background:#1e293b;
-  padding:10px;
-  margin:8px 0;
-  border-radius:10px;
+  background: var(--bg-sidebar);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.card h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* TABELE I FORMULARZE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+th {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.badge {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.badge-grade { background: #3b82f6; color: white; margin-right: 4px; display: inline-block;}
+.badge-present { background: #10b981; color: white; }
+.badge-absent { background: #ef4444; color: white; }
+
+.form-inline {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.form-inline input, .form-inline select {
+  padding: 10px;
+  background: #0f172a;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  color: white;
+  flex: 1;
+  min-width: 120px;
+}
+
+.btn-action {
+  padding: 10px 20px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-action:hover {
+  background: var(--accent-hover);
+}
+
+/* WIDOK UCZNIA */
+.student-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.stat-box {
+  background: var(--bg-sidebar);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.stat-box h4 { color: var(--text-muted); font-size: 14px; margin-bottom: 5px; }
+.stat-box p { font-size: 28px; font-weight: bold; color: var(--accent); }
+
+/* LISTA UWAG */
+.remarks-list {
+  max-height: 250px;
+  overflow-y: auto;
+  font-size: 13px;
+}
+.remark-item {
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+.remark-negative { background: rgba(239, 68, 68, 0.15); border-left: 4px solid #ef4444; }
+.remark-positive { background: rgba(16, 185, 129, 0.15); border-left: 4px solid #10b981; }
+.remark-meta { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+.admin-only {
+  display: none;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
 }
 </style>
 </head>
-
 <body>
 
-<!-- LOGIN -->
-<div id="loginBox">
-  <h2>🔐 Szkoła3310</h2>
-
-  <input id="pass" type="password" placeholder="Hasło">
-
-  <select id="role">
-    <option value="teacher">👨‍🏫 Nauczyciel</option>
-    <option value="student">👨‍🎓 Uczeń</option>
-  </select>
-
-  <button onclick="login()">Wejdź</button>
-</div>
-
-<!-- APP -->
-<div id="app">
-
-<div class="container">
-
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <h3>📚 Klasy</h3>
-    <button onclick="setClass('3a')">3A</button>
-    <button onclick="setClass('3b')">3B</button>
-    <button onclick="setClass('3c')">3C</button>
-    <button onclick="setClass('4a')">4A</button>
-    <button onclick="setClass('4b')">4B</button>
-    <button onclick="setClass('4c')">4C</button>
-    <button onclick="setClass('5a')">5A</button>
-    <button onclick="setClass('5b')">5B</button>
-    <button onclick="setClass('5c')">5C</button>
-  </div>
-
-  <!-- MAIN -->
-  <div class="main">
-
-    <h2>📊 Oceny / Uwagi</h2>
-
-    <div id="teacherPanel" style="display:none">
-      <input id="student" placeholder="Uczeń">
-
-      <input id="grade" placeholder="Ocena (1-6)">
-      <button onclick="addGrade()">Dodaj ocenę</button>
-
-      <br>
-
-      <input id="note" placeholder="Uwaga (np. brak pracy domowej)">
-      <button onclick="addNote()">Dodaj uwagę</button>
+<!-- EKRAN LOGOWANIA -->
+<div id="loginScreen">
+  <div class="login-card">
+    <h2>Synergia <span style="color:var(--accent)">3310</span></h2>
+    <p>Zaloguj się do systemu dziennika elektronicznego</p>
+    
+    <div class="input-group">
+      <label>Konto (Rola)</label>
+      <select id="loginRole" onchange="autofillPassword()">
+        <option value="director">🧑‍💼 Dyrektor</option>
+        <option value="teacher" selected>👨‍🏫 Nauczyciel</option>
+        <option value="student">👨‍🎓 Uczeń (Jan Kowalski)</option>
+      </select>
     </div>
 
-    <div id="list"></div>
+    <div class="input-group">
+      <label>Hasło dostępowe</label>
+      <input type="password" id="loginPass" value="Szkoła3310" placeholder="Wpisz klucz autoryzacji">
+    </div>
 
+    <button class="login-btn" onclick="handleLogin()">Zaloguj się bezpiecznie</button>
+    
+    <!-- Centralna baza haseł -->
+    <div class="credentials-box">
+      <h4><i class="fa-solid fa-key"></i> Autoryzowane Hasła Systemowe</h4>
+      <div class="cred-row"><span>Rola Dyrektora:</span> <span>Szkoła1033</span></div>
+      <div class="cred-row"><span>Rola Nauczyciela:</span> <span>Szkoła3310</span></div>
+      <div class="cred-row"><span>Rola Ucznia:</span> <span>Szkoła1010</span></div>
+    </div>
   </div>
-
-  <!-- RIGHT -->
-  <div class="right">
-    <h2>🏆 Ranking</h2>
-    <div id="ranking"></div>
-  </div>
-
 </div>
 
-</div>
-
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  onSnapshot,
-  query,
-  where
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "TWOJ_KEY",
-  authDomain: "TWOJ_PROJECT.firebaseapp.com",
-  projectId: "TWOJ_PROJECT",
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const col = collection(db, "grades");
-
-let currentClass = "3a";
-let role = "student";
-let allData = [];
-
-window.login = function () {
-  let pass = document.getElementById("pass").value;
-  role = document.getElementById("role").value;
-
-  if (pass === "Szkoła3310") {
-    document.getElementById("loginBox").style.display = "none";
-    document.getElementById("app").style.display = "block";
-
-    if (role === "teacher") {
-      document.getElementById("teacherPanel").style.display = "block";
-    }
-
-  } else {
-    alert("Złe hasło");
-  }
-};
-
-window.setClass = function(c) {
-  currentClass = c;
-  listen();
-};
-
-window.addGrade = async function () {
-  let student = document.getElementById("student").value;
-  let grade = Number(document.getElementById("grade").value);
-
-  if (!student || !grade) return;
-
-  await addDoc(col, {
-    type: "grade",
-    student,
-    grade,
-    class: currentClass,
-    date: new Date().toISOString()
-  });
-};
-
-window.addNote = async function () {
-  let student = document.getElementById("student").value;
-  let note = document.getElementById("note").value;
-
-  if (!student || !note) return;
-
-  await addDoc(col, {
-    type: "note",
-    student,
-    note,
-    class: currentClass,
-    date: new Date().toISOString()
-  });
-};
-
-function listen() {
-  const q = query(col, where("class", "==", currentClass));
-
-  onSnapshot(q, (snap) => {
-    allData = [];
-    snap.forEach(doc => allData.push(doc.data()));
-    render();
-  });
-}
-
-function render() {
-
-  // LISTA
-  let html = "";
-
-  allData.forEach(d => {
-    if (d.type === "grade") {
-      html += `<div class="card">👨‍🎓 ${d.student} — ⭐ ${d.grade}</div>`;
-    }
-
-    if (d.type === "note") {
-      html += `<div class="card">⚠️ ${d.student}: ${d.note}</div>`;
-    }
-  });
-
-  document.getElementById("list").innerHTML = html;
-
-  // RANKING (średnie)
-  let map = {};
-
-  allData.forEach(d => {
-    if (d.type !== "grade") return;
-
-    if (!map[d.student]) map[d.student] = [];
-    map[d.student].push(d.grade);
-  });
-
-  let ranking = [];
-
-  for (let s in map) {
-    let sum = map[s].reduce((a,b)=>a+b,0);
-    let avg = sum / map[s].length;
-    ranking.push({ name: s, avg: avg.toFixed(2) });
-  }
-
-  ranking.sort((a,b)=>b.avg - a.avg);
-
-  let rhtml = "";
-
-  ranking.forEach((r,i) => {
-    rhtml += `<div class="card">🏅 ${i+1}. ${r.name}<br>📊 ${r.avg}</div>`;
-  });
-
-  document.getElementById("ranking").innerHTML = rhtml;
-}
-
-window.onload = () => {
-  listen();
-};
-
-</script>
-
-</body>
-</html>
+<!-- GŁÓWNY INTERFEJS APLIKACJI -->
+<div id="app">
+  <div class="layout">
+    
+    <!-- PANEL BOCZNY -->
+    <div class="sidebar">
+      <div class="brand">
+        <i class="fa-solid fa-graduation-cap" style="color:var(--accent)"></i> LIBRUS PRO
+      </div>
+      <div class="user-profile">
+        <strong id="loggedUserName">Zalogowany użytkownik</strong>
+        <span id="loggedUserRole">Rola w systemie</span>
+      </div>
+      
+      <div class="class-list" id="sidebarClassSection">
+        <h3><i class="fa-solid fa-users"></i> Menu / Klasy</h3>
+        <div id="classButtonsContainer">
