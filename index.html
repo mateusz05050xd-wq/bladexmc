@@ -1,285 +1,157 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Dziennik | Portal Ucznia</title>
-    <style>
-        /* --- ZMIENNE I KOLORY --- */
-        :root {
-            --bg-color: #ebf0f7;
-            --card-bg: #ffffff;
-            --primary: #4a6cf7;
-            --success: #2ed573;
-            --danger: #ff4757;
-            --warning: #ffa502;
-            --text-main: #2f3542;
-            --text-muted: #747d8c;
-            --shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-            --radius: 12px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        /* --- UKŁAD STRONY --- */
-        .dashboard {
-            width: 100%;
-            max-width: 1200px;
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 20px;
-            /* Płynne wejście całej strony */
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-
-        header {
-            grid-column: span 12;
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* --- BLOKI (KARTY) --- */
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-3px);
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #f1f2f6;
-            color: var(--primary);
-        }
-
-        /* Rozmiary okien na komputerze */
-        .col-grades { grid-column: span 8; }
-        .col-attendance { grid-column: span 4; }
-        .col-timetable { grid-column: span 7; }
-        .col-notes { grid-column: span 5; }
-
-        /* Dostosowanie do telefonów */
-        @media (max-width: 900px) {
-            .col-grades, .col-attendance, .col-timetable, .col-notes {
-                grid-column: span 12;
-            }
-        }
-
-        /* --- OCENY --- */
-        .grades-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .grades-table th, .grades-table td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #f1f2f6;
-        }
-
-        .grade-badge {
-            display: inline-block;
-            width: 32px;
-            height: 32px;
-            line-height: 32px;
-            text-align: center;
-            border-radius: 6px;
-            font-weight: bold;
-            margin-right: 5px;
-            transition: transform 0.2s;
-            animation: popIn 0.4s ease-out backwards;
-        }
-
-        .grade-badge:hover { transform: scale(1.2); }
-        .g-good { background: #e3fcef; color: var(--success); }
-        .g-avg { background: #fff4e5; color: var(--warning); }
-        .g-bad { background: #ffe5e5; color: var(--danger); }
-
-        /* --- OBECNOŚĆ --- */
-        .attendance-stats {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .stat-num { font-size: 1.6rem; font-weight: bold; color: var(--primary); }
-        .attendance-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px dashed #e4e7eb;
-        }
-
-        /* --- PLAN LEKCJI --- */
-        .tabs { display: flex; gap: 5px; margin-bottom: 15px; }
-        .tab-btn {
-            background: #e4e7eb;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .tab-btn.active, .tab-btn:hover { background: var(--primary); color: white; }
-        .timetable-row {
-            display: grid;
-            grid-template-columns: 100px 1fr 80px;
-            padding: 8px 5px;
-            border-bottom: 1px solid #f1f2f6;
-        }
-
-        /* --- UWAGI --- */
-        .note-item {
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            border-left: 4px solid;
-            animation: slideIn 0.4s ease-out backwards;
-        }
-        .note-item.praise { background: #e3fcef; border-color: var(--success); }
-        .note-item.reprimand { background: #ffe5e5; border-color: var(--danger); }
-
-        /* --- ANIMACJE KROK PO KROKU --- */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.7); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-10px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dziennik Szkolny</title>
+<style>
+body{font-family:Arial;margin:0;background:#eef2f7}
+header{background:#1565c0;color:#fff;padding:20px;text-align:center}
+.container{max-width:1200px;margin:auto;padding:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:15px}
+.card,.panel{background:#fff;border-radius:14px;padding:15px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.card{cursor:pointer}
+button{background:#1565c0;color:#fff;border:0;padding:8px 12px;border-radius:8px;cursor:pointer}
+input,textarea,select{width:100%;padding:8px;margin:6px 0}
+.grade{display:inline-block;background:#43a047;color:#fff;padding:4px 8px;border-radius:8px;margin:3px}
+.note{background:#fff8e1;padding:8px;border-radius:8px;margin:5px 0}
+.del{background:#d32f2f;margin-left:6px}
+#studentView{display:none}
+table{width:100%;border-collapse:collapse;background:#fff}
+td,th{border:1px solid #ddd;padding:8px}
+</style>
 </head>
 <body>
+<header><h1>Dziennik Szkolny</h1></header>
+<div class="container">
 
-    <div class="dashboard">
-        
-        <!-- NAGŁÓWEK -->
-        <header>
-            <div>
-                <h2>Jan Kowalski</h2>
-                <p style="color: var(--text-muted);">Klasa 3A • Portal Ucznia</p>
-            </div>
-            <div style="text-align: right;">
-                <p id="live-date" style="font-weight: bold;"></p>
-                <p style="color: var(--success);">● System aktywny</p>
-            </div>
-        </header>
+<div id="listView">
+<h2>Uczniowie</h2>
+<div class="grid" id="students"></div>
 
-        <!-- OCENY -->
-        <section class="card col-grades">
-            <h3 class="card-title">📝 Oceny cząstkowe</h3>
-            <table class="grades-table">
-                <thead>
-                    <tr>
-                        <th>Przedmiot</th>
-                        <th>Oceny</th>
-                        <th>Średnia</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><b>Matematyka</b></td>
-                        <td>
-                            <span class="grade-badge g-good" style="animation-delay: 0.1s;">5</span>
-                            <span class="grade-badge g-good" style="animation-delay: 0.2s;">4</span>
-                            <span class="grade-badge g-bad" style="animation-delay: 0.3s;">2</span>
-                        </td>
-                        <td><b>3.66</b></td>
-                    </tr>
-                    <tr>
-                        <td><b>Język Angielski</b></td>
-                        <td>
-                            <span class="grade-badge g-good" style="animation-delay: 0.2s;">6</span>
-                            <span class="grade-badge g-good" style="animation-delay: 0.3s;">5</span>
-                        </td>
-                        <td><b>5.50</b></td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+<h2>Lista obecności klasy</h2>
+<div class="panel">
+<table id="attendanceTable">
+<tr><th>Uczeń</th><th>Obecny</th></tr>
+</table>
+</div>
+</div>
 
-        <!-- OBECNOŚĆ -->
-        <section class="card col-attendance">
-            <h3 class="card-title">📅 Frekwencja</h3>
-            <div class="attendance-stats">
-                <div>
-                    <div class="stat-num">94%</div>
-                    <p style="font-size: 0.8rem; color: var(--text-muted);">Obecności</p>
-                </div>
-                <div>
-                    <div class="stat-num" style="color: var(--danger);">2</div>
-                    <p style="font-size: 0.8rem; color: var(--text-muted);">Ucieczki</p>
-                </div>
-            </div>
-            <div class="attendance-item">
-                <span>02.06 - Matematyka</span>
-                <span style="color: var(--success); font-weight: bold;">Obecny</span>
-            </div>
-            <div class="attendance-item">
-                <span>01.06 - Fizyka</span>
-                <span style="color: var(--danger); font-weight: bold;">Nieobecny</span>
-            </div>
-        </section>
+<div id="studentView" class="panel">
+<button onclick="back()">← Powrót</button>
+<h2 id="studentName"></h2>
 
-        <!-- PLAN LEKCJI -->
-        <section class="card col-timetable">
-            <h3 class="card-title">🕒 Plan lekcji</h3>
-            <div class="tabs">
-                <button class="tab-btn active">Pon</button>
-                <button class="tab-btn">Wt</button>
-                <button class="tab-btn">Śr</button>
-                <button class="tab-btn">Czw</button>
-                <button class="tab-btn">Pt</button>
-            </div>
-            <div class="timetable-row">
-                <span style="color: var(--text-muted);">08:00 - 08:45</span>
-                <span><b>Matematyka</b></span>
-                <span style="color: var(--text-muted); text-align: right;">S. 204</span>
-            </div>
-            <div class="timetable-row">
-                <span style="color: var(--text-muted);">08:55 - 09:40</span>
-                <span><b>Informatyka</b></span>
-                <span style="color: var(--text-muted); text-align: right;">Lab 12</span>
-            </div>
-        </section>
+<h3>Dodaj ocenę</h3>
+<input id="gradeInput" placeholder="np. 5+">
+<button onclick="addGrade()">Dodaj</button>
 
-        <!-- UWAGI -->
-        <section class="card col-notes">
-            <h3 class="card-title">🔔 Uwagi i Pochwały</h3>
-            <div class="note-item praise" style="animation-delay: 0.1s;">
-                <p style="font-size: 0.8rem; color: var(--text-muted);">28.05 - mgr A. Nowak</p>
-                <p><b>Pochwała:</b> Pomoc przy naprawie komputera w sali.</p>
-            </div>
-            <div class="note-item reprimand" style="animation-delay: 0.2s;">
-                <p style="font-size: 0.8rem; color: var(--text-muted);">15.05 - dr J. Kowal</p>
+<h3>Oceny</h3>
+<div id="grades"></div>
+
+<h3>Dodaj uwagę</h3>
+<textarea id="noteInput"></textarea>
+<button onclick="addNote()">Dodaj uwagę</button>
+
+<h3>Uwagi</h3>
+<div id="notes"></div>
+</div>
+
+</div>
+
+<script>
+const students=[
+"Jan Kowalski","Adam Nowak","Piotr Wiśniewski","Kacper Zieliński",
+"Michał Wójcik","Julia Nowicka","Zuzanna Kaczmarek","Oliwia Mazur",
+"Maja Zielińska","Natalia Lewandowska","Amelia Dąbrowska","Wiktoria Kamińska"
+];
+
+let db=JSON.parse(localStorage.getItem("dziennik"))||{};
+
+students.forEach(s=>{
+ if(!db[s]) db[s]={grades:[],notes:[],present:true};
+});
+
+function save(){
+ localStorage.setItem("dziennik",JSON.stringify(db));
+}
+
+const list=document.getElementById("students");
+const table=document.getElementById("attendanceTable");
+
+students.forEach(s=>{
+ let c=document.createElement("div");
+ c.className="card";
+ c.innerHTML="<h3>"+s+"</h3><p>Otwórz profil ucznia</p>";
+ c.onclick=()=>openStudent(s);
+ list.appendChild(c);
+
+ let row=document.createElement("tr");
+ row.innerHTML=`<td>${s}</td><td><input type="checkbox" ${db[s].present?"checked":""}></td>`;
+ row.querySelector("input").onchange=e=>{
+   db[s].present=e.target.checked;
+   save();
+ };
+ table.appendChild(row);
+});
+
+let current="";
+
+function openStudent(name){
+ current=name;
+ document.getElementById("listView").style.display="none";
+ document.getElementById("studentView").style.display="block";
+ document.getElementById("studentName").innerText=name;
+ render();
+}
+
+function back(){
+ document.getElementById("studentView").style.display="none";
+ document.getElementById("listView").style.display="block";
+}
+
+function addGrade(){
+ let g=document.getElementById("gradeInput").value;
+ if(!g)return;
+ db[current].grades.push(g);
+ save();
+ document.getElementById("gradeInput").value="";
+ render();
+}
+
+function addNote(){
+ let n=document.getElementById("noteInput").value;
+ if(!n)return;
+ db[current].notes.push(n);
+ save();
+ document.getElementById("noteInput").value="";
+ render();
+}
+
+function render(){
+ let g=document.getElementById("grades");
+ g.innerHTML="";
+ db[current].grades.forEach((x,i)=>{
+   g.innerHTML+=`<div><span class="grade">${x}</span><button class="del" onclick="delGrade(${i})">Usuń</button></div>`;
+ });
+
+ let n=document.getElementById("notes");
+ n.innerHTML="";
+ db[current].notes.forEach((x,i)=>{
+   n.innerHTML+=`<div class="note">${x}<br><button class="del" onclick="delNote(${i})">Usuń</button></div>`;
+ });
+}
+
+function delGrade(i){
+ db[current].grades.splice(i,1);
+ save();
+ render();
+}
+
+function delNote(i){
+ db[current].notes.splice(i,1);
+ save();
+ render();
+}
+</script>
+</body>
+</html>
