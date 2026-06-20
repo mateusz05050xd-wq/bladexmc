@@ -24,6 +24,9 @@ padding:20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+position:sticky;
+top:0;
+z-index:100;
 }
 
 .logo{
@@ -56,6 +59,7 @@ text-shadow:2px 2px 10px black;
 .hero p{
 font-size:22px;
 margin:20px;
+text-shadow:1px 1px 5px black;
 }
 
 .btn{
@@ -65,6 +69,12 @@ border-radius:10px;
 color:black;
 font-weight:bold;
 text-decoration:none;
+display:inline-block;
+transition:.2s;
+}
+
+.btn:hover{
+transform:scale(1.05);
 }
 
 section{
@@ -89,10 +99,12 @@ padding:25px;
 border-radius:15px;
 text-align:center;
 transition:.3s;
+border:1px solid #222;
 }
 
 .card:hover{
-transform:translateY(-10px);
+transform:translateY(-8px);
+border-color:#00ff88;
 }
 
 .card h3{
@@ -106,6 +118,7 @@ padding:25px;
 text-align:center;
 border-radius:15px;
 font-size:25px;
+border:1px solid #222;
 }
 
 .store{
@@ -119,11 +132,51 @@ background:#161b22;
 padding:25px;
 border-radius:15px;
 text-align:center;
+border:1px solid #222;
+transition:.3s;
+}
+
+.rank:hover{
+transform:translateY(-8px);
+border-color:#00ff88;
 }
 
 .rank h3{
-color:gold;
 margin-bottom:10px;
+font-size:30px;
+}
+
+.vip{color:#ffd700;}
+.svip{color:#00ff88;}
+.gvip{color:#00bfff;}
+
+.rank-btn{
+display:inline-block;
+margin-top:15px;
+background:#00ff88;
+color:black;
+padding:12px 25px;
+border-radius:10px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.contact-box{
+max-width:700px;
+margin:auto;
+}
+
+.contact-item{
+background:#161b22;
+padding:20px;
+margin-bottom:15px;
+border-radius:15px;
+border:1px solid #222;
+}
+
+.contact-item a{
+color:#00ff88;
+text-decoration:none;
 }
 
 footer{
@@ -141,18 +194,18 @@ text-align:center;
 <nav>
 <a href="#o-serwerze">Serwer</a>
 <a href="#tryby">Tryby</a>
-<a href="#sklep">Usługi</a>
+<a href="#sklep">Rangi</a>
 <a href="#kontakt">Kontakt</a>
 </nav>
 </header>
 
 <section class="hero">
 <h1>BLADEXMC</h1>
-<p>Najlepszy serwer Minecraft Survival + PvP</p>
+<p>Najlepszy serwer Minecraft • Anarchia • Gildie • Duels</p>
 
 <a href="#" class="btn"
-onclick="navigator.clipboard.writeText('bladexmc.aternos.me')">
-Skopiuj IP
+onclick="navigator.clipboard.writeText('bladexmc.aternos.me'); alert('IP skopiowane!');">
+Skopiuj IP Serwera
 </a>
 </section>
 
@@ -160,7 +213,7 @@ Skopiuj IP
 <h2 class="title">O Serwerze</h2>
 
 <div class="ip-box">
-IP SERWERA:<br>
+IP SERWERA:<br><br>
 <b>bladexmc.aternos.me</b>
 </div>
 </section>
@@ -171,49 +224,50 @@ IP SERWERA:<br>
 <div class="cards">
 
 <div class="card">
-<h3>🌍 Survival</h3>
-<p>Buduj, eksploruj i rozwijaj swoją bazę.</p>
+<h3>💀 Anarchia</h3>
+<p>Brak zasad, pełna wolność i walka o przetrwanie.</p>
 </div>
 
 <div class="card">
-<h3>⚔ PvP</h3>
-<p>Walcz z innymi graczami o dominację.</p>
+<h3>🛡 Gildie</h3>
+<p>Zakładaj gildie, zdobywaj tereny i walcz o dominację.</p>
 </div>
 
 <div class="card">
-<h3>💰 Ekonomia</h3>
-<p>Zarabiaj pieniądze i handluj.</p>
-</div>
-
-<div class="card">
-<h3>🏆 Eventy</h3>
-<p>Codzienne konkursy i nagrody.</p>
+<h3>⚔ Duels</h3>
+<p>Pojedynki PvP 1v1 oraz walka o najlepszy ranking.</p>
 </div>
 
 </div>
 </section>
 
 <section id="sklep">
-<h2 class="title">Usługi Premium</h2>
+<h2 class="title">Rangi Premium</h2>
 
 <div class="store">
 
 <div class="rank">
-<h3>VIP</h3>
-<p>Specjalne komendy</p>
-<p>10 PLN</p>
+<h3 class="vip">VIP</h3>
+<p>Specjalne komendy, bonusy i wyróżnienie na serwerze.</p>
+<a class="rank-btn" href="https://discord.gg/zEMF9kpvf" target="_blank">
+Kup na Discordzie
+</a>
 </div>
 
 <div class="rank">
-<h3>SVIP</h3>
-<p>Więcej bonusów i kitów</p>
-<p>20 PLN</p>
+<h3 class="svip">SVIP</h3>
+<p>Więcej bonusów, lepsze kity i dodatkowe możliwości.</p>
+<a class="rank-btn" href="https://discord.gg/zEMF9kpvf" target="_blank">
+Kup na Discordzie
+</a>
 </div>
 
 <div class="rank">
-<h3>ELITA</h3>
-<p>Najlepsze przywileje</p>
-<p>35 PLN</p>
+<h3 class="gvip">GVIP</h3>
+<p>Najwyższa ranga z najlepszymi przywilejami.</p>
+<a class="rank-btn" href="https://discord.gg/zEMF9kpvf" target="_blank">
+Kup na Discordzie
+</a>
 </div>
 
 </div>
@@ -222,19 +276,25 @@ IP SERWERA:<br>
 <section id="kontakt">
 <h2 class="title">Kontakt</h2>
 
-<div class="card">
-<h3>Discord</h3>
-<p>discord.gg/twoj-serwer</p>
+<div class="contact-box">
 
-<br>
+<div class="contact-item">
+<h3>💬 Discord</h3>
+<a href="https://discord.gg/zEMF9kpvf" target="_blank">
+discord.gg/zEMF9kpvf
+</a>
+</div>
 
-<h3>Email</h3>
+<div class="contact-item">
+<h3>📧 Email</h3>
 <p>kontakt@bladexmc.pl</p>
+</div>
+
 </div>
 </section>
 
 <footer>
-© 2026 BladeXMC | Wszelkie prawa zastrzeżone
+© 2026 BladeXMC | Wszystkie prawa zastrzeżone
 </footer>
 
 </body>
