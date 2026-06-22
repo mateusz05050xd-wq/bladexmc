@@ -5,184 +5,281 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BladeXMC - Serwer Minecraft</title>
 
+<!-- Import nowoczesnej czcionki gamingowej -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
 <style>
+/* Reset i płynne przewijanie */
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif;
+font-family: 'Poppins', sans-serif;
+}
+
+html {
+scroll-behavior: smooth;
 }
 
 body{
-background:#0d1117;
-color:white;
+background:#0a0714; /* Głęboki, mroczny fiolet */
+color:#e2e0e7;
+overflow-x: hidden;
 }
 
+/* Nowoczesny, półprzezroczysty Header */
 header{
-background:linear-gradient(135deg,#00ff88,#00bfff);
-padding:20px;
+background: rgba(10, 7, 20, 0.75);
+backdrop-filter: blur(12px);
+-webkit-backdrop-filter: blur(12px);
+padding: 20px 10%;
 display:flex;
 justify-content:space-between;
 align-items:center;
 position:sticky;
 top:0;
 z-index:100;
+border-bottom: 1px solid rgba(168, 85, 247, 0.2);
 }
 
 .logo{
-font-size:32px;
-font-weight:bold;
+font-size:28px;
+font-weight:800;
+background: linear-gradient(135deg, #a855f7, #6366f1);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+letter-spacing: 1px;
 }
 
 nav a{
-color:white;
+color:#e2e0e7;
 text-decoration:none;
-margin-left:20px;
-font-weight:bold;
+margin-left:25px;
+font-weight:600;
+transition: .3s;
+font-size: 15px;
 }
 
+nav a:hover{
+color:#a855f7;
+text-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+}
+
+/* Sekcja Hero z ciemnym overlayem i animacją */
 .hero{
-height:80vh;
+height:85vh;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
-background:url('https://images.unsplash.com/photo-1627856013091-fed6e4e30025?q=80&w=1600') center/cover;
+position: relative;
+background: linear-gradient(rgba(10, 7, 20, 0.7), rgba(10, 7, 20, 0.9)), 
+            url('https://images.unsplash.com/photo-1627856013091-fed6e4e30025?q=80&w=1600') center/cover;
+padding: 0 20px;
 }
 
 .hero h1{
-font-size:60px;
-text-shadow:2px 2px 10px black;
+font-size:70px;
+font-weight: 800;
+letter-spacing: 2px;
+background: linear-gradient(135deg, #dfa5ff, #a855f7, #6366f1);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+animation: fadeInUp 1s ease-out;
 }
 
 .hero p{
-font-size:22px;
-margin:20px;
-text-shadow:1px 1px 5px black;
+font-size:20px;
+margin:20px 0 35px 0;
+color: #b4b0c4;
+max-width: 600px;
+animation: fadeInUp 1.2s ease-out;
 }
 
+/* Ulepszony przycisk z efektem świecenia */
 .btn{
-background:#00ff88;
-padding:15px 35px;
-border-radius:10px;
-color:black;
+background: linear-gradient(135deg, #a855f7, #6366f1);
+padding:16px 40px;
+border-radius:12px;
+color:white;
 font-weight:bold;
 text-decoration:none;
 display:inline-block;
-transition:.2s;
+transition:.3s;
+box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+animation: fadeInUp 1.4s ease-out;
+cursor: pointer;
+border: none;
+font-size: 16px;
 }
 
 .btn:hover{
-transform:scale(1.05);
+transform:translateY(-3px);
+box-shadow: 0 8px 25px rgba(168, 85, 247, 0.7);
+}
+
+/* Animacje wejścia */
+@keyframes fadeInUp {
+from { opacity: 0; transform: translateY(30px); }
+to { opacity: 1; transform: translateY(0); }
 }
 
 section{
-padding:70px 10%;
+padding:90px 10%;
 }
 
 .title{
 text-align:center;
-font-size:40px;
-margin-bottom:40px;
+font-size:38px;
+font-weight: 800;
+margin-bottom:50px;
+position: relative;
 }
 
-.cards{
+.title::after {
+content: '';
+display: block;
+width: 60px;
+height: 4px;
+background: #a855f7;
+margin: 10px auto 0 auto;
+border-radius: 2px;
+}
+
+/* Karty i Boksy */
+.cards, .store{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
 }
 
-.card{
-background:#161b22;
-padding:25px;
-border-radius:15px;
+.card, .rank, .ip-box, .contact-item{
+background:#161224;
+padding:30px;
+border-radius:18px;
 text-align:center;
 transition:.3s;
-border:1px solid #222;
+border:1px solid #251e38;
+box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
-.card:hover{
+.card:hover, .rank:hover, .ip-box:hover{
 transform:translateY(-8px);
-border-color:#00ff88;
+border-color:#a855f7;
+box-shadow: 0 10px 25px rgba(168, 85, 247, 0.2);
 }
 
 .card h3{
 margin-bottom:15px;
-color:#00ff88;
+color:#dfa5ff;
+font-size: 22px;
 }
 
+.card p {
+color: #9d99af;
+font-size: 15px;
+line-height: 1.6;
+}
+
+/* IP Box specjalny styl */
 .ip-box{
-background:#161b22;
-padding:25px;
-text-align:center;
-border-radius:15px;
-font-size:25px;
-border:1px solid #222;
+max-width: 500px;
+margin: 0 auto;
+font-size:22px;
+background: linear-gradient(135deg, #161224, #1f1833);
 }
 
-.store{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
+.ip-box b{
+color: #a855f7;
+font-size: 26px;
+letter-spacing: 1px;
+display: inline-block;
+margin-top: 10px;
+text-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
 }
 
-.rank{
-background:#161b22;
-padding:25px;
-border-radius:15px;
-text-align:center;
-border:1px solid #222;
-transition:.3s;
-}
-
-.rank:hover{
-transform:translateY(-8px);
-border-color:#00ff88;
-}
-
+/* Rangi */
 .rank h3{
-margin-bottom:10px;
-font-size:30px;
+margin-bottom:15px;
+font-size:32px;
+font-weight: 800;
 }
 
-.vip{color:#ffd700;}
-.svip{color:#00ff88;}
-.gvip{color:#00bfff;}
+/* Dopasowane neonowe kolory rang */
+.vip{color:#ffb86c; text-shadow: 0 0 10px rgba(255, 184, 108, 0.3);}
+.svip{color:#ff79c6; text-shadow: 0 0 10px rgba(255, 121, 198, 0.3);}
+.gvip{color:#00f5ff; text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);}
+
+.rank p {
+color: #9d99af;
+margin-bottom: 20px;
+min-height: 50px;
+}
 
 .rank-btn{
-display:inline-block;
-margin-top:15px;
-background:#00ff88;
-color:black;
+display:block;
+background: transparent;
+color:#a855f7;
 padding:12px 25px;
 border-radius:10px;
 text-decoration:none;
 font-weight:bold;
+border: 2px solid #a855f7;
+transition: .3s;
 }
 
+.rank-btn:hover{
+background: #a855f7;
+color: white;
+box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+}
+
+/* Kontakt */
 .contact-box{
 max-width:700px;
 margin:auto;
 }
 
 .contact-item{
-background:#161b22;
-padding:20px;
-margin-bottom:15px;
-border-radius:15px;
-border:1px solid #222;
+margin-bottom:20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+text-align: left;
+padding: 20px 40px;
 }
 
-.contact-item a{
-color:#00ff88;
+.contact-item h3 {
+font-size: 20px;
+}
+
+.contact-item a, .contact-item p{
+color:#a855f7;
 text-decoration:none;
+font-weight: 600;
+font-size: 18px;
+}
+
+.contact-item a:hover {
+text-decoration: underline;
 }
 
 footer{
-background:#000;
-padding:20px;
+background:#05030a;
+padding:30px;
 text-align:center;
+color: #615e70;
+font-size: 14px;
+border-top: 1px solid rgba(168, 85, 247, 0.1);
+}
+
+/* RWD - poprawki na telefony */
+@media (max-width: 768px) {
+header { flex-direction: column; gap: 15px; text-align: center; }
+nav a { margin: 0 10px; }
+.hero h1 { font-size: 45px; }
+.contact-item { flex-direction: column; text-align: center; gap: 10px; }
 }
 </style>
 </head>
@@ -203,17 +300,17 @@ text-align:center;
 <h1>BLADEXMC</h1>
 <p>Najlepszy serwer Minecraft • Anarchia • Gildie • Duels</p>
 
-<a href="#" class="btn"
-onclick="navigator.clipboard.writeText('bladexmc.aternos.me'); alert('IP skopiowane!');">
+<button class="btn"
+onclick="navigator.clipboard.writeText('bladexmc.aternos.me'); alert('IP skopiowane! Powodzenia na serwerze ⚔');">
 Skopiuj IP Serwera
-</a>
+</button>
 </section>
 
 <section id="o-serwerze">
 <h2 class="title">O Serwerze</h2>
 
 <div class="ip-box">
-IP SERWERA:<br><br>
+IP SERWERA:<br>
 <b>bladexmc.aternos.me</b>
 </div>
 </section>
@@ -225,17 +322,17 @@ IP SERWERA:<br><br>
 
 <div class="card">
 <h3>💀 Anarchia</h3>
-<p>Brak zasad, pełna wolność i walka o przetrwanie.</p>
+<p>Brak zasad, pełna wolność i krwawa walka o przetrwanie w surowym świecie.</p>
 </div>
 
 <div class="card">
 <h3>🛡 Gildie</h3>
-<p>Zakładaj gildie, zdobywaj tereny i walcz o dominację.</p>
+<p>Zakładaj potężne sojusze, podbijaj wrogie tereny i walcz o absolutną dominację.</p>
 </div>
 
 <div class="card">
 <h3>⚔ Duels</h3>
-<p>Pojedynki PvP 1v1 oraz walka o najlepszy ranking.</p>
+<p>Dynamiczne pojedynki PvP 1v1. Udowodnij swoje skille i wbijaj najwyższy ranking.</p>
 </div>
 
 </div>
@@ -248,7 +345,7 @@ IP SERWERA:<br><br>
 
 <div class="rank">
 <h3 class="vip">VIP</h3>
-<p>Specjalne komendy, bonusy i wyróżnienie na serwerze.</p>
+<p>Specjalne komendy, unikalne bonusy i widoczne wyróżnienie na czacie serwera.</p>
 <a class="rank-btn" href="https://discord.gg/zEMF9kpvf" target="_blank">
 Kup na Discordzie
 </a>
@@ -256,7 +353,7 @@ Kup na Discordzie
 
 <div class="rank">
 <h3 class="svip">SVIP</h3>
-<p>Więcej bonusów, lepsze kity i dodatkowe możliwości.</p>
+<p>Jeszcze więcej bonusów, potężniejsze zestawy kit oraz dodatkowe uprawnienia.</p>
 <a class="rank-btn" href="https://discord.gg/zEMF9kpvf" target="_blank">
 Kup na Discordzie
 </a>
@@ -264,7 +361,7 @@ Kup na Discordzie
 
 <div class="rank">
 <h3 class="gvip">GVIP</h3>
-<p>Najwyższa ranga z najlepszymi przywilejami.</p>
+<p>Najwyższa elitarna ranga zapewniająca absolutnie najlepsze przywileje na BladeXMC.</p>
 <a class="rank-btn" href="https://discord.gg/zEMF9kpvf" target="_blank">
 Kup na Discordzie
 </a>
@@ -279,14 +376,14 @@ Kup na Discordzie
 <div class="contact-box">
 
 <div class="contact-item">
-<h3>💬 Discord</h3>
+<h3>💬 Oficjalny Discord</h3>
 <a href="https://discord.gg/zEMF9kpvf" target="_blank">
 discord.gg/zEMF9kpvf
 </a>
 </div>
 
 <div class="contact-item">
-<h3>📧 Email</h3>
+<h3>📧 Pomoc Email</h3>
 <p>kontakt@bladexmc.pl</p>
 </div>
 
@@ -294,7 +391,7 @@ discord.gg/zEMF9kpvf
 </section>
 
 <footer>
-© 2026 BladeXMC | Wszystkie prawa zastrzeżone
+© 2026 BladeXMC | Wszystkie prawa zastrzeżone. Strona stworzona dla graczy Minecraft.
 </footer>
 
 </body>
