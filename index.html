@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BladeXMC - Profesjonalny Serwer Minecraft</title>
 
-<!-- Google Fonts: Poppins -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 
 <style>
@@ -394,6 +393,167 @@ section {
 .svip-box .store-btn:hover { background: #ff79c6; color: #000; box-shadow: 0 0 15px #ff79c6; }
 .gvip-box .store-btn:hover { background: var(--accent-cyan); color: #000; box-shadow: 0 0 15px var(--accent-cyan); }
 
+/* --- NOWE STYLE: SEKCJA REKRUTACJI --- */
+.rec-box {
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 45px 35px;
+    border: 1px solid rgba(188, 85, 255, 0.1);
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.rec-view { display: none; }
+.rec-view.active { display: block; animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+.rec-input, .rec-select, .rec-textarea {
+    width: 100%;
+    padding: 15px 20px;
+    background: rgba(6, 4, 10, 0.6);
+    border: 1px solid rgba(188, 85, 255, 0.2);
+    border-radius: 12px;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    margin-bottom: 25px;
+    outline: none;
+    transition: 0.3s;
+}
+.rec-input:focus, .rec-select:focus, .rec-textarea:focus {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 15px rgba(0, 245, 255, 0.2);
+}
+
+.rec-label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--accent-purple);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.rec-btn {
+    background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+    padding: 16px 35px;
+    border-radius: 12px;
+    color: white;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(188, 85, 255, 0.3);
+}
+.rec-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(188, 85, 255, 0.6);
+}
+
+.rec-rank-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.rec-rank-item {
+    background: rgba(6, 4, 10, 0.4);
+    border: 2px solid transparent;
+    padding: 18px;
+    border-radius: 14px;
+    text-align: center;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.rec-rank-item:hover {
+    transform: translateY(-4px) scale(1.02);
+    background: rgba(188, 85, 255, 0.05);
+}
+
+.quiz-choice {
+    background: rgba(6, 4, 10, 0.5);
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.03);
+    transition: 0.2s;
+    font-size: 14px;
+}
+.quiz-choice:hover {
+    border-color: var(--accent-cyan);
+    background: rgba(0, 245, 255, 0.03);
+}
+.quiz-choice.selected {
+    background: linear-gradient(135deg, var(--accent-cyan), #00b5ff) !important;
+    color: #000 !important;
+    font-weight: 800;
+    border-color: transparent;
+    box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+}
+
+/* Struktura panelu właściciela */
+.adm-container { display: flex; gap: 25px; margin-top: 25px; }
+@media (max-width: 768px) { .adm-container { flex-direction: column; } }
+
+.adm-sidebar { width: 240px; display: flex; flex-direction: column; gap: 12px; shrink: 0; }
+@media (max-width: 768px) { .adm-sidebar { width: 100%; } }
+
+.adm-tab-btn {
+    padding: 14px;
+    background: rgba(6, 4, 10, 0.5);
+    border: 1px solid rgba(188, 85, 255, 0.15);
+    border-radius: 10px;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-weight: 700;
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    transition: 0.3s;
+}
+.adm-tab-btn.active, .adm-tab-btn:hover {
+    background: var(--accent-purple);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(188, 85, 255, 0.2);
+}
+
+.adm-main-content {
+    flex: 1;
+    background: rgba(6, 4, 10, 0.3);
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.adm-app-card {
+    background: rgba(6, 4, 10, 0.5);
+    padding: 22px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    border-left: 5px solid #00c853;
+    border-top: 1px solid rgba(255,255,255,0.02);
+}
+
+.adm-ban-card {
+    background: rgba(6, 4, 10, 0.5);
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 5px solid #ff4d4d;
+}
+
 /* --- KONTAKT --- */
 .contact-wrapper {
     max-width: 650px;
@@ -471,6 +631,7 @@ footer {
         <a href="#o-serwerze">Serwer</a>
         <a href="#tryby">Tryby Gry</a>
         <a href="#sklep">Sklep/Rangi</a>
+        <a href="#rekrutacja">Rekrutacja</a>
         <a href="#kontakt">Kontakt</a>
     </nav>
 </header>
@@ -484,7 +645,6 @@ footer {
             Skopiuj IP Serwera
         </button>
         
-        <!-- NOWY SYSTEM POWIADOMIEŃ -->
         <br>
         <div class="notification-box">
             <span id="notif-text">Ładowanie nowości...</span>
@@ -563,6 +723,150 @@ footer {
     </div>
 </section>
 
+<section id="rekrutacja">
+    <h2 class="title">Oficjalna <span>Rekrutacja</span></h2>
+    <div class="rec-box">
+        
+        <div id="rec-view-start" class="rec-view active">
+            <h3 style="margin-bottom: 15px; text-align:center; font-weight:800; font-size:22px;">Dołącz do ekipy administracyjnej BladeXMC</h3>
+            <p style="color: var(--text-muted); text-align: center; margin-bottom: 30px; font-size: 14px; line-height: 1.6;">
+                Szukamy ambitnych, dojrzałych i odpowiedzialnych osób. Wypełnij profil, przejdź test wiedzy i wyślij zgłoszenie bezpośrednio do właściciela.
+            </p>
+            <label class="rec-label">Podaj swój dokładny nick z Discorda:</label>
+            <input type="text" id="rec-player-nick" class="rec-input" placeholder="np. bladexmc lub TwójNick#1234">
+            <button class="rec-btn" onclick="checkRecPlayerStatus()">Zweryfikuj profil i przejdź dalej</button>
+            <div style="text-align: center; margin-top: 25px;">
+                <span style="color: var(--text-muted); font-size: 13px; cursor: pointer; text-decoration: underline; font-weight:500;" onclick="showRecView('rec-view-admin-login')">🛡️ Panel Zarządzania Właściciela</span>
+            </div>
+        </div>
+
+        <div id="rec-view-banned" class="rec-view" style="text-align: center;">
+            <h3 style="color: #ff4d4d; font-weight:800; margin-bottom: 15px; font-size:24px;">Dostęp Zablokowany 🛑</h3>
+            <p style="color: var(--text-muted); line-height: 1.6; max-width: 600px; margin: 0 auto 25px auto;">
+                Przykro nam, ale podany nick figuruje w systemie jako zablokowany. Dzieje się tak, gdy uzyskasz wynik niższy niż wymagane 67% na egzaminie wstępnym lub gdy zostaniesz zablokowany ręcznie.
+            </p>
+            <button class="rec-btn" style="background: #ff4d4d; max-width:250px;" onclick="resetRecViews()">Odśwież formularz</button>
+        </div>
+
+        <div id="rec-view-ranks" class="rec-view">
+            <span style="cursor:pointer; color:var(--accent-cyan); font-size:13px; font-weight:700;" onclick="showRecView('rec-view-start')">← Zmień nick</span>
+            <h3 style="margin: 15px 0 5px 0; text-align: center; font-weight:800;">Wybierz stanowisko</h3>
+            <p style="text-align:center; color:var(--text-muted); font-size:13px; margin-bottom:20px;">Wskaż rangę, na którą chcesz złożyć podanie:</p>
+            <div class="rec-rank-grid">
+                <div class="rec-rank-item" style="border-color: #e67e22; color: #e67e22;" onclick="setRecRank('HeadAdmin')">👑 HEADADMIN</div>
+                <div class="rec-rank-item" style="border-color: #9b59b6; color: #9b59b6;" onclick="setRecRank('Technik')">🔧 TECHNIK</div>
+                <div class="rec-rank-item" style="border-color: #3498db; color: #3498db;" onclick="setRecRank('Rekrutator')">📋 REKRUTATOR</div>
+                <div class="rec-rank-item" style="border-color: #9b59b6; color: #9b59b6;" onclick="setRecRank('Grafik')">🖼️ GRAFIK</div>
+                <div class="rec-rank-item" style="border-color: #e74c3c; color: #e74c3c;" onclick="setRecRank('Admin')">🔴 ADMIN</div>
+                <div class="rec-rank-item" style="border-color: #2ecc71; color: #2ecc71;" onclick="setRecRank('Moderator')">🟢 MODERATOR</div>
+                <div class="rec-rank-item" style="border-color: #3498db; color: #3498db;" onclick="setRecRank('Helper')">🔵 HELPER</div>
+                <div class="rec-rank-item" style="border-color: #2ecc71; color: #2ecc71;" onclick="setRecRank('ChatMod')">💬 CHATMOD</div>
+                <div class="rec-rank-item" style="border-color: #e67e22; color: #e67e22;" onclick="setRecRank('Budowniczy')">🏗️ BUDOWNICZY</div>
+                <div class="rec-rank-item" style="border-color: #e84393; color: #e84393;" onclick="setRecRank('Przyjaciel')">💖 PRZYJACIEL</div>
+                <div class="rec-rank-item" style="border-color: #e84393; color: #e84393;" onclick="setRecRank('Twórca')">🎨 TWÓRCA</div>
+            </div>
+        </div>
+
+        <div id="rec-view-form" class="rec-view">
+            <span style="cursor:pointer; color:var(--accent-cyan); font-size:13px; font-weight:700;" onclick="showRecView('rec-view-ranks')">← Powrót do rang</span>
+            <h3 id="rec-dynamic-title" style="margin: 15px 0 25px 0; text-align: center; font-weight:800; color: #fff;">Kwestionariusz Osobowy</h3>
+            
+            <form id="rec-form-element" onsubmit="handleRecSubmit(event)">
+                <label class="rec-label">Ile masz lat? (Weryfikacja wieku):</label>
+                <input type="number" id="rec-f-age" class="rec-input" required min="12" max="99" placeholder="np. 16">
+
+                <label class="rec-label">Czy posiadasz sprawny mikrofon i przeszedłeś mutację głosu?:</label>
+                <select id="rec-f-mic" class="rec-select">
+                    <option value="Tak, w pełni sprawny + mutacja">Tak, posiadam sprawny mikrofon oraz dojrzały głos</option>
+                    <option value="Nie / Brak pełnego sprzętu">Nie posiadam pełnego zestawu / brak mutacji</option>
+                </select>
+
+                <label class="rec-label">Opisz swoje dotychczasowe doświadczenie (Komendy, serwery):</label>
+                <textarea id="rec-f-about" class="rec-textarea" rows="5" required placeholder="Napisz rozbudowane zgłoszenie, aby zwiększyć swoje szanse..."></textarea>
+
+                <div style="border-top: 1px dashed rgba(188, 85, 255, 0.3); margin: 35px 0; padding-top: 25px;">
+                    <h4 style="color: var(--accent-cyan); margin-bottom: 25px; text-align: center; text-transform: uppercase; font-size:14px; letter-spacing:1px; font-weight:800;">📝 EGZAMIN AKADEMII PEŁNIENIA FUNKCJI (Min. 67% punktów aby zdać)</h4>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <label class="rec-label" style="color: #fff; text-transform: none; font-weight:500;">Pytanie 1: Widzisz gracza używającego cheatów (np. KillAura/Fly). Jaka jest Twoja natychmiastowa reakcja?</label>
+                        <div class="quiz-choice" data-q="0" data-a="A">A) Czekam na kogoś z wyższą rangą, nic nie robiąc.</div>
+                        <div class="quiz-choice" data-q="0" data-a="B">B) Zaczynam nagrywać dowód (spectate) i nakładam permanentną blokadę konta.</div>
+                        <div class="quiz-choice" data-q="0" data-a="C">C) Kickuję gracza z serwera z powodem "wyłącz cheaty".</div>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <label class="rec-label" style="color: #fff; text-transform: none; font-weight:500;">Pytanie 2: Która komenda służy do dokładnego sprawdzenia historii modyfikacji bloków i logów gracza w danym miejscu?</label>
+                        <div class="quiz-choice" data-q="1" data-a="A">A) /co inspect (CoreProtect)</div>
+                        <div class="quiz-choice" data-q="1" data-a="B">B) /check logs player</div>
+                        <div class="quiz-choice" data-q="1" data-a="C">C) /worldedit undo history</div>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <label class="rec-label" style="color: #fff; text-transform: none; font-weight:500;">Pytanie 3: Twój bliski znajomy z serwera prosi Cię o darmowe przedmioty (itemy) z trybu kreatywnego. Co robisz?</label>
+                        <div class="quiz-choice" data-q="2" data-a="A">A) Daję mu kilka diamentów, dbając by nikt nie zauważył.</div>
+                        <div class="quiz-choice" data-q="2" data-a="B">B) Odmawiam kategorycznie. Rozdawanie przedmiotów (faworyzacja) to natychmasta degradacja.</div>
+                        <div class="quiz-choice" data-q="2" data-a="C">C) Mówię, żeby zapytał innego Helpera.</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="rec-btn">Zakończ test i prześlij aplikację</button>
+            </form>
+        </div>
+
+        <div id="rec-view-success" class="rec-view" style="text-align: center;">
+            <h3 style="color: #00c853; font-weight:800; font-size:26px; margin-bottom: 15px;">🎉 Egzamin Zdany Gratulacje!</h3>
+            <p id="rec-success-score" style="font-size: 18px; margin-bottom: 15px; font-weight: 700; color: #fff;"></p>
+            <p style="color: var(--text-muted); line-height: 1.6; max-width:600px; margin:0 auto 25px auto;">
+                Twoje podanie rekrutacyjne zostało poprawnie przesłane i zabezpieczone w globalnej bazie danych. Właściciel sprawdzi je na dniach. Oczekuj wiadomości!
+            </p>
+            <button class="rec-btn" style="max-width:250px;" onclick="resetRecViews()">Strona Główna</button>
+        </div>
+
+        <div id="rec-view-failed" class="rec-view" style="text-align: center;">
+            <h3 style="color: #ff4d4d; font-weight:800; font-size:26px; margin-bottom: 15px;">❌ Wynik Negatywny</h3>
+            <p id="rec-fail-score" style="font-size: 18px; margin-bottom: 15px; font-weight: 700; color: #ff4d4d;"></p>
+            <p style="color: var(--text-muted); line-height: 1.6; max-width:600px; margin:0 auto 25px auto;">
+                Niestety Twój wynik procentowy spadł poniżej wymaganych 67%. System automatycznie odrzucił podanie oraz nałożył blokadę rekrutacyjną na Twój nick.
+            </p>
+            <button class="rec-btn" style="background:#ff4d4d; max-width:250px;" onclick="resetRecViews()">Zamknij</button>
+        </div>
+
+        <div id="rec-view-admin-login" class="rec-view" style="max-width: 450px; margin: 0 auto;">
+            <span style="cursor:pointer; color:var(--accent-cyan); font-size:13px; font-weight:700;" onclick="showRecView('rec-view-start')">← Powrót</span>
+            <h3 style="margin: 15px 0; text-align: center; font-weight:800;">Panel Autoryzacji</h3>
+            <label class="rec-label">Wpisz tajne hasło właściciela:</label>
+            <input type="password" id="rec-admin-pass" class="rec-input" placeholder="Wpisz hasło...">
+            <button class="rec-btn" onclick="checkRecAdminLogin()">Zaloguj i synchronizuj</button>
+            <p id="rec-login-err" style="color: #ff4d4d; font-weight: 700; margin-top: 15px; text-align: center; display: none;">BŁĘDNE HASŁO ADMINISTRATORA!</p>
+        </div>
+
+        <div id="rec-view-admin-panel" class="rec-view">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(188,85,255,0.2); padding-bottom: 15px; margin-bottom: 25px;">
+                <h3 style="margin: 0; font-size:20px; font-weight:800;">Zarządzanie Baza Danych Online 🛠️</h3>
+                <button class="rec-btn" style="width: auto; padding: 8px 20px; font-size: 12px; background: #ff4d4d;" onclick="resetRecViews()">Wyloguj</button>
+            </div>
+
+            <div class="adm-container">
+                <div class="adm-sidebar">
+                    <button class="adm-tab-btn active" id="rec-tab-apps-btn" onclick="switchRecAdminTab('apps')">Zaakceptowane podania</button>
+                    <button class="adm-tab-btn" id="rec-tab-bans-btn" onclick="switchRecAdminTab('bans')">Zablokowane profile</button>
+                </div>
+                <div class="adm-main-content">
+                    <div id="rec-panel-apps-view">
+                        <h4 style="margin-bottom: 15px; font-size: 14px; color: var(--accent-cyan); text-transform:uppercase; font-weight:800;">Zgłoszenia, które zdały test wiedzy:</h4>
+                        <div id="rec-render-apps-target">Pobieranie bazy danych z sieci...</div>
+                    </div>
+                    <div id="rec-panel-bans-view" style="display: none;">
+                        <h4 style="margin-bottom: 15px; font-size: 14px; color: #ff4d4d; text-transform:uppercase; font-weight:800;">Lista blokad (Auto-odrzucenia i ręczne):</h4>
+                        <div id="rec-render-bans-target">Pobieranie czarnej listy z sieci...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
 <section id="kontakt">
     <h2 class="title">Centrum <span>Kontaktu</span></h2>
     <div class="contact-wrapper">
@@ -587,7 +891,6 @@ footer {
     <p>&copy; 2026 BladeXMC. Wszelkie prawa zastrzeżone. Strona nie jest powiązana z firmą Mojang AB.</p>
 </footer>
 
-<!-- SKRYPTY JS -->
 <script>
 // --- Funkcja do kopiowania IP ---
 function copyServerIP(button) {
@@ -615,30 +918,242 @@ const notifElement = document.getElementById('notif-text');
 let currentIndex = 0;
 
 function changeNotification() {
-    // 1. Schowaj stary tekst (fade out)
+    if(!notifElement) return;
     notifElement.style.opacity = 0;
     
     setTimeout(() => {
-        // 2. Wylosuj nowy indeks (aby się nie powtarzał dwa razy z rzędu)
         let nextIndex;
         do {
             nextIndex = Math.floor(Math.random() * notifications.length);
         } while (nextIndex === currentIndex && notifications.length > 1);
         
         currentIndex = nextIndex;
-        
-        // 3. Zaktualizuj tekst i pokaż go (fade in)
         notifElement.innerHTML = notifications[currentIndex];
         notifElement.style.opacity = 1;
-    }, 500); // Czas trwania efektu fade out (0.5s)
+    }, 500);
 }
 
-// Uruchomienie pierwszej rotacji od razu
 changeNotification();
-
-// Zmiana tekstu automatycznie co 5 sekund (5000 ms)
 setInterval(changeNotification, 5000);
 
+
+// =========================================================================
+// ARCHITEKTURA GLOBALNEJ REKRUTACJI ONLINE (ZAPIS W CHMURZE PRZEZ METODĘ PUT)
+// =========================================================================
+const CLOUD_API_ENDPOINT = "https://kvdb.io/Mz6R77eNqGvEaLzXyKkW9a/bladexmc_rec_database_v3";
+
+let recDatabase = { applications: [], blacklistedNicks: [] };
+let recUserNick = "";
+let recUserRank = "";
+let recUserAnswers = {};
+const recAnswerKey = ["B", "A", "B"]; // Prawidłowy klucz odpowiedzi egzaminu
+
+async function syncWithCloud() {
+    try {
+        let response = await fetch(CLOUD_API_ENDPOINT);
+        if (response.ok) {
+            recDatabase = await response.json();
+        } else {
+            await pushToCloud();
+        }
+    } catch (err) {
+        console.log("Synchronizacja bazy chmurowej...");
+    }
+}
+syncWithCloud();
+
+async function pushToCloud() {
+    try {
+        await fetch(CLOUD_API_ENDPOINT, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(recDatabase)
+        });
+    } catch (err) {
+        console.error("Błąd zapisu bazy w chmurze: ", err);
+    }
+}
+
+function showRecView(viewId) {
+    document.querySelectorAll('.rec-view').forEach(v => v.classList.remove('active'));
+    document.getElementById(viewId).classList.add('active');
+}
+
+function resetRecViews() {
+    document.getElementById('rec-player-nick').value = "";
+    document.getElementById('rec-form-element').reset();
+    recUserAnswers = {};
+    document.querySelectorAll('.quiz-choice').forEach(c => c.classList.remove('selected'));
+    showRecView('rec-view-start');
+}
+
+// Wybór odpowiedzi w quizie
+document.querySelectorAll('.quiz-choice').forEach(item => {
+    item.addEventListener('click', function() {
+        const qIndex = this.getAttribute('data-q');
+        const answerLetter = this.getAttribute('data-a');
+        
+        document.querySelectorAll(`.quiz-choice[data-q="${qIndex}"]`).forEach(o => o.classList.remove('selected'));
+        this.classList.add('selected');
+        
+        recUserAnswers[qIndex] = answerLetter;
+    });
+});
+
+// Krok 1: Weryfikacja nicku gracza
+async function checkRecPlayerStatus() {
+    const nickInput = document.getElementById('rec-player-nick').value.trim();
+    if(!nickInput) { alert("Musisz podać swój dokładny nick z Discorda!"); return; }
+    
+    recUserNick = nickInput;
+    await syncWithCloud(); // Pobierz najświeższą bazę online
+
+    let isBanned = recDatabase.blacklistedNicks.some(b => b.toLowerCase() === recUserNick.toLowerCase());
+    if(isBanned) {
+        showRecView('rec-view-banned');
+    } else {
+        showRecView('rec-view-ranks');
+    }
+}
+
+function setRecRank(rankName) {
+    recUserRank = rankName;
+    document.getElementById('rec-dynamic-title').innerText = `Aplikacja na rangę: ${rankName.toUpperCase()}`;
+    showRecView('rec-view-form');
+}
+
+// Krok 3: Przesłanie formularza i kalkulacja punktów
+async function handleRecSubmit(event) {
+    event.preventDefault();
+
+    for(let i=0; i<3; i++) {
+        if(!recUserAnswers[i]) {
+            alert(`Zaznacz odpowiedź na pytanie egzaminacyjne numer ${i+1}!`);
+            return;
+        }
+    }
+
+    let correctPoints = 0;
+    if(recUserAnswers[0] === recAnswerKey[0]) correctPoints++;
+    if(recUserAnswers[1] === recAnswerKey[1]) correctPoints++;
+    if(recUserAnswers[2] === recAnswerKey[2]) correctPoints++;
+
+    let scorePercent = Math.round((correctPoints / 3) * 100);
+    await syncWithCloud(); // Upewnij się, że nie nadpisujesz podania innego gracza z tej samej chwili
+
+    if(scorePercent >= 67) {
+        // Zdał -> zapisujemy podanie
+        const newApp = {
+            nick: recUserNick,
+            rank: recUserRank,
+            age: document.getElementById('rec-f-age').value,
+            mic: document.getElementById('rec-f-mic').value,
+            about: document.getElementById('rec-f-about').value,
+            score: scorePercent,
+            timestamp: new Date().toLocaleString('pl-PL')
+        };
+        recDatabase.applications.push(newApp);
+        await pushToCloud();
+
+        document.getElementById('rec-success-score').innerText = `Twój wynik: ${scorePercent}%`;
+        showRecView('rec-view-success');
+    } else {
+        // Nie zdał -> Auto ban w systemie rekrutacji
+        recDatabase.blacklistedNicks.push(recUserNick);
+        await pushToCloud();
+
+        document.getElementById('rec-fail-score').innerText = `Twój wynik: ${scorePercent}% (Wymagane 67%)`;
+        showRecView('rec-view-failed');
+    }
+}
+
+// Autoryzacja panelu admina
+function checkRecAdminLogin() {
+    const typedPass = document.getElementById('rec-admin-pass').value.trim();
+    if(typedPass === "BladexMC059867" || typedPass === "bladexmc") {
+        document.getElementById('rec-login-err').style.display = "none";
+        document.getElementById('rec-admin-pass').value = "";
+        showRecView('rec-view-admin-panel');
+        renderRecAdminDashboard();
+    } else {
+        document.getElementById('rec-login-err').style.display = "block";
+    }
+}
+
+function switchRecAdminTab(tab) {
+    document.querySelectorAll('.adm-tab-btn').forEach(b => b.classList.remove('active'));
+    if(tab === 'apps') {
+        document.getElementById('rec-tab-apps-btn').classList.add('active');
+        document.getElementById('rec-panel-apps-view').style.display = 'block';
+        document.getElementById('rec-panel-bans-view').style.display = 'none';
+    } else {
+        document.getElementById('rec-tab-bans-btn').classList.add('active');
+        document.getElementById('rec-panel-apps-view').style.display = 'none';
+        document.getElementById('rec-panel-bans-view').style.display = 'block';
+    }
+}
+
+async function renderRecAdminDashboard() {
+    await syncWithCloud();
+    
+    // Render Podań
+    const appsTarget = document.getElementById('rec-render-apps-target');
+    appsTarget.innerHTML = "";
+    if(recDatabase.applications.length === 0) {
+        appsTarget.innerHTML = "<p style='color: var(--text-muted); font-size: 14px;'>Brak nowych podań w bazie chmurowej.</p>";
+    } else {
+        recDatabase.applications.forEach((app, idx) => {
+            const card = document.createElement('div');
+            card.className = "adm-app-card";
+            card.innerHTML = `
+                <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:10px;">
+                    <span style="color:#00c853; font-weight:800; background:rgba(0,200,83,0.1); padding:3px 8px; border-radius:5px;">WYNIK: ${app.score}%</span>
+                    <span style="color:var(--text-muted);">${app.timestamp}</span>
+                </div>
+                <h5 style="font-size:16px; margin-bottom:8px; color:#fff;">Discord: <span style="color:var(--accent-cyan); font-weight:800;">${app.nick}</span> &rarr; Ranga: <span style="color:var(--accent-purple);">${app.rank}</span></h5>
+                <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px;"><strong>Wiek:</strong> ${app.age} lat | <strong>Mikrofon:</strong> ${app.mic}</p>
+                <div style="background:rgba(0,0,0,0.4); padding:15px; border-radius:8px; font-size:13px; line-height:1.5; font-style:italic; border:1px solid rgba(255,255,255,0.02);">
+                    ${app.about}
+                </div>
+                <button onclick="deleteRecApp(${idx})" style="background:#ff4d4d; border:none; color:white; padding:6px 12px; border-radius:6px; font-size:11px; font-weight:700; margin-top:12px; cursor:pointer; text-transform:uppercase;">Usuń podanie</button>
+            `;
+            appsTarget.appendChild(card);
+        });
+    }
+
+    // Render Czarnej Listy
+    const bansTarget = document.getElementById('rec-render-bans-target');
+    bansTarget.innerHTML = "";
+    if(recDatabase.blacklistedNicks.length === 0) {
+        bansTarget.innerHTML = "<p style='color: var(--text-muted); font-size: 14px;'>Czarna lista jest obecnie pusta.</p>";
+    } else {
+        recDatabase.blacklistedNicks.forEach((bannedNick, idx) => {
+            const row = document.createElement('div');
+            row.className = "adm-ban-card";
+            row.innerHTML = `
+                <span style="font-size:14px; font-weight:500;">🛑 Profil: <strong style="color:#fff;">${bannedNick}</strong></span>
+                <button onclick="unbanRecPlayer(${idx})" style="background:#00c853; border:none; color:white; padding:6px 12px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; text-transform:uppercase;">Odblokuj</button>
+            `;
+            bansTarget.appendChild(row);
+        });
+    }
+}
+
+async function deleteRecApp(index) {
+    if(confirm("Czy na pewno chcesz bezpowrotnie usunąć to podanie z bazy danych?")) {
+        recDatabase.applications.splice(index, 1);
+        await pushToCloud();
+        renderRecAdminDashboard();
+    }
+}
+
+async function unbanRecPlayer(index) {
+    if(confirm("Czy chcesz odblokować tego gracza? Otrzyma możliwość ponownego podejścia do testu.")) {
+        recDatabase.blacklistedNicks.splice(index, 1);
+        await pushToCloud();
+        renderRecAdminDashboard();
+    }
+}
 </script>
 
 </body>
